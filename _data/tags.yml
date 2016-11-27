@@ -25,3 +25,24 @@ jekyll:
   color: '#949667'
   description: >
     Jekyll is a static site generator, an open-source tool for creating simple yet powerful websites of all shapes and sizes.
+
+all:
+  name: All
+  
+java:
+  name: Java
+
+spring:
+  name: Spring
+  
+docker:
+  name: Docker
+  
+javascript:
+  name: Javascript
+  
+tensorflow:
+  name: TensorFlow
+  
+etc:
+  name: etc
