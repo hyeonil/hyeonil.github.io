@@ -4,7 +4,7 @@ layout: post
 title: 'TensorFlow Intro'
 tags: [tensorflow]
 description: >
-  
+
 ---
 
 ## 딥러닝이란?
@@ -15,7 +15,7 @@ description: >
 * `신경세포`의 구조에서 착안하여 고안된 알고리즘을 사용
 * 신경세포의 특징을 바탕으로 1957년 `프랭크 로젠블랫, Frank Rosenblatt`이 개발한 `퍼셉트론` 알고리즘이 딥 러닝과 많은 머신 러닝 알고리즘의 기초가 됨
 
-##
+## Title
 
 * 하나의 `퍼셉트론`은 하나의 신경세포를 인공적으로 모델링한 `뉴런, neuron`이라 표현
 
