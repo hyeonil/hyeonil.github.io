@@ -143,6 +143,7 @@ $ docker inspect ubuntu
 ```
 
 주요 정보는 다음과 같다.
+
 * Image ID
 * 생성일
 * Docker version
