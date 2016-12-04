@@ -1,0 +1,262 @@
+---
+layout: post
+title: 'Docker 기본 사용법'
+tags: [docker]
+description: >
+---
+
+## 기본 사용 Command
+
+### 이미지 다운로드(docker pull)
+
+```bash
+docker pull [옵션] <이미지명>[:태그명]
+```
+
+__Ubuntu Download__
+
+```bash
+docker pull ubuntu
+```
+
+`tag`를 붙이지 않으면 자동으로 최신 버전을 다운받는다.
+
+```bash
+docker pull registry.hub.docker.com/ubuntu
+```
+위와 같이 url도 지정할 수 있다.
+
+### 이미지 목록 출력(docker images)
+
+```bash
+docker images [옵션] [repository명]
+```
+
+![Docker Images][docker-images]
+
+위와같이 `docker images` 명령어를 사용해 다운받은 전체 이미지 목록을 출력할 수 있다.
+
+Attribute|Description
+---|---
+REPOSITORY|Docker 이미지 명
+TAG|Docker 이미지 태그명
+IMAGE ID|Docker 이미지 ID
+CREATED|생성일
+VIRTUAL SIZE|사이즈
+
+### 이미지 세부 정보 확인(docker inspect)
+
+```bash
+docker inspect [옵션] <컨테이너 또는 이미지의 이름, ID>
+```
+
+Docker 이미지의 세부정보를 확인할 수 있다.
+
+```bash
+$ docker inspect ubuntu
+[
+    {
+        "Id": "sha256:4ca3a192ff2a5b7e225e81dc006b6379c10776ed3619757a65608cb72de0a7f6",
+        "RepoTags": [
+            "ubuntu:latest"
+        ],
+        "RepoDigests": [
+            "ubuntu@sha256:3b64c309deae7ab0f7dbdd42b6b326261ccd6261da5d88396439353162703fb5"
+        ],
+        "Parent": "",
+        "Comment": "",
+        "Created": "2016-11-29T20:04:37.391061223Z",
+        "Container": "924f68d3d4b6ae0fe9e35ec75d745b12863d8f0eb3f3d054ca4427a789d72d69",
+        "ContainerConfig": {
+            "Hostname": "6766fe1c072d",
+            "Domainname": "",
+            "User": "",
+            "AttachStdin": false,
+            "AttachStdout": false,
+            "AttachStderr": false,
+            "Tty": false,
+            "OpenStdin": false,
+            "StdinOnce": false,
+            "Env": [
+                "PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
+            ],
+            "Cmd": [
+                "/bin/sh",
+                "-c",
+                "#(nop) ",
+                "CMD [\"/bin/bash\"]"
+            ],
+            "ArgsEscaped": true,
+            "Image": "sha256:9ab52bdd7c391413c7e0d83b56df4f6a0a6d2f03cb4c609fca1884ab2e63dab4",
+            "Volumes": null,
+            "WorkingDir": "",
+            "Entrypoint": null,
+            "OnBuild": null,
+            "Labels": {}
+        },
+        "DockerVersion": "1.12.3",
+        "Author": "",
+        "Config": {
+            "Hostname": "6766fe1c072d",
+            "Domainname": "",
+            "User": "",
+            "AttachStdin": false,
+            "AttachStdout": false,
+            "AttachStderr": false,
+            "Tty": false,
+            "OpenStdin": false,
+            "StdinOnce": false,
+            "Env": [
+                "PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
+            ],
+            "Cmd": [
+                "/bin/bash"
+            ],
+            "ArgsEscaped": true,
+            "Image": "sha256:9ab52bdd7c391413c7e0d83b56df4f6a0a6d2f03cb4c609fca1884ab2e63dab4",
+            "Volumes": null,
+            "WorkingDir": "",
+            "Entrypoint": null,
+            "OnBuild": null,
+            "Labels": {}
+        },
+        "Architecture": "amd64",
+        "Os": "linux",
+        "Size": 128206574,
+        "VirtualSize": 128206574,
+        "GraphDriver": {
+            "Name": "aufs",
+            "Data": null
+        },
+        "RootFS": {
+            "Type": "layers",
+            "Layers": [
+                "sha256:d29d52f94ad5aa750bd76d24effaf6aeec487d530e262597763e56065a06ee67",
+                "sha256:dfcc17ddae9e5bab2da074f94856a2a1a42b21e402b49815bb4f87b048082ca5",
+                "sha256:1c53295311c1505bddc4d07d5992434de18243951059ab5ea7b2daf9cec1488a",
+                "sha256:18568efa7ad4beb199f7a9dc211b33fb2b165dcc0966c4c74af3f5ae396f3ec3",
+                "sha256:0d45be5b95d86888d2f6beda0fddb089ba61a3ddc514fdb0a4fd022aad19a392"
+            ]
+        }
+    }
+]
+```
+
+주요 정보는 다음과 같다.
+* Image ID
+* 생성일
+* Docker version
+* Image creator
+* CPU
+
+### 이미지 태그 설정(docker tag)
+
+```bash
+docker tag <image>[:tag] <docker hub 사용자명>/<image명>[:tag명]
+```
+
+Docker Hub에 생성된 이미지를 등록한다. 여기서 `docker images` 커맨드를 통해서 `IMAGE ID`가 같음을 확인할 수 있는데, 두 개의 이미지가 이름은 다르나 동일 이미지를 사용한다는 것을 확인 할 수 있다.
+
+![Docker Tag][docker-tag]
+
+### 이미지 검색(docker search)
+
+```bash
+docker search [옵션] <검색 키워드>
+```
+
+Docker Hub에 공개된 이미지를 검색할 때 사용되는 커맨드다.
+
+옵션|설명
+---|---
+--automated=false|Automated Build만 표시
+--no-trunc=false|모든 결과 표시
+-s[--stars=0]|특정 개수 이상의 별 수
+
+항목|설명
+---|---
+NAME|Docker Image명
+DESCRIPTION|Docker Image 설명
+STARS|해당 이미지가 받은 별 수
+OFFICIAL|공식 이미지 여부
+AUTOMATED|Dockerfile을 기반으로 자동 생성된 이미지 여부
+
+![Docker Search][docker-search]
+
+### 이미지 삭제(docker rmi)
+
+```bash
+docker rmi [옵션] <이미지명>
+```
+
+Docker Image를 삭제할 때 사용한다. 여러 이미지를 삭제하고자 할 때는 공백으로 여러 이미지명을 구분하여 입력한다.
+
+옵션|설명
+---|---
+-f, --force=false|이미지 강제 삭제
+--no-prune=false|태그가 없는 부모 이미지를 삭제하지 않음
+
+![Docker RMI][docker-rmi]
+
+### Docker Hub에 로그인(docker login)
+
+```bash
+docker login [옵션] [서버명]
+```
+
+Docker Hub에 업로드 할 때 docker login 커맨드를 사용해 Docker Hub에 로그인 한다.
+서버명을 입력하지 않으면 Docker Hub에 액세스한다. 다른 repository로 로그인 할 경우에는 해당 서버명을 입력한다.
+
+옵션|설명
+---|---
+-u, --username=""|사용자명
+-p, --password=""|패스워드
+-e, --email=""|이메일 주소
+
+```bash
+$ docker login
+Login with your Docker ID to push and pull images from Docker Hub. If you dont have a Docker ID, head over to https://hub.docker.com to create one.
+Username: 사용자명
+Password: 패스워드
+Login Succeeded
+```
+
+### 이미지 업로드(docker push)
+
+```bash
+docker push <이미지명>[:태그명]
+```
+Docker Hub에 이미지를 업로드할 때 `docker push` 커맨드를 사용한다.
+`docker push` 커맨드 사용을 위해서는 `docker login`을 해야한다.
+
+```bash
+$ docker push nuti0102/ubuntu:1.0
+The push refers to a repository [docker.io/nuti0102/ubuntu]
+0d45be5b95d8: Mounted from library/ubuntu
+18568efa7ad4: Mounted from library/ubuntu
+1c53295311c1: Mounted from library/ubuntu
+dfcc17ddae9e: Mounted from library/ubuntu
+d29d52f94ad5: Mounted from library/ubuntu
+1.0: digest: sha256:3b64c309deae7ab0f7dbdd42b6b326261ccd6261da5d88396439353162703fb5 size: 1357
+```
+
+![Docker Push][docker-push]
+
+### Docker Hub에서 로그아웃(docker logout)
+
+```bash
+docker logout [서버명]
+```
+
+Docker Hub에서 로그아웃할 때 `docker logout` 커맨드를 사용한다.
+
+```bash
+$ docker logout
+Remove login credentials for https://index.docker.io/v1/
+```
+
+[docker-images]: /public/img/docker-basic-usage/docker-images.png
+[docker-tag]: /public/img/docker-basic-usage/docker-tag.png
+[docker-search]: /public/img/docker-basic-usage/docker-search.png
+[docker-rmi]: /public/img/docker-basic-usage/docker-rmi.png
+[docker-push]: /public/img/docker-basic-usage/docker-push.png
