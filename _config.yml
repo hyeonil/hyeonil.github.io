@@ -11,7 +11,7 @@ url:                 https://nuti01.github.io
 
 # Set to '' in case of hosting on GitHub pages,
 # i.e. `http://<username>.github.io`
-baseurl:             
+baseurl:
 
 title:               Hyeonil's Note
 
@@ -24,7 +24,7 @@ description:         >
   Hyeonil's Dev Note
 
 # The tags listed as entries in the sidebar
-sidebar_tags:        [all, java, spring, docker, javascript, tensorflow, etc]
+sidebar_tags:        [all, java, spring, docker, javascript, tensorflow, troubleshooting, etc]
 
 # Fallback image and color if not overwritten for tag or post
 image:               /public/img/side.jpg
@@ -46,13 +46,13 @@ author:
   # Markdown enabled, can use multiple paragraphs (enabled by `|`)
   about:             |
     **Name**: Hyeonil Jeong
-    
+
     **Birth**: 1990-01-20
-    
+
     **E-mail**: [dev.nuti0102@gmail.com](mailto:dev.nuti0102@gmail.com)
-    
+
     **Job**: Web Programmer
-    
+
     **Interest**: Java, Docker, DevOps
 
   # Social media icons in sidebar
