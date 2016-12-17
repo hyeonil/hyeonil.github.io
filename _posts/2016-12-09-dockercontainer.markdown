@@ -92,6 +92,7 @@ docker run [option] <image>[:tag] [cmd]
 --link=[컨테이너명:alias]|다른 컨테이너에서 액세스 시 이름 설정
 
 __Port Mapping__
+
 ```bash
 docker run -d -p 9000:80 httpd
 ```
@@ -99,21 +100,25 @@ docker run -d -p 9000:80 httpd
 호스트 포트 `9000`과 컨테이너 포트`80`에 매핑한다. 호스트 `9000`으로 액세스 하면 컨테이너 상의 `80`포트로 연결된다. 임의의 포트를 할당할 때에는 `P` 옵션을 사용한다.
 
 __DNS Server__
+
 ```bash
 docker run --dns=192.168.1.1 httpd
 ```
 
 __MAC Address__
+
 ```bash
 docker run -it --mac-address="92:d0:c6:0a:29:33" centos
 ```
 
 __Host Name__
+
 ```bash
 docker run -it --add-host=test.com:192.168.1.1 centos
 ```
 
 __net option__
+
 |값|설명|
 ---|---
 bridge|bridge 접속(default) 사용
@@ -128,6 +133,7 @@ docker run [option] <image>[:tag] [cmd]
 ```
 
 __option__
+
 |option|description|
 ---|---
 -c,--cpu-shares=0|CPU resource 분배
@@ -135,6 +141,7 @@ __option__
 -v,--volume=[host directory]:[container directory]|호스트와 컨테이너의 디렉토리 공유
 
 __cpu & memory__
+
 ```bash
 docker run --cpu-shares=512 --memory=512m centos
 ```
@@ -144,6 +151,7 @@ Docker 리소스를 제한하는 기능은 `linux`의 `cgroups` 기능을 사용
 `Host OS`와 `Container`내의 디렉토리를 공유하고자 할 때는 volume option을 사용한다.
 
 __volume__
+
 ```bash
 docker run -v /c/Users/user/workspace:/var/www/html httpd
 ```
@@ -178,6 +186,7 @@ docker ps [option]
 ```
 
 __option__
+
 |option|description|
 ---|---
 -a, --all=false|구동, 중지 상태의 모든 컨테이너를 표시
@@ -192,6 +201,7 @@ __option__
 
 
 __result(option key)__
+
 |item|description|
 ---|---
 CONTAINER ID| 컨테이너 ID
@@ -204,6 +214,7 @@ NAMES|컨테이너 명
 
 
 __format__
+
 |placeholder|description|
 ---|---
 .ID|컨테이너 ID
@@ -229,6 +240,7 @@ docker stats <컨테이너명 또는 ID>
 ```
 
 __result__
+
 |item|description|
 ---|---
 CONTAINER|컨테이너명 또는 ID
@@ -248,6 +260,7 @@ docker start [option] <컨테이너명 또는 ID>
 ```
 
 __option__
+
 |option|description|
 ---|---
 -a, --attach=false|표준 출력, 표준 에러를 연결
@@ -264,6 +277,7 @@ docker stop [option] <컨테이너명 또는 ID>
 ```
 
 __option__
+
 |option|description|
 ---|---
 -t, --time=10|컨테이너 중지 시간을 지정(default: 10)
@@ -277,6 +291,7 @@ docker restart [option] <컨테이너명 또는 ID>
 ```
 
 __option__
+
 |option|description|
 ---|---
 -t, --time=10|컨테이너 재시작 시간을 지정(default: 10)
@@ -292,6 +307,7 @@ docker rm [option] <컨테이너명 또는 ID>
 ```
 
 __option__
+
 |option|description|
 ---|---
 -f, --force=false|구동 중인 컨테이너를 강제 삭제
@@ -327,6 +343,7 @@ docker exec [option] <컨테이너명 또는 ID> <cmd> [value]
 ```
 
 __option__
+
 |option|description|
 ---|---
 -d, --detach=false|커맨드를 백그라운드에서 실행
@@ -375,6 +392,7 @@ docker diff <컨테이너명 또는 ID>
 ```
 
 __구분__
+
 |구분|description|
 ---|---
 A|파일 추가
@@ -449,6 +467,7 @@ docker commit [option] <컨테이너명 또는 ID> [image][:tag]
 ```
 
 __option__
+
 |option|description|
 ---|---
 -a, --author=""|생성자
