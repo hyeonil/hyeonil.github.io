@@ -28,21 +28,24 @@ jekyll:
 
 all:
   name: All
-  
+
 java:
   name: Java
 
 spring:
   name: Spring
-  
+
 docker:
   name: Docker
-  
+
 javascript:
   name: Javascript
-  
+
 tensorflow:
   name: TensorFlow
-  
+
+troubleshooting
+  name: TroubleShooting
+
 etc:
   name: etc
