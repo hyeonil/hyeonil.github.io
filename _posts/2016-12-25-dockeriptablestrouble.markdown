@@ -1,0 +1,18 @@
+---
+layout: post
+title: "docker iptables 오류"
+tags: [docker][troubleshooting]
+description: >
+
+---
+
+```bash
+iptables failed: ~~~ ! -i docker0: iptables: No chain/target/match by that name
+```
+위와 같은 오류가 날 경우 아래와 같이 iptables에 DOCKER 체인을 등록해 주면 된다.
+
+```bash
+iptables -t nat -N DOCKER
+iptables -t nat -A PREROUTING -m addrtype --dst-type LOCAL -j DOCKER
+iptables -t nat -A PREROUTING -m addrtype --dst-type LOCAL ! --dst 127.0.0.0/8 -j DOCKER
+```
