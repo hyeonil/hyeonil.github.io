@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "docker iptables 오류"
-tags: [docker][troubleshooting]
+tags: [docker, troubleshooting]
 description: >
 
 ---
