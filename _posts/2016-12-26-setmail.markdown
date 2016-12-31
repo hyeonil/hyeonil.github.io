@@ -1,0 +1,99 @@
+---
+layout: post
+title: "CentOS 메일서버 설정 및 자바에서 메일 발송하기"
+tags: [etc]
+description: >
+
+---
+
+## CentOS 메일서버 설정
+
+### sendmail 관련 패키지 설치
+
+`sendmail`, `sendmail-cf`, `sendmail-devel` 패키지를 설치한다.
+
+__표준 패키지__
+
+`sendmail` - 메일 전송 에이전트
+
+__추가 패키지__
+
+`sendmail-cf` - sendmail을 재설정 하는데 필요한 파일들
+`sendmail-devel`
+
+
+__설치__
+
+```bash
+yum install sendmail sendmail-cf sendmail-devel
+```
+
+### sendmail 설정
+
+sendmail은 로컬에서만 메일을 발송하도록 하는데, 릴레이 설정을 하고, 메일 클라이언트를 통해서 발송할 수 있도록 아래와 같이 설정을 바꾼다.
+
+__/etc/mail/sendmail.mc__
+
+```plain
+52: TRUST_AUTH_MECH('EXTERNAL DIGEST-MD5 CRAM-MD5 LOGIN PLAIN') dnl
+53: define('confAUTH_MECHANISMS', 'EXTERNAL GSSAPI DIGEST-MD5 CRAM-MD5 LOGIN PLAIN') dnl
+116: dnl DAEMON_OPTIONS('Port=smtp,Name=MTA') dnl
+```
+
+위 파일을 통해 `sendmail.cf` 파일을 생성한다.
+
+```bash
+m4 sendmail.mc > sendmail.cf
+```
+
+### sendmail 서비스 시작
+
+```bash
+service start sendmail
+chkconfig --level 2345 sendmail on
+```
+
+아래 설정은 부팅 시 실행되도록 설정하는 것이다.
+
+### sendmail access 수정
+
+access권한을 수정한다.
+
+__/etc/mail/access__
+
+```plain
+.
+.
+.
+Connect:192.168.0         RELAY
+```
+
+서비스를 재시작 한다.
+
+```bash
+service sendmail restart
+```
+
+## 자바 설정
+
+### dependency
+
+```xml
+<dependency>
+  <groupId>javax.mail</groupId>
+  <artifactId>mail</articactId>
+  <version>version</version>
+</dependency>
+```
+
+(spring 기준)
+```java
+// 환경정보 설정
+// 메일서버 주소를 IP 또는 도메인 명으로 지정
+Properties props = System.getProperties();
+pops.setProperty("mail.smtp.host", "192.168.0.11")
+
+
+```
+
+작성중...
