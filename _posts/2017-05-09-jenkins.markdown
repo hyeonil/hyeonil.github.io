@@ -1,0 +1,12 @@
+---
+layout: post
+title: "Jenkins"
+tags: [etc]
+description: >
+---
+
+[바로보기][jenkins]
+
+작성중...
+
+[jenkins]: /public/jenkins/jenkins.html
