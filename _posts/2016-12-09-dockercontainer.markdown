@@ -85,9 +85,9 @@ docker run [option] <image>[:tag] [cmd]
 --dns=[IP Address]|DNS 서버의 IP Address를 설정
 --expose=[Port Number]|Port Number 할당
 --mac-address=[MAC Address]|Container의 MAC Address 설정
---net=[bridge or none or container:<name or d> or host]|컨테이너 네트워크 설정
--h,--hostname="Host Name"|컨테이너의 Host Name 설정
--P,--publish-all=[true or false]|임의의 포트를 컨테이너에 할당
+--net=[bridge or none or container:'name or d' or host]|컨테이너 네트워크 설정
+-h, --hostname=[Host Name]|컨테이너의 Host Name 설정
+-P, --publish-all=[true or false]|임의의 포트를 컨테이너에 할당
 -p [Host Port Number]:[Container Port Number]|Host와 Container의 Port를 매핑
 --link=[컨테이너명:alias]|다른 컨테이너에서 액세스 시 이름 설정
 
