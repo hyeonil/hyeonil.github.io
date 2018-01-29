@@ -2,6 +2,7 @@
 gems:
   - jekyll-sitemap
   - jekyll-paginate
+  - jekyll-asciidoc
 
 # Permalinks
 permalink:           pretty
@@ -115,3 +116,16 @@ compress_html:
 
 sass:
   style:             compressed
+
+asciidoc: {}
+asciidoctor:
+  processor: asciidoctor
+  ext: asciidoc,adoc,ad
+  page_attribute_prefix: jekyll
+  require_front_matter_header: true
+  base_dir: :docdir
+  safe: unsafe
+  attributes:
+    - idseparator=_
+    - source-highlighter=coderay
+    - icons=font

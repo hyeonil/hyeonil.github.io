@@ -10,7 +10,7 @@
 }
 
 /* Icon font styles */
-[class^="icon-"], [class*=" icon-"] {
+[class^="icon-"]:not(.fa), [class*=" icon-"]:not(.fa) {
   /* use !important to prevent issues with browser extensions that change fonts */
   font-family: 'icomoon' !important;
   speak: none;
