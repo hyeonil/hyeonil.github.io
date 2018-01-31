@@ -1,10 +1,9 @@
 ---
 layout: post
-title: '프론트 정적 리소스버전관리 및 독립 프로젝트로 분리'
 tags: [etc]
 ---
 
-== description: &gt;
+= 프론트 정적 리소스버전관리 및 독립 프로젝트로 분리
 
 == 프론트 정적 리소스(javascript, css) 버전 관리 및 WAS에서 분리
 

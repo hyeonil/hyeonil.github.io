@@ -1,11 +1,10 @@
 ---
 layout: post
-title: "NGINX Loadbalance 설정"
 tags: [etc]
-description: &gt;
 ---
 
-'''
+= NGINX Loadbalance 설정
+
 [source,bash]
 ----
 upstream groupName {

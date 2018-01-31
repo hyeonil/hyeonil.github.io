@@ -1,10 +1,9 @@
 ---
 layout: post
-title: 'Docker 기본 사용법'
 tags: [docker]
 ---
 
-== description: &gt;
+= Docker 기본 사용법
 
 == 기본 사용 Command
 
