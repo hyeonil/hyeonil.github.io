@@ -2,57 +2,67 @@
 layout: post
 title: 'Docker 기본 사용법'
 tags: [docker]
-description: >
 ---
 
-## 기본 사용 Command
+== description: &gt;
 
-### 이미지 다운로드(docker pull)
+== 기본 사용 Command
 
-```bash
+=== 이미지 다운로드(docker pull)
+
+[source,bash]
+----
 docker pull [옵션] <이미지명>[:태그명]
-```
+----
 
-__Ubuntu Download__
+*Ubuntu Download*
 
-```bash
+[source,bash]
+----
 docker pull ubuntu
-```
+----
 
 `tag`를 붙이지 않으면 자동으로 최신 버전을 다운받는다.
 
-```bash
+[source,bash]
+----
 docker pull registry.hub.docker.com/ubuntu
-```
+----
+
 위와 같이 url도 지정할 수 있다.
 
-### 이미지 목록 출력(docker images)
+=== 이미지 목록 출력(docker images)
 
-```bash
+[source,bash]
+----
 docker images [옵션] [repository명]
-```
+----
 
-![Docker Images][docker-images]
+image:/public/img/docker-basic-usage/docker-images.png[Docker Images]
 
 위와같이 `docker images` 명령어를 사용해 다운받은 전체 이미지 목록을 출력할 수 있다.
 
-Attribute|Description
----|---
-REPOSITORY|Docker 이미지 명
-TAG|Docker 이미지 태그명
-IMAGE ID|Docker 이미지 ID
-CREATED|생성일
-VIRTUAL SIZE|사이즈
+|===
+|Attribute |Description
 
-### 이미지 세부 정보 확인(docker inspect)
+|REPOSITORY |Docker 이미지 명
+|TAG |Docker 이미지 태그명
+|IMAGE ID |Docker 이미지 ID
+|CREATED |생성일
+|VIRTUAL SIZE |사이즈
+|===
 
-```bash
+=== 이미지 세부 정보 확인(docker inspect)
+
+[source,bash]
+----
 docker inspect [옵션] <컨테이너 또는 이미지의 이름, ID>
-```
+----
 
 Docker 이미지의 세부정보를 확인할 수 있다.
 
-```bash
+[source,bash]
+----
 $ docker inspect ubuntu
 [
     {
@@ -140,7 +150,7 @@ $ docker inspect ubuntu
         }
     }
 ]
-```
+----
 
 주요 정보는 다음과 같다.
 
@@ -150,87 +160,102 @@ $ docker inspect ubuntu
 * Image creator
 * CPU
 
-### 이미지 태그 설정(docker tag)
+=== 이미지 태그 설정(docker tag)
 
-```bash
+[source,bash]
+----
 docker tag <image>[:tag] <docker hub 사용자명>/<image명>[:tag명]
-```
+----
 
 Docker Hub에 생성된 이미지를 등록한다. 여기서 `docker images` 커맨드를 통해서 `IMAGE ID`가 같음을 확인할 수 있는데, 두 개의 이미지가 이름은 다르나 동일 이미지를 사용한다는 것을 확인 할 수 있다.
 
-![Docker Tag][docker-tag]
+image:/public/img/docker-basic-usage/docker-tag.png[Docker Tag]
 
-### 이미지 검색(docker search)
+=== 이미지 검색(docker search)
 
-```bash
+[source,bash]
+----
 docker search [옵션] <검색 키워드>
-```
+----
 
 Docker Hub에 공개된 이미지를 검색할 때 사용되는 커맨드다.
 
-옵션|설명
----|---
---automated=false|Automated Build만 표시
---no-trunc=false|모든 결과 표시
--s[--stars=0]|특정 개수 이상의 별 수
+|===
+|옵션 |설명
 
-항목|설명
----|---
-NAME|Docker Image명
-DESCRIPTION|Docker Image 설명
-STARS|해당 이미지가 받은 별 수
-OFFICIAL|공식 이미지 여부
-AUTOMATED|Dockerfile을 기반으로 자동 생성된 이미지 여부
+|–automated=false |Automated Build만 표시
+|–no-trunc=false |모든 결과 표시
+|-s[–stars=0] |특정 개수 이상의 별 수
+|===
+|===
+|항목 |설명
 
-![Docker Search][docker-search]
+|NAME |Docker Image명
+|DESCRIPTION |Docker Image 설명
+|STARS |해당 이미지가 받은 별 수
+|OFFICIAL |공식 이미지 여부
+|AUTOMATED |Dockerfile을 기반으로 자동 생성된 이미지 여부
+|===
 
-### 이미지 삭제(docker rmi)
+image:/public/img/docker-basic-usage/docker-search.png[Docker Search]
 
-```bash
+=== 이미지 삭제(docker rmi)
+
+[source,bash]
+----
 docker rmi [옵션] <이미지명>
-```
+----
 
 Docker Image를 삭제할 때 사용한다. 여러 이미지를 삭제하고자 할 때는 공백으로 여러 이미지명을 구분하여 입력한다.
 
-옵션|설명
----|---
--f, --force=false|이미지 강제 삭제
---no-prune=false|태그가 없는 부모 이미지를 삭제하지 않음
+|===
+|옵션 |설명
 
-![Docker RMI][docker-rmi]
+|-f, –force=false |이미지 강제 삭제
+|–no-prune=false |태그가 없는 부모 이미지를 삭제하지 않음
+|===
 
-### Docker Hub에 로그인(docker login)
+image:/public/img/docker-basic-usage/docker-rmi.png[Docker RMI]
 
-```bash
+=== Docker Hub에 로그인(docker login)
+
+[source,bash]
+----
 docker login [옵션] [서버명]
-```
+----
 
 Docker Hub에 업로드 할 때 docker login 커맨드를 사용해 Docker Hub에 로그인 한다.
 서버명을 입력하지 않으면 Docker Hub에 액세스한다. 다른 repository로 로그인 할 경우에는 해당 서버명을 입력한다.
 
-옵션|설명
----|---
--u, --username=""|사용자명
--p, --password=""|패스워드
--e, --email=""|이메일 주소
+|===
+|옵션 |설명
 
-```bash
+|-u, –username=&quot;"|사용자명
+-p, –password=""|패스워드
+-e, –email="&quot; |이메일 주소
+|===
+
+[source,bash]
+----
 $ docker login
 Login with your Docker ID to push and pull images from Docker Hub. If you dont have a Docker ID, head over to https://hub.docker.com to create one.
 Username: 사용자명
 Password: 패스워드
 Login Succeeded
-```
+----
 
-### 이미지 업로드(docker push)
+=== 이미지 업로드(docker push)
 
-```bash
+[source,bash]
+----
 docker push <이미지명>[:태그명]
-```
+----
+
 Docker Hub에 이미지를 업로드할 때 `docker push` 커맨드를 사용한다.
 `docker push` 커맨드 사용을 위해서는 `docker login`을 해야한다.
 
-```bash
+[source,bash]
+----
 $ docker push nuti0102/ubuntu:1.0
 The push refers to a repository [docker.io/nuti0102/ubuntu]
 0d45be5b95d8: Mounted from library/ubuntu
@@ -239,25 +264,21 @@ The push refers to a repository [docker.io/nuti0102/ubuntu]
 dfcc17ddae9e: Mounted from library/ubuntu
 d29d52f94ad5: Mounted from library/ubuntu
 1.0: digest: sha256:3b64c309deae7ab0f7dbdd42b6b326261ccd6261da5d88396439353162703fb5 size: 1357
-```
+----
 
-![Docker Push][docker-push]
+image:/public/img/docker-basic-usage/docker-push.png[Docker Push]
 
-### Docker Hub에서 로그아웃(docker logout)
+=== Docker Hub에서 로그아웃(docker logout)
 
-```bash
+[source,bash]
+----
 docker logout [서버명]
-```
+----
 
 Docker Hub에서 로그아웃할 때 `docker logout` 커맨드를 사용한다.
 
-```bash
+[source,bash]
+----
 $ docker logout
 Remove login credentials for https://index.docker.io/v1/
-```
-
-[docker-images]: /public/img/docker-basic-usage/docker-images.png
-[docker-tag]: /public/img/docker-basic-usage/docker-tag.png
-[docker-search]: /public/img/docker-basic-usage/docker-search.png
-[docker-rmi]: /public/img/docker-basic-usage/docker-rmi.png
-[docker-push]: /public/img/docker-basic-usage/docker-push.png
+----

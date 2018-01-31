@@ -2,10 +2,11 @@
 layout: post
 title: '프론트 정적 리소스버전관리 및 독립 프로젝트로 분리'
 tags: [etc]
-description: >
 ---
 
-## 프론트 정적 리소스(javascript, css) 버전 관리 및 WAS에서 분리
+== description: &gt;
+
+== 프론트 정적 리소스(javascript, css) 버전 관리 및 WAS에서 분리
 
 nginx(loadbalancing), WAS와 같은 구조로 서버를 운영할 때, 정적인 리소스도 모두 WAS에 올라가는데, 정적인 리소스는 굳이 WAS까지 갈 필요 없이 웹 서버에서 처리해도 되지 않을까 라는 생각과, 여기저기 흩어져 있는 javascript, css를 한곳에 모으기 위해 알아보기 시작
 
@@ -13,7 +14,7 @@ nginx(loadbalancing), WAS와 같은 구조로 서버를 운영할 때, 정적인
 
 결론적으로 원하는 그림대로 구성을 완료하기는 했지만 구조가 조금 복잡해진다는 단점이 생겼다
 
-#### 준비물
+==== 준비물
 
 * git
 * nginx
@@ -21,58 +22,61 @@ nginx(loadbalancing), WAS와 같은 구조로 서버를 운영할 때, 정적인
 * bower
 * grunt
 * nexus3(optional)
+'''
 
----
-
-## Step 1. webapp project
+== Step 1. webapp project
 
 webapp project를 2개의 프로젝트로 나눈다. 전체적인 구조는 보통 사용하는 구조와 같고, `resources` 디렉토리를 `git`의 `submodule` 프로젝트로 분리한다.
 
-`submodule` 설정 관련 정보는 [여기][git-submodule]에서 확인
+`submodule` 설정 관련 정보는 https://git-scm.com/docs/git-submodule[여기]에서 확인
 
 `submodule`을 등록하면 아래와 같이 `.gitmodules`파일이 생성된다.(굳이 `git command`를 사용하여 `submodule`을 등록하지 않고 `.gitmodules`파일을 생성해서 정보를 입력해줘도 된다. 이 때, 해당 디렉토리가 반드시 존재해야 된다.)
 `submodule`을 등록하기 전에 두 개의 `git repository`는 반드시 필요하다.
 
-```txt
+[source,txt]
+----
 [submodule "src/main/webapp/resources"]
    path = src/main/webapp/resources
    url = git@your/repository.git
-```
+----
 
 위 처럼 `path`와 `git repository url`을 등록하면 `submodule`등록이 완료된다.
 
 최초 세팅 시 부모(?) 프로젝트를 받으며 `submodule`프로젝트까지 받을려면 아래와 같이 하면 된다.
 
-```bash
+[source,bash]
+----
 git clone --recursive git@your/parent/repository.git
-```
+----
 
----
+'''
 
-## Step 2. resource project
+== Step 2. resource project
 
 `resource project`는 `npm`, `bower`, `grunt`, `git`, `nexus(optional)`을 사용한다.
 우선 `npm`으로 필요한 패키지 정보를 받는다.
 
-```bash
+[source,bash]
+----
 npm init
 npm install -g grunt bower
-```
+----
 
 이렇게 하면 `grunt`와 `bower` `command`를 사용할 수 있다.
 
 여기서 `bower`는 `nexus`에 `package`를 등록하고, 전체적인 프론트 프로젝트(뒤에서 설명)에서 `dependency`를 추가하기 위해 사용한다.
 
-```bash
+[source,bash]
+----
 bower init
-```
+----
 
 위의 명령어를 사용하면 bower가 초기화 되고, `bower.json`파일이 생성된다.
 
 아래는 `bower.json`파일의 정보다.
 
-
-```js
+[source,js]
+----
 {
   "name": "resources",
   "version": "0.0.1",
@@ -96,7 +100,7 @@ bower init
     "package.json"
   ]
 }
-```
+----
 
 여기서 `main`은 프론트 프로젝트에서 사용할 파일, 디렉토리 목록을 나타낸 것이고, `ignore`는 무시할 목록들이다.
 
@@ -110,15 +114,17 @@ bower init
 
 우선 필요한 것은 `grunt-tag`이다.
 
-```bash
+[source,bash]
+----
 npm install --save-dev grunt-tag
-```
+----
 
 `grunt-git`을 통해서도 관리를 할 수 있기는 하나, `grunt-tag`가 중복된 버전이 있을 시 하위에 등록된 것을 지워주고, 신규로 등록을 해주고, 원격 저장소까지 자동으로 올려줘서 `grunt-tag`를 선택했다.
 
 `package.json` 파일과 동일한 위치에 `Gruntfile.js`를 생성해준다. 파일의 내용은 아래와 같다.
 
-```js
+[source,js]
+----
 module.exports = function(grunt) {
    grunt.initConfig({
       tag: {
@@ -143,7 +149,7 @@ module.exports = function(grunt) {
 
    grunt.registerTask('default', ['tag']);
 };
-```
+----
 
 위의 내용은 `bower.json` 파일에서 version 정보를 가져와 `git tag`에 등록을 하고, `remote(origin)` 저장소에 push를 하라는 내용이다.
 
@@ -153,21 +159,23 @@ module.exports = function(grunt) {
 
 나는 `git repository url`을 사용하기 싫기도 하고, 기존에 `nexus`를 사용하고 있어서 `nexus`를 사용했다.
 
-`bower`는 `nexus 3`부터 지원이 되므로 `nexus 3`이 필요하다. 무료 버전 다운로드는 [여기][nexus3]에서 할 수 있다.
+`bower`는 `nexus 3`부터 지원이 되므로 `nexus 3`이 필요하다. 무료 버전 다운로드는 https://www.sonatype.com/download-oss-sonatype[여기]에서 할 수 있다.
 
 `nexus 3`를 설치를 하면 기본 설정으로 `bower repository`는 생성되어 있지 않아서 신규로 생성을 해 줘야 한다.
 
-관련 정보는 [여기][nexus3-documents]를 참조하길 바란다.
+관련 정보는 https://books.sonatype.com/nexus-book/3.0/reference/index.html[여기]를 참조하길 바란다.
 
 `npm`을 통해 필요한 `패키지`를 설치해준다.
 
-```bash
+[source,bash]
+----
 npm install --save-dev bower-nexus3-resolver
-```
+----
 
 이제 `.bowerrc` 라는 파일을 `bower.json`과 같은 위치에 생성을 하고 아래와 같이 작성한다.
 
-```js
+[source,js]
+----
 {
    "registry" : {
       "search" : [
@@ -177,29 +185,31 @@ npm install --save-dev bower-nexus3-resolver
    },
    "resolvers" : [ "bower-nexus3-resolver" ]
 }
-```
+----
 
 `id`와 `password`는 `nexus`에서 등록한 `repository` 등록 권한이 있는 사용자 정보를 입력하면 된다.
 
-__* 참고로 id와 password에 특수문자를 사용할 수 있기는 하나 일반적인 url에서 규칙으로 사용되는 특수문자는 사용하면 안된다.(ex: /, #, @)__
+** 참고로 id와 password에 특수문자를 사용할 수 있기는 하나 일반적인 url에서 규칙으로 사용되는 특수문자는 사용하면 안된다.(ex: /, #, @)*
 
 이렇게 작성을 한 후 커맨드 창에서 아래의 명령어를 입력한다.
 
-```bash
+[source,bash]
+----
 bower register your-package-name git@your.repository.git
-```
+----
 
 이렇게 하면 등록이 완료됐다.
 
 아래의 명령어를 입력하면 `package` 정보를 확인할 수 있다.
 
-```bash
+[source,bash]
+----
 bower info your-package-name
-```
+----
 
----
+'''
 
-## Step 3. front project
+== Step 3. front project
 
 이 프로젝트에서는 전체적으로 사용하는 프론트 라이브러리나, 내가 만든 프론트 소스를 관리한다.
 
@@ -213,20 +223,23 @@ bower info your-package-name
 
 `npm`과 `bower`를 초기화 한다.
 
-```bash
+[source,bash]
+----
 npm init
 bower init
-```
+----
 
 `grunt`와 `bower`를 앞에서 `install`했으므로 해당 명령은 건너뛴다.
 
 `nexus`를 사용한다면 `bower-nexus3-resolver` 패키지를 등록하고 `.bowerrc`파일을 생성해서 아래와 같이 내용을 작성해 준다.
 
-```bash
+[source,bash]
+----
 npm install --save-dev bower-nexus3-resolver
-```
+----
 
-```js
+[source,js]
+----
 {
    "registry" : {
       "search" : [
@@ -236,19 +249,21 @@ npm install --save-dev bower-nexus3-resolver
    },
    "resolvers" : [ "bower-nexus3-resolver" ]
 }
-```
+----
 
 `bower`에서 필요한 라이브러리 패키지 설치한다.
 
-```bash
+[source,bash]
+----
 bower install --save jquery bootstrap
-```
+----
 
 이렇게 하면 `bower.json`파일에 `dependency`가 추가된다.
 
 나는 라이브러리도 버전별로 등록을 하고 싶어서 아래와 같이 등록을 했다.
 
-```js
+[source,js]
+----
 {
   "name": "package name",
   "description": "",
@@ -272,11 +287,12 @@ bower install --save jquery bootstrap
     "my-package-0.0.1": "my-package#0.0.1"
   }
 }
-```
+----
 
 만약 넥서스를 사용하지 않는다면 자신의 프로젝트를 아래와 같이 등록할 수 있다.
 
-```js
+[source,js]
+----
 {
   ...
   "dependencies": {
@@ -284,22 +300,22 @@ bower install --save jquery bootstrap
     "my-package-0.0.1": "git@your/repository.git#0.0.1"
   }
 }
-```
+----
 
 이렇게 전체적인 프론트 관리 프로젝트를 별도로 두는 이유는, 한 곳으로 모아서 `WAS`가 아닌 `Web Server`에 올리기 위함도 있지만, `javascript`와 `css`파일을 `난독화(minify)`하고, `gzip`으로 압축하기 위함이다.
-
 
 이제 `grunt`를 통해 빌드 자동화를 하도록 한다.
 `Gruntfile.js` 파일을 생성하고, 커맨드창에 아래의 명령어를 입력한다.
 
-```bash
+[source,bash]
+----
 npm install --save-dev grunt-cli grunt-bower-task grunt-contrib-uglify grunt-contrib-cssmin grunt-contrib-compress
-```
-
+----
 
 `Gruntfile.js`는 아래와 같이 내용을 채워준다.
 
-```js
+[source,js]
+----
 module.exports = function(grunt) {
    var path = require('path');
 
@@ -400,13 +416,13 @@ module.exports = function(grunt) {
 
    grunt.registerTask('default', ['bower', 'cssmin', 'uglify', 'compress']);
 };
-```
+----
 
 `bower task`에서 `layout`은 파일들의 디렉토리를 어떻게 나눌 것인지에 대한 내용이다. 기본 값은 `byType`인데 이대로는 내가 원하는 구조대로 되지 않아서 해당 부분을 수정했다. `cssmin`과 `uglify`는 각각 `css`와 `javascript` 파일을 `난독화(minify)`하는 것이고, `compress`는 `gzip`으로 압축하는 것이다.
 
 `grunt`는 `registerTask`에서 등록한 순서대로 해당 명령들을 실행한다.
 
-위같은 경우는 `bower` -> `cssmin` -> `uglify` -> `compress` 순으로 실행하게 된다.
+위같은 경우는 `bower` -&gt; `cssmin` -&gt; `uglify` -&gt; `compress` 순으로 실행하게 된다.
 
 이제 `command`창에서 `grunt` 명령어를 입력하면 `bower_components` 디렉토리와 `static` 디렉토리가 생성되는 것을 확인할 수 있다. 여기서 `bower_components`는 설정하기 위해 필요한 파일들을 받아오는 역할만 할 뿐이므로 지워도 된다. 여기서 확인해야 될 것은 `static` 디렉토리다.
 
@@ -414,34 +430,35 @@ module.exports = function(grunt) {
 
 또한 `min` 파일과 `gzip`으로 압축한 파일들이 들어있는데, 여기서 필요없는 파일들은 `Gruntfile.js` 파일을 각자 입맛대로 수정해서 지우면 된다.
 
-
 이 프로젝트 또한 `git repository`에 등록해서 서버에서 사용한다.(나는 `bower_components`, `node_modules`, `static` 디렉토리에 `gitignore`를 걸어놓고 실제 이 프로젝트는 의존성만 관리하는 식으로 등록해놨다 실제 빌드는 서버에서 수행하도록 했다.)
 
----
+'''
 
-## Step 4. front project(server)
+== Step 4. front project(server)
 
 front project를 서버에 세팅한다.
 `git`으로 관리하므로 우선 `clone`을 받는다.
 
-```bash
+[source,bash]
+----
 git clone git@front/project/repository.git
-```
+----
 
 그리고 `grunt`로 빌드를 한다.
 
 이것으로 설정은 끝났다.
 
----
+'''
 
-## Step 5. nginx
+== Step 5. nginx
 
 이제 `nginx`설정을 한다.
 `nginx`에서 `gzip` 설정을 하고, `root`를 등록해준다.
 
 `gzip.conf`
 
-```txt
+[source,txt]
+----
 gzip on;
 gzip_disable "Mozilla/4";
 gzip_disable "msie6";
@@ -456,9 +473,10 @@ gzip_types
         text/javascript
         text/css
         application/javascript;
-```
+----
 
-```txt
+[source,txt]
+----
 server {
         listen          80;
         server_name     resources.your.domain;
@@ -471,19 +489,18 @@ server {
         location / {
         }
 }
-```
-
+----
 
 `nginx`를 재실행 한다.
 
-```bash
+[source,bash]
+----
 service nginx restart
-```
+----
 
 이제 모든 설정이 끝났다.
 
-## ETC...
-
+== ETC…
 
 추가로 `webapp` 프로젝트에서 설정해 줘야 할 것이 개발시, `build`시 `resource path`를 다르게 설정하는 것인데, 이것은 각자의 프로젝트에서 사용하는 빌드 툴에 따라 알아서 설정하면 된다.
 `maven`의 경우 `profile`을 활용해서 `properties` 파일을 바꿔치는 방법이 있다.
@@ -493,8 +510,4 @@ service nginx restart
 
 각 서버별 사용하는 리소스의 버전도 `properties`에 등록을 해서 관리한다면, 프론트 리소스의 버전이 올라갔을 때 `properties`에 등록된 버전만 수정하면 된다.
 
----
-
-[git-submodule]: https://git-scm.com/docs/git-submodule
-[nexus3]: https://www.sonatype.com/download-oss-sonatype
-[nexus3-documents]: https://books.sonatype.com/nexus-book/3.0/reference/index.html
+'''
