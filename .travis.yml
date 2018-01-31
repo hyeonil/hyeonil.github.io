@@ -21,7 +21,7 @@ script:
   - jekyll build
 
 after_success:
-  - cp ./_site/* ./
+  - cd _site
   - git init
   - git config user.name "${GH_USER_NAME}"
   - git config user.email "{GH_EMAIL}"
