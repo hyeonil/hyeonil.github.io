@@ -15,7 +15,6 @@ services:
 
 before_install:
   - gem install bundler
-  - gem install yajl-ruby -v '1.1.0'
   - bundle install
 
 script:
