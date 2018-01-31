@@ -44,7 +44,6 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family={{ site.load_google_fonts }}">
     {% endif %}
 
-    <link rel="stylesheet" href="{{ site.baseurl }}/public/css/font-awesome.min.css">
   </noscript>
 
   <link rel="preload" href="{{ site.baseurl }}/public/css/non-essentials.css" as="style" onload="this.rel='stylesheet'">
@@ -81,6 +80,12 @@
 
   <link rel="canonical" href="{{ site.url }}{{ site.baseurl }}{{ page.url }}" />
   <link rel="alternate" type="application/atom+xml" title="{{ site.title }} Atom Feed" href="{{ site.baseurl }}/atom.xml">
+
+  <link rel="stylesheet" href="{{ site.baseurl }}/public/css/asciidoctor.css">
+  <link rel="stylesheet" href="{{ site.baseurl }}/public/css/coderay.css">
+  <link rel="stylesheet" href="{{ site.baseurl }}/public/css/font-awesome.min.css">
+  <link rel="stylesheet" href="{{ site.baseurl }}/public/css/foundation.min.css">
+  <link rel="stylesheet" href="{{ site.baseurl }}/public/css/normalize.css">
 
   <script>{% include scripts/load-js-deferred.min.js %}</script>
 

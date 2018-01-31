@@ -8,11 +8,11 @@ tags: [etc]
 :doctype: book
 :icons: font
 :source-highlighter: coderay
-:toc: left
+:toc: top
 :toclevels: 3
 :sectlinks:
 :numbered:
-ifndef::imagesdir[:imagesdir: public/images]
+ifndef::imagesdir[:imagesdir: /public/images]
 
 [[introduction]]
 == Introduction
