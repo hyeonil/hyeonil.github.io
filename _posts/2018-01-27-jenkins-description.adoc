@@ -3,7 +3,7 @@ layout: post
 tags: [etc]
 ---
 
-= Jenkins 사용 설명(번역)1
+= Jenkins 사용 설명(번역)
 
 :doctype: book
 :icons: font

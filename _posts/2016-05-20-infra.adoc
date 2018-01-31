@@ -5,6 +5,14 @@ tags: [etc]
 
 = 프론트 정적 리소스버전관리 및 독립 프로젝트로 분리
 
+:doctype: book
+:icons: font
+:source-highlighter: coderay
+:toc: top
+:toclevels: 3
+:sectlinks:
+:numbered:
+
 == 프론트 정적 리소스(javascript, css) 버전 관리 및 WAS에서 분리
 
 nginx(loadbalancing), WAS와 같은 구조로 서버를 운영할 때, 정적인 리소스도 모두 WAS에 올라가는데, 정적인 리소스는 굳이 WAS까지 갈 필요 없이 웹 서버에서 처리해도 되지 않을까 라는 생각과, 여기저기 흩어져 있는 javascript, css를 한곳에 모으기 위해 알아보기 시작

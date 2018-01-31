@@ -5,6 +5,14 @@ tags: [etc, spring]
 
 = SpringCamp 2017 2/2
 
+:doctype: book
+:icons: font
+:source-highlighter: coderay
+:toc: top
+:toclevels: 3
+:sectlinks:
+:numbered:
+
 2016년, 2017년 2년째 참석하고 있는 스프링 캠프, 첫째날과 둘째날 모두 등록을 했는데 첫째날은 회사 당직근무와 겹치는 바람에 참석을 하지 못했다. 토비님의 발표를 꼭 듣고 싶었는데 매우 아쉽다.(같이 셀카찍었으니 괜찮…)
 개인적인 생각으로 작년에는 스칼라 주제가 많아서 큰 인상을 받지 못했는데, 올해는 작년에 비해 많은 인상을 받았다.
 최근 많은 개발자들이 `Reactive Programming`에 관심을 가지고 있는데, 이번 `Spring Camp`에서 `Reactive Programming`에 대해 다양한 각도에서 발표를 해주셔서 많은 것을 배우게 됐다.

@@ -5,6 +5,13 @@ tags: [etc]
 
 = CentOS 메일서버 설정 및 자바에서 메일 발송하기
 
+:doctype: book
+:icons: font
+:source-highlighter: coderay
+:toc: top
+:toclevels: 3
+:sectlinks:
+:numbered:
 
 == CentOS 메일서버 설정
 

@@ -5,6 +5,14 @@ tags: [etc]
 
 = Clean Code
 
+:doctype: book
+:icons: font
+:source-highlighter: coderay
+:toc: top
+:toclevels: 3
+:sectlinks:
+:numbered:
+
 == 코드 단위를 짧게 하라
 
 * 하나의 메소드는 하나의 역할만 하도록 한다.

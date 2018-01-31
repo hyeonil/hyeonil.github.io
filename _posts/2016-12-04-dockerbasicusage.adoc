@@ -5,6 +5,14 @@ tags: [docker]
 
 = Docker 기본 사용법
 
+:doctype: book
+:icons: font
+:source-highlighter: coderay
+:toc: top
+:toclevels: 3
+:sectlinks:
+:numbered:
+
 == 기본 사용 Command
 
 === 이미지 다운로드(docker pull)
