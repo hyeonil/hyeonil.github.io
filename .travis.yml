@@ -11,26 +11,18 @@ branches:
   - gh-pages
 
 services:
-  - docker
+  - ruby
 
 before_install:
-  - mkdir -p output
-  - docker pull asciidoctor/docker-asciidoctor
+  - gem install bundler
+  - gem install yajl-ruby -v '1.1.0'
+  - bundle install
 
 script:
-  - docker run -v $TRAVIS_BUILD_DIR:/documents/ --name asciidoc-to-html asciidoctor/docker-asciidoctor asciidoctor -D /documents/output **/*.adoc
-  - docker run -v $TRAVIS_BUILD_DIR:/documents/ --name asciidoc-to-pdf asciidoctor/docker-asciidoctor asciidoctor-pdf -D /documents/output **/*.adoc
-
-after_error:
-  - docker logs asciidoc-to-html
-  - docker logs asciidoc-to-pdf
-
-after_failure:
-  - docker logs asciidoc-to-html
-  - docker logs asciidoc-to-pdf
+  - jekyll build
 
 after_success:
-  - cd output ; mv README.html index.html ; cp -R ../images images
+  - cp ./_site/* ./
   - git init
   - git config user.name "${GH_USER_NAME}"
   - git config user.email "{GH_EMAIL}"
