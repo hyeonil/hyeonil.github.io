@@ -229,7 +229,7 @@ __format__
 .Label|컨테이너 라벨
 
 ```bash
-docker ps -a --format "table {{.ID}}\t{{.Status}}"
+docker ps -a --format "table {{ "{{.ID" }}}}\t{{ "{{.Status" }}}}"
 ```
 ---
 
