@@ -17,16 +17,16 @@ tags: [etc]
 
 === sendmail 관련 패키지 설치
 
-`sendmail`, `sendmail-cf`, `sendmail-devel` 패키지를 설치한다.
+``sendmail``, ``sendmail-cf``, ``sendmail-devel`` 패키지를 설치한다.
 
 *표준 패키지*
 
-`sendmail` - 메일 전송 에이전트
+``sendmail`` - 메일 전송 에이전트
 
 *추가 패키지*
 
-`sendmail-cf` - sendmail을 재설정 하는데 필요한 파일들
-`sendmail-devel`
+``sendmail-cf`` - sendmail을 재설정 하는데 필요한 파일들
+``sendmail-devel``
 
 *설치*
 
@@ -48,7 +48,7 @@ sendmail은 로컬에서만 메일을 발송하도록 하는데, 릴레이 설�
 116: dnl DAEMON_OPTIONS('Port=smtp,Name=MTA') dnl
 ----
 
-위 파일을 통해 `sendmail.cf` 파일을 생성한다.
+위 파일을 통해 ``sendmail.cf`` 파일을 생성한다.
 
 [source,bash]
 ----
@@ -100,12 +100,10 @@ service sendmail restart
 ----
 
 (spring 기준)
-```java
+[source,java]
+----
 // 환경정보 설정
 // 메일서버 주소를 IP 또는 도메인 명으로 지정
 Properties props = System.getProperties();
-pops.setProperty("mail.smtp.host", "192.168.0.11")
-
-```
-
-작성중…
+pops.setProperty("mail.smtp.host", "192.168.0.11");
+----

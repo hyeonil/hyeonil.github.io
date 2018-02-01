@@ -2,10 +2,44 @@ code {
   border: 0;
 }
 
+h1 {
+  font-size: 2rem;
+}
+
+h2 {
+  font-size: 1.8rem;
+}
+
+h3 {
+  font-size: 1.6rem;
+}
+
+h4 {
+  font-size: 1.4rem;
+}
+
+h5 {
+  font-size: 1.2rem;
+}
+
+*:not(pre)>code {
+  color: #ba3925;
+}
+
 .imageblock>.content,
 .listingblock>.content {
   padding-top: 1rem;
   padding-bottom: 1rem;
+}
+
+.CodeRay .content {
+  padding: 0;
+  margin: 0;
+}
+
+.admonitionblock>table td.content {
+  padding-top: 2rem;
+  padding-bottom: 2rem;
 }
 
 @media (min-width: 48em) {
@@ -16,6 +50,14 @@ code {
     margin-right: 0;
     border-left: none;
   }
+  .admonitionblock>table td.content {
+    padding-top: 2rem;
+    padding-bottom: 2rem;
+  }
+  .CodeRay .content {
+    padding: 0;
+    margin: 0;
+  }
 }
 
 @media (min-width: 64em) {
@@ -23,5 +65,13 @@ code {
   .listingblock>.content {
     margin-left: 0;
     margin-right: 0;
+  }
+  .admonitionblock>table td.content {
+    padding-top: 2rem;
+    padding-bottom: 2rem;
+  }
+  .CodeRay .content {
+    padding: 0;
+    margin: 0;
   }
 }

@@ -1,13 +1,19 @@
 ---
-
 layout: post
-title: 'NapuCon 2016 Review'
 tags: [etc]
-description: >
-  
 ---
 
-## NapuCon 2016 후기
+= NapuCon 2016 Review
+
+:doctype: book
+:icons: font
+:source-highlighter: coderay
+:toc: top
+:toclevels: 3
+:sectlinks:
+:numbered:
+
+== NapuCon 2016 후기
 
 지금까지 컨퍼런스를 그렇게 많이 다닌 것은 아니지만 여태까지 참석한 컨퍼런스중에 가장 만족스러운 컨퍼런스였다.
 

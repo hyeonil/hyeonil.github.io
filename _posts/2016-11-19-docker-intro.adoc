@@ -1,16 +1,22 @@
 ---
 layout: post
-title: 'Docker Intro'
 tags: [docker]
-description: >
-  
 ---
 
-## Docker?
+= Docker Intro
 
----
+:doctype: book
+:icons: font
+:source-highlighter: coderay
+:toc: top
+:toclevels: 3
+:sectlinks:
+:numbered:
 
-### Introduction
+== Docker?
+
+
+=== Introduction
 
 * 컨테이너 가상화 기술을 사용하여 어플리케이션 실행 환경을 구축 및 운영하기 위한 플랫폼
 * Go 언어로 만들어졌고, 2013년부터 Docker사에서 개발
@@ -20,64 +26,58 @@ description: >
 * 벤더(Cloud Service, OS)뿐만 아니라 여러 오픈소스와도 쉽게 연계할 수 있음
 * CI Tool(Jenkins)과 연계하면 테스트 자동화 및 무중단 배포도 가능
 
----
 
-### 컨테이너 가상화란?
+=== 컨테이너 가상화란?
 
 * 호스트 가상화(VMWare, VirtualBox), 하이퍼바이저 가상화(Windows 8 이상에서 지원)는 가상화 소프트웨어를 통해 OS와 하이퍼바이저 위에 또 다른 OS를 여러 개 구동시키며 그 자체로 많은 리소스를 필요로함
 * 호스트 OS상에서 논리적으로 컨테이너를 나눠 어플리케이션 동작을 위한 라이브러리와 어플리케이션 등을 컨테이너 안에 넣고, 개별 서버처럼 사용하는 것
 * 오버헤드가 적어 가볍고 빠른 것이 특징
 
----
 
-### 이식성
+=== 이식성
 
 * 업무 어플리케이션 실행 모듈
 * 미들웨어 라이브러리
 * OS 및 네트워크 등 인프라 환경 설정
 
----
 
-### 기본 기능
+=== 기본 기능
 
 * 이미지 생성
 * 컨테이너 동작
 * 이미지 공개 및 공유
 
----
 
-### 컴포넌트 종류
+=== 컴포넌트 종류
 
-#### Engine
+==== Engine
 
 * 이미지 생성과 컴포넌트 구동 등을 위한 코어 기능
 * 커맨드 실행 및 이미지 생성 등을 수행
 
-#### Kitematic
+==== Kitematic
 
 * 이미지 생성과 컴포넌트 구동 등을 위한 GUI 툴
 
-#### Registry
+==== Registry
 
 * 이미지를 공개 및 공유하기 위한 기능
 
-#### Compose
+==== Compose
 
 * 여러 컨테이너의 구성 정보를 코드로 정의하고 커맨드를 통해 어플리케이션 실행 환경을 구성하는 컨테이너 통합 관리 툴
 
-#### Machine
+==== Machine
 
 * 클라우드 환경에 실행 환경을 커맨드로 자동 생성하기 위한 툴
 
-#### Swarm
+==== Swarm
 
 * 여러 Docker gh스트를 클러스트화 하기 위한 툴
 * Manager는 클러스터 관리와 API를 제공하며 Node는 Docker 컨테이너를 실행
 
----
 
-### namespace
+=== namespace
 
 * 컨테이너를 구분하는 구조
 * 컨테이너라는 독립된 환경을 만들고 이를 나누어 어플리케이션 실행 환경을 만들 때 Linux Kernel의 namespace 기능을 사용
-
