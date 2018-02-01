@@ -9,7 +9,7 @@ gems:
 permalink:           pretty
 
 # Setup
-url:                 https://hyeonil.github.io
+url:                 http://blog.nuti.pe.kr
 
 # Set to '' in case of hosting on GitHub pages,
 # i.e. `http://<username>.github.io`

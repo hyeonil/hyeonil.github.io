@@ -33,7 +33,7 @@ ifndef::imagesdir[:imagesdir: /public/images]
   <packaging>jar</packaging> <5>
   <name>build deployment</name> <6>
   <description>build and deployment description.</description> <7>
-  <url>https://hyeonil.github.io</url> <8>
+  <url>https://blog.nuti.pe.kr</url> <8>
 
   <properties>
     <url.github>https://github.com/hyeonil</url.github>
