@@ -1,6 +1,6 @@
 ---
 layout: post
-tags: [tensorflow]
+tags: [etc]
 ---
 
 = TensorFlow Intro

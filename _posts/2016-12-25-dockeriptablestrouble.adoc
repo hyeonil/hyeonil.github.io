@@ -1,6 +1,6 @@
 ---
 layout: post
-tags: [docker, troubleshooting]
+tags: [devops]
 ---
 
 = docker iptables 오류

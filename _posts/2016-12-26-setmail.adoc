@@ -1,6 +1,6 @@
 ---
 layout: post
-tags: [etc]
+tags: [java, devops]
 ---
 
 = CentOS 메일서버 설정 및 자바에서 메일 발송하기

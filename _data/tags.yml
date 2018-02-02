@@ -35,17 +35,8 @@ java:
 spring:
   name: Spring
 
-docker:
-  name: Docker
-
-javascript:
-  name: Javascript
-
-tensorflow:
-  name: TensorFlow
-
-troubleshooting:
-  name: TroubleShooting
+devops:
+  name: DevOps
 
 etc:
-  name: etc
+  name: Etc

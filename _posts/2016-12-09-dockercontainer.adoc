@@ -1,6 +1,6 @@
 ---
 layout: post
-tags: [docker]
+tags: [devops]
 ---
 
 = Docker Container
@@ -582,4 +582,3 @@ docker save [option] <file> [image]
 ----
 docker load [option]
 ----
-

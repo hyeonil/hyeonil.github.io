@@ -1,6 +1,6 @@
 ---
 layout: post
-tags: [docker]
+tags: [devops]
 ---
 
 = Docker 기본 사용법
