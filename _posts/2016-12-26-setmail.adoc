@@ -105,5 +105,38 @@ service sendmail restart
 // 환경정보 설정
 // 메일서버 주소를 IP 또는 도메인 명으로 지정
 Properties props = System.getProperties();
-pops.setProperty("mail.smtp.host", "192.168.0.11");
+props.setProperty("mail.smtp.host", "127.0.0.1");
+JavaMailSenderImpl javaMailSender = new JavaMailSenderImpl();
+javaMailSender.setJavaMailProperties(props);
+
+try {
+  final MimeMessage mimeMessage = javaMailSender.createMimeMessage();
+  boolean html = false;
+  MimeMessageHelper helper = new MimeMessageHelper(mimeMessage, true, Charsets.UTF_8.displayName());
+  helper.setFrom(new InternetAddress("dev.nuti0102@gmail.com", "HyeonilJeong"));
+  helper.setTo("nuti0102@gmail.com");
+  helper.setSubject("Subject");
+
+  if (MailContentType.HTML.equals(MailContentType.HTML)) {
+    html = true;
+  }
+
+  helper.setText("Mail Content", html);
+
+  List<String> attachList = new ArrayList<>();
+  attachList.add("Attach File Path1");
+  attachList.add("Attach File Path2");
+
+  for (final String attach : attachList) {
+    final File file = new File(attach);
+
+    if (file.exists()) {
+      helper.addAttachment(file.getName(), file);
+    }
+  }
+
+  javaMailSender.send(mimeMessage);
+} catch (Exception e) {
+  e.printStackTrace(System.err);
+}
 ----
