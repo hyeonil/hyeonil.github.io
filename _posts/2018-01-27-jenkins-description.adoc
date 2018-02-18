@@ -1,6 +1,6 @@
 ---
 layout: post
-tags: [etc]
+tags: [devops]
 ---
 
 = Jenkins 사용 설명(번역)
