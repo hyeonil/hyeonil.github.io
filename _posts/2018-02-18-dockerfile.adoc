@@ -1,5 +1,6 @@
 ---
 layout: post
+comments: true
 tags: [java]
 ---
 
@@ -12,6 +13,8 @@ tags: [java]
 :toclevels: 3
 :sectlinks:
 :numbered:
+
+== Dockerfile?
 
 ``Dockerfile``은 ``Image`` 설정 파일로 ``Image``를 생성할 내용을 작성한다.
 
@@ -47,7 +50,8 @@ tags: [java]
 |호스트와 연결할 포트 번호를 지정한다.
 |===
 
-**Example**
+== Example
+
 [source,docker]
 ----
 FROM centos:centos6.8
@@ -65,7 +69,6 @@ ENV V_NGINX=1.12.1 \
   DB_NAME=blog \
   DB_USERNAME=nuti \
   DB_PASSWORD=db_pw
-
 
 RUN rpm --import /etc/pki/rpm-gpg/RPM* \
   && yum update -y

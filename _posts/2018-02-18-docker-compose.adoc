@@ -1,0 +1,54 @@
+---
+layout: post
+comments: true
+tags: [java]
+---
+
+= docker-compose
+
+:doctype: book
+:icons: font
+:source-highlighter: coderay
+:toc: top
+:toclevels: 3
+:sectlinks:
+:numbered:
+
+
+== docker-compose?
+
+``Docker Compose``는 하나의 설정으로 여러 컨테이너를 정의하고 실행할 수 있도록 도와주는 툴이다.
+하나의 명령어로 여러 컨테이너를 띄워서 어플리케이션을 실행할 수 있다.
+
+* 사용 케이스
+** ㅁ
+
+== Options
+
+== Example
+
+[source,yml]
+----
+version: '3'
+services:
+  example:
+    build:
+      context: ./docker
+      dockerfile: Dockerfile
+    image: example:latest
+    environment:
+      STATIC_DOMAIN: "http://static.nuti.pe.kr"
+      VM_XMS: "256m"
+      VM_XMX: "1024m"
+      VM_XX_NEW_SIZE: "384m"
+      VM_XX_NEW_PERM_SIZE: "128m"
+      DB_HOST: "db.nuti.pe.kr"
+      DB_NAME: "blog"
+      DB_USERNAME: "nuti"
+      DB_PASSWORD: "db_pw"
+    volumes:
+      - ./logs:/tomcat/logs
+    ports:
+      - "80:80"
+    network_mode: "bridge"
+----
