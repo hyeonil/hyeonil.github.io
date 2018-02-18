@@ -1,0 +1,197 @@
+---
+layout: post
+tags: [devops]
+---
+
+= MariaDB Replication(복제) 설정
+
+:doctype: book
+:icons: font
+:source-highlighter: coderay
+:toc: top
+:toclevels: 3
+:sectlinks:
+:numbered:
+
+== Replication?
+
+``Replication``은 ``MariaDB``에서 제공하는 ``Master-Slave``간에 데이터를 복제(이중화)하는 기능입니다.
+``MariaDB``에서는 ``Replication``외에도 ``Galera Cluster``를 이용하는 방법도 있습니다.
+
+* 적용 환경
+
+Master OS       : CentOS 7
+Master DMBS     : MariaDB 10.1.11
+
+Slave OS        : CentOS 7
+Slave DBMS      : MariaDB 10.1.11
+
+
+**``Replication`` 설정 시 ``Master``와 ``Slave``에 동일한 구조의 DB나 TABLE이 존재해야 합니다.**
+
+=== Master 설정
+
+``/etc/my.cnf.d/`` 에서 ``server.cnf``(혹은 ``my.cnf``)파일에 다음과 같이 설정합니다.
+
+[source,plain]
+----
+[mysqld]
+server-id               = 1
+log_bin                 = /var/log/mysql/mariadb-bin
+log_bin_index           = /var/log/mysql/mariadb-bin.index
+expire_logs_days        = 10
+max_binlog_size         = 100M
+----
+
+**여기서 ``/var/log/mysql/``은 소유자가 ``mysql``이어야 합니다.**
+
+그 후 DBMS 재시작을 합니다.
+
+[source,bash]
+----
+service mariadb restart
+----
+
+``MariaDB``에 접속하여 ``Replication`` 사용자를 생성합니다.
+
+[source,bash]
+----
+CREATE USER 'replication_user'@'%' IDENTIFIED BY 'password';
+GRANT REPLICATION SLAVE ON *.* TO replication_user;
+----
+
+운영중인 서버라면 **DB에 락**을 걸어주고 ``MASTER``정보를 조회합니다.
+
+[source,bash]
+----
+FLUSH TABLES WITH READ LOCK; # 운영중인 서버라면 테이블에 락을 걸어준다.
+SHOW MASTER STATUS; # MASTER 정보를 조회
+----
+
+[source,plain]
+----
++--------------------+----------+--------------+------------------+
+| File               | Position | Binlog_Do_DB | Binlog_Ignore_DB |
++--------------------+----------+--------------+------------------+
+| mariadb-bin.000005 |     2033 |              |                  |
++--------------------+----------+--------------+------------------+
+----
+
+**여기서 File과 Position은 ``Slave`` 설정 시 필요하니 잘 기억해 두세요.**
+
+
+=== Slave 설정
+
+``/etc/my.cnf.d/`` 에서 ``server.cnf``(혹은 ``my.cnf``)파일에 다음과 같이 설정합니다.
+
+[source,plain]
+----
+[mysqld]
+server-id               = 2
+log_bin                 = /var/log/mysql/mariadb-bin
+log_bin_index           = /var/log/mysql/mariadb-bin.index
+expire_logs_days        = 10
+max_binlog_size         = 100M
+relay_log               = /var/log/mysql/relay-bin
+relay_log_index         = /var/log/mysql/relay-bin.index
+relay_log_info_file     = /var/log/mysql/relay-bin.info
+log_slave_updates
+replicate-ignore-db     = test
+replicate-ignore-db     = information_schema
+replicate-ignore-db     = mysql
+----
+
+``replicate-ignore-db``는 복제하지 않을 DB를 지정해주는 것입니다.
+``replicate-ignore-db`` 외에도 ``replicate-do-table``, ``replicate-do-db`` 등 특정 DB 혹은 테이블만 지정해서 복제하는 방법도 있습니다.
+
+이제 DBMS를 재시작 합니다.
+
+[source,bash]
+----
+service mariadb restart
+----
+
+이제 ``mariadb``에 접속하여 다음의 명령어를 실행시킵니다.
+여기서 ``MASTER_LOG_FILE``과 ``MASTER_LOG_POS``는 ``Master`` 정보(``Master`` 설정 시 조회한 정보)와 동일하게 설정합니다.
+
+[source,bash]
+----
+CHANGE MASTER TO
+MASTER_HOST='Master IP',
+MASTER_USER='replication_user',
+MASTER_PASSWORD='password',
+MASTER_PORT=portNumber,
+MASTER_LOG_FILE='Master File',
+MASTER_LOG_POS=Master Position,
+MASTER_CONNECT_RETRY=10;
+
+FLUSH PRIVILEGES;
+
+START SLAVE;
+----
+
+[source,bash]
+----
+SHOW SLAVE STATUS\G;
+----
+
+[source,plain]
+----
+*************************** 1. row ***************************
+               Slave_IO_State: Waiting for master to send event
+                  Master_Host: ip
+                  Master_User: replication_user
+                  Master_Port: port
+                Connect_Retry: 10
+              Master_Log_File: master file
+          Read_Master_Log_Pos: master pos
+               Relay_Log_File: relay file
+                Relay_Log_Pos: relay pos
+        Relay_Master_Log_File: relay master file
+             Slave_IO_Running: Yes
+            Slave_SQL_Running: Yes
+              Replicate_Do_DB:
+          Replicate_Ignore_DB: test,information_schema,mysql
+           Replicate_Do_Table:
+       Replicate_Ignore_Table:
+      Replicate_Wild_Do_Table:
+  Replicate_Wild_Ignore_Table:
+                   Last_Errno: 0
+                   Last_Error:
+                 Skip_Counter: 0
+          Exec_Master_Log_Pos: exec master pos
+              Relay_Log_Space: relay log space
+              Until_Condition: None
+               Until_Log_File:
+                Until_Log_Pos: 0
+           Master_SSL_Allowed: No
+           Master_SSL_CA_File:
+           Master_SSL_CA_Path:
+              Master_SSL_Cert:
+            Master_SSL_Cipher:
+               Master_SSL_Key:
+        Seconds_Behind_Master: 0
+Master_SSL_Verify_Server_Cert: No
+                Last_IO_Errno: 0
+                Last_IO_Error:
+               Last_SQL_Errno: 0
+               Last_SQL_Error:
+  Replicate_Ignore_Server_Ids:
+             Master_Server_Id: 1
+               Master_SSL_Crl:
+           Master_SSL_Crlpath:
+                   Using_Gtid: No
+                  Gtid_IO_Pos:
+      Replicate_Do_Domain_Ids:
+  Replicate_Ignore_Domain_Ids:
+                Parallel_Mode: conservative
+----
+
+위의 명령어를 통해 ``slave`` 상태를 조회할 수 있습니다.
+``slave``상태를 조회 시 에러가 없다면 설정이 완료되었습니다.
+이제 ``Master``로 다시 돌아가서 락을 해제합니다.
+
+[source,bash]
+----
+UNLOCK TABLES;
+----
