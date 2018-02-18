@@ -20,10 +20,94 @@ tags: [java]
 ``Docker Compose``는 하나의 설정으로 여러 컨테이너를 정의하고 실행할 수 있도록 도와주는 툴이다.
 하나의 명령어로 여러 컨테이너를 띄워서 어플리케이션을 실행할 수 있다.
 
-* 사용 케이스
-** ㅁ
+* 사용 환경
+** 개발
+** 테스트
+** 스테이징
 
 == Options
+
+[cols="2,8"]
+|===
+|Option |Description
+
+|image
+|
+
+|build
+|
+
+|dockerfile
+|
+
+|command
+|
+
+|links
+|
+
+|external_links
+|
+
+|extra_hosts
+|
+
+|ports
+|
+
+|expose
+|
+
+|volumes
+|
+
+|volumes_from
+|
+
+|environment
+|
+
+|env_file
+|
+
+|extends
+|
+
+|labels
+|
+
+|container_name
+|
+
+|log driver
+|
+
+|net
+|
+
+|pid
+|
+
+|dns
+|
+
+|cap_add
+|
+
+|cap_drop
+|
+
+|dns_search
+|
+
+|devices
+|
+
+|security_opt
+|
+
+|
+|
 
 == Example
 
