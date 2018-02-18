@@ -35,6 +35,12 @@ java:
 spring:
   name: Spring
 
+groovy:
+  name: Groovy
+
+grails:
+  name: Grails
+
 devops:
   name: DevOps
 
