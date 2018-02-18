@@ -1,0 +1,46 @@
+---
+layout: post
+tags: [devops]
+---
+
+= nginx proxy 설정
+
+:doctype: book
+:icons: font
+:source-highlighter: coderay
+:toc: top
+:toclevels: 3
+:sectlinks:
+:numbered:
+
+``/etc/nginx/``의 하위 디렉토리인 ``conf.d``로 들어가서 ``xxxx.conf`` 파일 생성
+
+해당 파일에 아래와 같은 정보 입력
+
+[source,plain]
+----
+server {
+        listen 80;
+        server_name your.domain.com;
+
+        access_log /var/log/admin/access.log;
+        error_log /var/log/admin/error.log;
+
+        location / {
+                proxy_pass_header Server;
+                proxy_set_header Host $http_host;
+                proxy_set_header X-Real-IP $remote_addr;
+                proxy_set_header X-Scheme $scheme;
+                proxy_pass http://127.0.0.1:8080;
+        }
+}
+----
+
+저장 후 ``nginx`` 재시작
+
+[source,bash]
+----
+service nginx restart
+----
+
+기본 ``nginx``설정이라면 ``conf.d`` 에 있는 파일을 모두 불러와서 로딩시켜주므로 별도의 설정은 필요 없음
