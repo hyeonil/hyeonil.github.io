@@ -1,0 +1,26 @@
+---
+layout: post
+tags: [devops]
+---
+
+= 자바 음향효과(BGM)
+
+:doctype: book
+:icons: font
+:source-highlighter: coderay
+:toc: top
+:toclevels: 3
+:sectlinks:
+:numbered:
+
+[source,java]
+----
+AudioClip clip;
+try {
+    File file = new File("resources/bgm/bgm.wav");
+    clip = Applet.newAudioClip(file.toURL());
+    clip.play();
+} catch (Exception e) {
+    e.printStackTrace();
+}
+----
