@@ -1,6 +1,6 @@
 ---
 layout: post
-tags: [devops]
+tags: [java]
 ---
 
 = 자바 음향효과(BGM)
