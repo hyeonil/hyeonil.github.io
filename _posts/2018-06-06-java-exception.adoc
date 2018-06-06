@@ -1,0 +1,107 @@
+---
+layout: post
+comments: true
+tags: [java]
+---
+
+= Java Exception
+
+:doctype: book
+:icons: font
+:source-highlighter: coderay
+:toc: top
+:toclevels: 3
+:sectlinks:
+:numbered:
+
+== 개요
+
+자바 계통 언어에서는 오류를 표현하는 2가지 방법이 존재한다.
+첫 번째는 ``Error`` 클래스인데 ``Error`` 클래스를 상속받는 하위 클래스는 시스템 오류를 표현하게 된다.
+두 번째는 ``Exception`` 클래스로 어플리케이션 레벨에서 개발자가 예외사항을 표현하기 위해 사용한다.
+
+이번 포스팅에서는 ``Error``와 ``Exception``에 대해서 작성한다.
+
+== Error
+
+``Error`` 클래스는 시스템 오류를 표현하는 것으로 주로 ``JVM``에서 사용한다.
+어플리케이션 레벨에서 사용하는 경우도 있기는 한데 거의 사용되지 않고, ``try~catch``로 처리할 수 없다.
+시스템 오류를 표현하는 것이므로 어플리케이션 개발자가 관여하게될 가능성이 매우 낮다.
+흔히 볼 수 있는 ``Error`` 클래스의 구현체는 ``OutOfMemoryError``와 ``StackOverflowError``가 있다.
+
+== Exception
+
+``Exception`` 클래스는 어플리케이션을 개발하는 과정에서 로직을 처리하는 중에 예외사항이 발생할 경우 사용하게 된다.
+``Exception``은 크게 ``Checked Exception``과 ``Unchecked Exception``으로 구분되는데 이 둘의 차이는 아래 표와 같다.
+
+[cols="2,4,4"]
+|===
+|  | Checked Exception | Unchecked Exception
+
+|명시적 처리
+|명시적으로 처리해야 함
+|명시적인 처리를 강요하지 않음
+
+|처리 시점
+|Compile Time
+|Application Runtime
+
+|대표 Class
+|Exception 클래스와 하위 클래스 중 RuntimeException과 그 하위 클래스를 제외
+|RuntimeException
+|===
+
+자바에서는 ``Exception``을 처리하는 과정에서 ``RuntimeException``과 그 하위 클래스들을 특별하게 취급하여 ``Compile Time``에서 처리를 강제하지 않고, ``Runtime``에서 처리한다.
+
+주로 개발자에게 예외사항이 발생할 수 있음을 알려주기 위하거나, 비즈니스 요구사항을 표현하기 위해서 ``CheckedException``을 사용하게 된다.
+반대로 ``Unchecked Exception``은 반드시 처리하지 않아도 되는 경우나, 굳이 개발자가 알 필요가 없을 경우 사용하게 된다.
+
+``Exception``을 사용하게 되면 비즈니스 로직에서 ``true/false`` 혹은 ``object/null``을 사용하는 것에 비해서 훨씬 다양하게 예외사항을 표현할 수 있고, 비즈니스 요구사항을 코드로 깔끔하게 담을 수 있다.
+또한 의미와 용도에 맞는 ``Exception``을 다양하게 사용하게 된다면, 디버깅이나 유지부수에도 큰 이점을 가질 수 있다.
+``Exception``은 주로 분석/설계 단계에서 정의를 하게 된다.
+실제 비즈니스 로직을 구현하면서 메소드에 ``throws``를 명시적으로 작성함으로써 해당 메소드를 사용하는 개발자에게 예외사항이 발생할 수 있음을 열려준다.
+
+== 예시
+
+어플리케이션을 개발하는 과정에서 요구사항을 분석하는 과정이 있고, 이 과정에서 ``User Story``와 ``Scenario``를 정의할 수 있다.
+
+예를 들어 TODO를 관리하는 어플리케이션이 있고, TODO의 상태를 변경하는 기능 요구사항이 있고, 요구사항 분석 결과 아래와 같은 ``User Story``와 ``Scenario``가 나왔다고 가정한다.
+
+[quote]
+____
+User Story:
+TODO Item의 상태를 변경할 수 있다. +
+Todo/Doing/Done으로 상태를 변경할 수 있고, 상태변경은 Todo > Doing, Doing > Done, Done > Doing, Doing > Todo 로만 할 수 있다.
+
+Scenario 1: Todo에서 Doing으로 상태를 변경한다. +
+Scenario 2: Doing에서 Done으로 상태를 변경한다. +
+Scenario 3: Done에서 Doing으로 상태를 변경한다. +
+Scenario 4: Doing에서 Todo로 상태를 변경한다. +
+Scenario 5: Todo에서 Done으로 상태를 변경한다. +
+Scenario 6: Done에서 Todo로 상태를 변경한다.
+____
+
+위와 같이 ``User Story``와 ``Scenario``를 정의한다고 할 때 ``Scenario 5``와 ``Scenario 6``은 예외사항이 발생하는 ``Scenario`` 이다.
+이렇게 분석 과정에서 예외사항이 발생할 수 있음을 미리 파악하고, 이를 설계 및 구현에서 반영을 하게 된다.
+
+위의 예시를 코드로 표현하면 아래와 같다.
+
+[source, java]
+----
+public TodoItem changeState(@NonNull TodoItem todo, @NonNull TodoState state) throws IllegalStateChangeException {
+  TodoItem savedItem = todoItemRepository.findById(todo.getIdx())
+      .orElseThrow(ResourceNotFoundException::new);
+
+  final boolean possibleToChangeState = TodoState.isPossibleToChangeState(savedItem.getState(), state);
+  if (not(possibleToChangeState)) {
+    throw new IllegalStateChangeException();
+  }
+
+  savedItem.setState(state);
+
+  return todoItemRepository.save(savedItem);
+}
+----
+
+위의 코드 예시와 같이 비즈니스 요구사항에 의한 예외사항은 ``Checked Exception``으로 처리하여 ``throws``를 통해 명시적으로 알려준다.
+반면에 비즈니스 요구사항이 아닌, 해당 TODO Item이 없어서 처리할 수 없는 예외같은 경우는 ``Unchecked Exception``을 통해 처리를 하면 된다.
