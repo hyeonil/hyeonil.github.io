@@ -70,7 +70,7 @@ tags: [java]
 [source, plain]
 ----
 User Story:
-TODO Item의 상태를 변경할 수 있다. +
+TODO Item의 상태를 변경할 수 있다.
 Todo/Doing/Done으로 상태를 변경할 수 있고, 상태변경은 Todo > Doing, Doing > Done, Done > Doing, Doing > Todo 로만 할 수 있다.
 
 
