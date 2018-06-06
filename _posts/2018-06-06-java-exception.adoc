@@ -67,19 +67,20 @@ tags: [java]
 
 예를 들어 TODO를 관리하는 어플리케이션이 있고, TODO의 상태를 변경하는 기능 요구사항이 있고, 요구사항 분석 결과 아래와 같은 ``User Story``와 ``Scenario``가 나왔다고 가정한다.
 
-[quote]
-____
+[source, plain]
+----
 User Story:
 TODO Item의 상태를 변경할 수 있다. +
 Todo/Doing/Done으로 상태를 변경할 수 있고, 상태변경은 Todo > Doing, Doing > Done, Done > Doing, Doing > Todo 로만 할 수 있다.
 
-Scenario 1: Todo에서 Doing으로 상태를 변경한다. +
-Scenario 2: Doing에서 Done으로 상태를 변경한다. +
-Scenario 3: Done에서 Doing으로 상태를 변경한다. +
-Scenario 4: Doing에서 Todo로 상태를 변경한다. +
-Scenario 5: Todo에서 Done으로 상태를 변경한다. +
+
+Scenario 1: Todo에서 Doing으로 상태를 변경한다.
+Scenario 2: Doing에서 Done으로 상태를 변경한다.
+Scenario 3: Done에서 Doing으로 상태를 변경한다.
+Scenario 4: Doing에서 Todo로 상태를 변경한다.
+Scenario 5: Todo에서 Done으로 상태를 변경한다.
 Scenario 6: Done에서 Todo로 상태를 변경한다.
-____
+----
 
 위와 같이 ``User Story``와 ``Scenario``를 정의한다고 할 때 ``Scenario 5``와 ``Scenario 6``은 예외사항이 발생하는 ``Scenario`` 이다.
 이렇게 분석 과정에서 예외사항이 발생할 수 있음을 미리 파악하고, 이를 설계 및 구현에서 반영을 하게 된다.
