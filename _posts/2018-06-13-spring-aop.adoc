@@ -182,7 +182,7 @@ public class LogDetailMethodInvocationHandler implements InvocationHandler {
 
 == Proxy Pattern
 
-image::aop/proxy_pattern.jpg[title="Proxy Pattern", scaledwidth="60%", align="center"]
+image::aop/proxy_pattern.png[title="Proxy Pattern", scaledwidth="60%", align="center"]
 
 * 클라이언트가 실제 사용하려 하는 기능에 부가적인 기능을 더해서 자신이 핵심 기능인 척 위장하는 것
 * 타겟은 프록시가 있는지 알아서는 안된다.
@@ -198,7 +198,7 @@ image::aop/proxy_pattern.jpg[title="Proxy Pattern", scaledwidth="60%", align="ce
 
 == Decorator Pattern
 
-image::aop/decorator_pattern.jpg[title="Decorator Pattern", scaledwidth="60%", align="center"]
+image::aop/decorator_pattern.png[title="Decorator Pattern", scaledwidth="60%", align="center"]
 
 * 대상이 되는 Object에 부가적인 기능을 부여하기 위해 사용
 * 컴파일 시점에 어떤 방법과 순서로 연결되어 사용하는지 정해지지 않음

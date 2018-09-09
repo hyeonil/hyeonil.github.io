@@ -32,7 +32,7 @@ ifndef::imagesdir[:imagesdir: /public/images]
 * cleanup: 메소드 실행 후에 실행
 * where: 여러 값에 대해 반복행위를 할 때 작성
 
-image::spock/spock-lifecycle.png[title="TDD", scaledwidth="60%", align="center"]
+image::spock/spock-lifecycle.png[title="Spock Lifecycle", scaledwidth="60%", align="center"]
 출처: http://spockframework.org/spock/docs/1.1/spock_primer.html
 
 
