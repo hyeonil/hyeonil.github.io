@@ -26,7 +26,7 @@ description:         >
   Hyeonil's Dev Note
 
 # The tags listed as entries in the sidebar
-sidebar_tags:        [all, java, spring, groovy, grails, devops, etc]
+sidebar_tags:        [all, java, spring, groovy, spec, devops, etc]
 
 # Fallback image and color if not overwritten for tag or post
 image:               /public/img/side.jpg
@@ -42,8 +42,8 @@ author:
   name:              'Hyeonil Jeong'
 
   # This photo will be used in the about section
-  photo:             /public/img/profile.jpg
-  photo2x:           /public/img/profile.jpg
+  photo:             /public/img/profile2.jpg
+  photo2x:           /public/img/profile2.jpg
 
   # Markdown enabled, can use multiple paragraphs (enabled by `|`)
   about:             |

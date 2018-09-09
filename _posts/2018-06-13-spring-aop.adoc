@@ -1,0 +1,357 @@
+---
+layout: post
+comments: true
+tags: [spring, java]
+---
+
+= Spring AOP(Aspect Oriented Programming)
+
+:doctype: book
+:icons: font
+:source-highlighter: coderay
+:toc: top
+:toclevels: 3
+:sectlinks:
+:numbered:
+ifndef::imagesdir[:imagesdir: /public/images]
+
+== 개요
+
+INFO:
+``AOP``는 스프링의 기반 기술 중 하나로 이해하기 힘든 용어와 개념을 가졌다.
+``AOP``는 자바의 ``Reflection API``를 활용해서 구현을 하게되고, 주로 비즈니스 요구사항이 아닌 부분들을 처리하기 위해 사용한다.
+
+== Reflection API
+
+image::aop/jvm-architecture.jpg[title="JVM Architecture", scaledwidth="60%", align="center"]
+
+자바의 Reflection API는 컴파일 레벨에서 실행될 클래스를 정하는 것이 아닌, 런타임에 실행할 클래스 파일을 정하게 할 수 있다.
+또한, 런타임에서 클래스의 공개되지 않은 필드에 대한 정보를 볼 수 있고 조작할 수 있다.
+
+주로 JDBC나 MyBatis에서 많이 사용한다.
+예시는 아래와 같다.
+
+=== Reflection API Example
+
+[source,java]
+----
+package kr.pe.nuti.home.api.core.annotation;
+
+import java.lang.annotation.*;
+
+@Inherited
+@Documented
+@Retention(RetentionPolicy.RUNTIME)
+@Target({
+    ElementType.METHOD
+})
+public @interface LogDetail {
+}
+----
+
+[source,java]
+----
+package kr.pe.nuti.home.api.core.annotation;
+
+import java.lang.annotation.*;
+
+@Inherited
+@Documented
+@Retention(RetentionPolicy.RUNTIME)
+@Target({
+    ElementType.TYPE
+})
+public @interface TrackLog {
+}
+----
+
+[source,java]
+----
+package kr.pe.nuti.home.api.core.util;
+
+import kr.pe.nuti.home.api.core.annotation.TrackLog;
+
+import java.lang.reflect.Field;
+
+import static kr.pe.nuti.home.api.core.util.BooleanUtil.not;
+
+public final class LogUtil {
+
+  private LogUtil() {
+    throw new IllegalAccessError();
+  }
+
+  public static String argValues(Object arg, int depth) throws IllegalAccessException {
+    if (arg == null) {
+      return "null";
+    }
+    final Class<?> cls = arg.getClass();
+
+    if (cls.isPrimitive() || cls.isAssignableFrom(String.class) || not(cls.isAnnotationPresent(TrackLog.class))) {
+      return arg.toString();
+    }
+
+    StringBuilder builder = new StringBuilder();
+    builder.append(whiteSpace(depth)).append(cls.getName()).append("{\n");
+
+    for (Field field : cls.getDeclaredFields()) {
+      field.setAccessible(true);
+      Object fieldObj = field.get(arg);
+      builder.append(whiteSpace(depth + 1))
+          .append(field.getName())
+          .append(" : ")
+          .append(argValues(fieldObj, depth + 1))
+          .append("\n");
+    }
+
+    builder.append("}");
+
+    return builder.toString();
+  }
+
+  public static String whiteSpace(int depth) {
+    final String appender = "  ";
+    StringBuilder builder = new StringBuilder();
+
+    for (int i = 0; i < depth; i++) {
+      builder.append(appender);
+    }
+
+    return builder.toString();
+  }
+}
+----
+
+[source,java]
+----
+package kr.pe.nuti.home.api.core.handler;
+
+import kr.pe.nuti.home.api.core.annotation.LogDetail;
+import kr.pe.nuti.home.api.core.util.LogUtil;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import java.lang.reflect.InvocationHandler;
+import java.lang.reflect.Method;
+
+import static kr.pe.nuti.home.api.core.util.BooleanUtil.not;
+
+public class LogDetailMethodInvocationHandler implements InvocationHandler {
+
+  private static final Logger logger = LoggerFactory.getLogger(LogDetailMethodInvocationHandler.class);
+
+  private Object target;
+
+  public LogDetailMethodInvocationHandler(Object target) {
+    this.target = target;
+  }
+
+  @Override
+  public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
+    if (not(method.isAnnotationPresent(LogDetail.class))) {
+      return method.invoke(target, args);
+    }
+    String className = method.getDeclaringClass().getName();
+    String methodName = method.getName();
+    StringBuilder argBuilder = new StringBuilder();
+
+    for (Object arg : args) {
+      argBuilder.append(LogUtil.argValues(arg, 0))
+          .append("\n");
+    }
+    String argString = argBuilder.toString();
+
+    logger.info("invoke method {}${}", className, methodName);
+    logger.info("method arguments: {}", argString);
+
+    Object result  = method.invoke(target, args);
+
+    logger.info("finish the method {}${}", className, methodName);
+
+    return result;
+  }
+}
+----
+
+위 예시는 ``LogDetail``이라는 어노테이션을 가진 메소드에 대해서 해당 메소드의 파라미터 정보를 상세하게 로깅하는 것이다.
+런타임에서 메소드의 정보를 분석해서 어노테이션 표기 여부에 따라 로그를 남기고 메소드를 실행시키게 된다.
+또한, ``LogUtil.argValues``는 Object의 정보를 상세하게 분석해서 Object 내부의 필드정보를 보여줄 수 있도록 되어있다.
+
+``Reflection API``는 이런식으로 컴파일 타임에 어떤 클래스의 인스턴스가 실행될 지 알 수 없는 경우에 런타임에서 클래스정보를 분석하고 실행할 수 있도록 할 때 사용한다.
+
+
+== Proxy Pattern
+
+image::aop/proxy_pattern.jpg[title="Proxy Pattern", scaledwidth="60%", align="center"]
+
+* 클라이언트가 실제 사용하려 하는 기능에 부가적인 기능을 더해서 자신이 핵심 기능인 척 위장하는 것
+* 타겟은 프록시가 있는지 알아서는 안된다.
+* 타겟의 기능을 확장 및 접근 방법을 제어할 수 있는 유용한 방법
+* 특정 Object에 대한 접근을 제어
+* 대상이 되는 Object의 생성에 관여를 하기도 함
+** 생성이 복잡한 경우
+** 당장 생성이 필요하지 않은 경우에 바로 생성하지 않고, 필요한 시기에 생성
+* 원격 Object를 이용하는 경우에 사용
+** RMI
+** EJB
+* 대상이 되는 Object에 대한 접근권한을 제어하기 위해 사용
+
+== Decorator Pattern
+
+image::aop/decorator_pattern.jpg[title="Decorator Pattern", scaledwidth="60%", align="center"]
+
+* 대상이 되는 Object에 부가적인 기능을 부여하기 위해 사용
+* 컴파일 시점에 어떤 방법과 순서로 연결되어 사용하는지 정해지지 않음
+* InputStream, OutputStream
+
+=== 프록시 패턴과의 차이
+* 프록시는 어떤 오브젝트를 사용하기 위해 대리인 역할을 맡은 오브젝트를 사용하는 방법을 총칭
+* 프록시패턴 프록시를 사용하는 방법 중 타겟에 대한 접근 방법을 제어하려는 목적
+* 타겟을 생성하기 복잡하거나 당장 필요하지 않은 경우에 타겟을 바로 생성하지 않고 프록시를 사용
+* 실제 타겟을 사용할 때 타겟을 생성(Lazy)
+* 기능에 대한 접근 권한을 제어하는 목적으로도 사용(읽기/쓰기 권한)
+* 자신이 만들거나 접근할 타겟을 알고있는 경우가 많음
+
+== Proxy
+
+* Client와 사용 대상 Object 사이에서 대리 역할을 하는 Object
+* 대상 Object의 핵심 기능에 부가적인 기능을  추가
+* 대상 Object는 Proxy Object의 존재 여부를 모름
+* 대상 Object를 Target 또는 Real Object라고 부름
+
+== Dynamic Proxy
+
+image::aop/dynamic-proxy.jpg[title="Dynamic Proxy", scaledwidth="60%", align="center"]
+
+* 프록시는 매 Class, Method마다 Proxy를 정의해주어야 한다는 단점이 존재
+* JAVA의 Reflection API를 통해 Runtime에 동적으로 Proxy하도록 함
+
+== AOP
+
+image::aop/aop.jpg[title="AOP", scaledwidth="60%", align="center"]
+
+* Advice
+** 타겟이 필요 없는 순수한 부가 기능
+** 스프링에서는 부가기능을 제공하는 Object를 Advice라고 부름
+
+* Pointcut
+** 부가기능 적용 대상 선정 방법
+** 스프링에서는 메소드 선정 알고리즘을 담은 Object를 Pointcut이라고 부름
+
+* Advisor
+** Pointcut + Advice
+
+* Join Point
+** Advice가 적용될 수 있는 위치
+
+* Aspect
+** 독립적인 모듈화가 불가능한 모듈
+** 그 자체로 핵심 기능을 담고 있지는 않지만, 어플리케이션을 구성하는 중요한 한 가지 요소이고, 핵심 기능에 부가되어 의미를 갖는 특별한 모듈
+* 핵심적인 기능에서 부가적인 기능을 분리해서 Aspect라는 독특한 모듈로 만들어 설계하고 개발하는 방법
+* 객체지향을 좀 더 편하고 객체지향답게 사용할 수 있도록 하는 개념
+
+== AOP Example
+
+=== Expression
+
+execution([접근제한자 패턴] 타입패턴 [타입패턴.]이름패턴 (타입패턴 | “..}, …) [throws 예외 패턴])
+
+ex) public int springbook.learningtest.spring.pointcut.Target.mins(int, int) throws java.lang.RuntimeException
+
+* public
+** 접근 제한자, 생략 가능
+* int
+** 리턴 값의 타입을 나타내는 패턴
+* springbook.learningtest.spring.pointcut.Target
+** 패키지 및 클래스 이름 패턴
+* minus
+** 메소드 이름 패턴
+* (int, int)
+** 메소드 파리미터 패턴
+* throws java.lang.RuntimeException
+** 예외 이름 패턴
+
+https://docs.spring.io/spring/docs/5.0.0.RELEASE/spring-framework-reference/core.html#aop-pointcuts[참고링크]
+
+=== Example Code
+
+[source, java]
+----
+package kr.pe.nuti.home.api.core.annotation;
+
+import java.lang.annotation.*;
+
+@Inherited
+@Documented
+@Retention(RetentionPolicy.RUNTIME)
+@Target({
+    ElementType.METHOD
+})
+public @interface LogDetail {
+
+}
+----
+
+[source, java]
+----
+package kr.pe.nuti.home.api.core.aspect;
+
+import kr.pe.nuti.home.api.core.annotation.LogDetail;
+import kr.pe.nuti.home.api.core.util.LogUtil;
+import org.aspectj.lang.ProceedingJoinPoint;
+import org.aspectj.lang.annotation.Around;
+import org.aspectj.lang.annotation.Aspect;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Component;
+
+@Aspect
+@Component
+public class LogDetailAspect {
+
+  private static final Logger logger = LoggerFactory.getLogger(LogDetailAspect.class);
+
+  @Around("execution(* kr.pe.nuti.home.api..*.*(..)) && @annotation(logDetail)")
+  public Object aroundTargetObject(ProceedingJoinPoint joinPoint, LogDetail logDetail) throws Throwable {
+    Object target = joinPoint.getTarget();
+    Object[] args = joinPoint.getArgs();
+
+    String className = target.getClass().getName();
+    String methodName = joinPoint.getSignature().getName();
+    StringBuilder argBuilder = new StringBuilder();
+
+    for (Object arg : args) {
+      argBuilder.append(LogUtil.argValues(arg, 0))
+          .append("\n");
+    }
+    String argString = argBuilder.toString();
+
+    logger.debug("invoke method {}${}", className, methodName);
+    logger.debug("method arguments: {}", argString);
+
+    Object result  = joinPoint.proceed(args);
+
+    logger.debug("finish the method {}${}", className, methodName);
+
+    return result;
+  }
+}
+----
+
+[source, java]
+----
+@Transactional
+@Override
+public TodoItem changeState(@NonNull TodoItem todo, @NonNull TodoState state) throws IllegalStateChangeException {
+  TodoItem savedItem = this.getItem(todo.getIdx());
+
+  final boolean possibleToChangeState = TodoState.isPossibleToChangeState(savedItem.getState(), state);
+  if (not(possibleToChangeState)) {
+    throw new IllegalStateChangeException();
+  }
+
+  savedItem.setState(state);
+
+  return todoItemRepository.save(savedItem);
+}
+----

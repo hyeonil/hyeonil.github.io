@@ -1,0 +1,226 @@
+---
+layout: post
+comments: true
+tags: [spec]
+---
+
+= BDD
+
+:doctype: book
+:icons: font
+:source-highlighter: coderay
+:toc: top
+:toclevels: 3
+:sectlinks:
+:numbered:
+ifndef::imagesdir[:imagesdir: /public/images]
+
+== BDD(Behavior-Driven Development)란?
+
+``BDD``는 ``TDD``에서 파생된 개발 방법론으로 테스트에 대한 집중보다는 명세와 행위에 대해 비중을 두고 있다.
+
+=== TDD
+
+image::bdd/tdd.jpg[title="TDD", scaledwidth="60%", align="center"]
+
+``TDD``는 ``Test Case(이하 TC)``를 작성하고 실패를 확인 후 실제 비즈니스 코드를 작성, ``TC`` 성공확인을 하나의 반복주기로 잡고,
+이를 반복해서 진행하는 것을 요구한다.
+하지만 ``TC``를 작성하는데 의문점이 있다.
+코드가 없는데 무엇을 테스트할 것인가?
+``TDD``를 보면 무엇을 테스하는지에 대한 명시는 되어있지 않다.
+또한, 보통 테스트라 하면 제품이 나오면 그 제품을 사용해보면서 제대로 작동하는지 확인을 해보는 과정인데,
+제품이 나오지도 않았는데 테스트를 한다라는 것부터 모순이 생긴다.
+이를 개선한 것이 ``BDD``라고 생각을 한다.
+
+=== BDD(Behavior-Driven Development)
+
+``BDD``는 위에서 언급한바와 같이 ``TDD``에서 파생된 개발방법론이고, 코드의 구현과 테스트 보다는 행위(동작, 명세)에 집중하고 있다.
+``BDD``에서는 기능의 ``TC``를 작성하는 것이 아닌 명세를 작성하는 것이고, 요구사항 분석 후 기능 설계 및 명세작성, 코드구현의 순서로 진행을 하게된다.
+
+``BDD``에서 ``테스트(Test)`` 라는 단어를 사용하지 않고 ``명세(Specification)``를 사용함으로써 많은 것이 바뀌게 된다.
+``TDD``에서는 ``테스트``라는 단어를 사용하게 되어 혼란과 모순을 가지게 되었는데,
+``BDD``에서는 이를 ``명세``라는 단어로 사용함으로써, 제품이 생산되기 전에 제품에 대한 명세를 작성하게 되는 것이므로 이에 대한 모순이 사라지게 된다.
+
+== BDD Template
+
+[source, plain]
+----
+Title: 스토리에대한 제목을 간략하고 명확하게 작성
+User Story
+  Who 누가
+  Why 왜
+  What 무엇을 하는지
+Scenario
+  Given 어떤 값이 주어졌을 때
+  When 어떤 행위를 하게 되면
+  Then 어떤 결과를 도출한다
+----
+
+== BDD Example
+
+할일을 관리할 수 있는 프로그램을 만든다고 가정을 한다.
+그렇다면 기획자 혹은 개발자는 고객과 커뮤니케이션을 하며 프로그램에 대한 요구사항을 수집하게 된다.
+
+[source, plain]
+----
+할일을 관리할 수 있는 시스템을 개발한다.
+Todo Item을 등록/수정/삭제 할 수 있다.
+Todo/Doing/Done 할 수 있고 Archive할 수 있어야 한다.
+Todo Item을 등록할 때 Todo 상태로 시작한다.
+상태변경을 할 수 있고 상태 변경은
+Todo > Doing, Doing > Done, Done > Doing, Doing > Todo로만 할 수 있다.
+Archive는 Todo/Doing/Done 모든 상태에서 가능하다.
+목록보기/상세보기 기능을 포함한다.
+페이징 기능은 스펙에서 제외하고 현재 스펙에서는 전체 목록을 한번에 조회한다.
+----
+
+수집한 요구항이 위와 같다고 하면 아래 그림과 같은 ``Use Case Diagram``과 ``Class Diagram``을 그릴 수 있다.
+
+image::bdd/use-case-diagram.png[title="Use Case Diagram", scaledwidth="60%", align="center"]
+
+image::bdd/class-diagram.png[title="Class Diagram", scaledwidth="60%", align="center"]
+
+위 예시에서 **상태변경**을 통해 명세작성 예시를 진행하도록 하겠다.
+
+[source, plain]
+----
+Title: Todo Item의 상태를 변경한다.
+
+User Story
+Who: Todo Management System을 사용하는 사용자가
+Why: Todo Item의 상태관리를 위해서
+What: 각각의 Todo Item의 상태를 변경할 수 있다.
+      상태 변경은 Todo > Doing, Doing > Done,
+      Done > Doing, Doing > Todo로만 할 수 있다.
+
+Scenario 1: Todo상태를 Doing상태로 변경하면 상태가 변경된다.
+Scenario 2: Doing상태를 Done상태로 변경하면 상태가 변경된다.
+Scenario 3: Done상태를 Doing상태로 변경하면 상태가 변경된다.
+Scenario 4: Doing상태를 Todo상태로 변경하면 상태가 변경된다.
+Scenario 5: Todo상태를 Done상태로 변경하면 상태가 변경되지 않고 예외사항이 발생한다.
+Scenario 6: Done상태를 Todo상태로 변경하면 상태가 변경되지 않고 예외사항이 발생한다.
+----
+
+일반 글로 위와 같은 명세를 작성할 수 있고 아래와 같이 코드로 명세를 작성할 수 있다.
+
+[source, java]
+----
+package kr.pe.nuti.home.api.service.todo;
+
+import kr.pe.nuti.home.api.core.application.Application;
+import kr.pe.nuti.home.api.core.application.JpaConfiguration;
+import kr.pe.nuti.home.api.core.application.WebConfiguration;
+import kr.pe.nuti.home.api.domain.todo.TodoItem;
+import kr.pe.nuti.home.api.enumeration.todo.TodoState;
+import kr.pe.nuti.home.api.exception.todo.IllegalStateChangeException;
+import kr.pe.nuti.home.api.repository.todo.TodoItemRepository;
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
+import org.mockito.Spy;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+
+import java.util.Optional;
+
+import static org.hamcrest.Matchers.is;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.verifyNoMoreInteractions;
+import static org.mockito.Mockito.when;
+
+/**
+ * Title: Todo Item의 상태를 변경한다.
+ * User Story:
+ * Todo Management System을 사용하는 사용자가
+ * Todo Item의 상태관리를 위해서
+ * 각각의 Todo Item의 상태를 변경할 수 있다.
+ * 상태 변경은 Todo > Doing, Doing > Done,
+ * Done > Doing, Doing > Todo로만 할 수 있다.
+ */
+@RunWith(SpringJUnit4ClassRunner.class)
+@ContextConfiguration(classes = {JpaConfiguration.class, WebConfiguration.class, Application.class})
+public class TodoServiceStateChangeTest {
+
+  @Mock
+  private TodoItemRepository todoItemRepository;
+
+  @Autowired
+  @Spy
+  @InjectMocks
+  private TodoService service;
+
+  @Before
+  public void setup() {
+    MockitoAnnotations.initMocks(this);
+  }
+
+  /**
+   * Todo상태를 Doing상태로 변경하면 상태가 변경된다.
+   * @throws Exception
+   */
+  @Test
+  public void testStateChangeFromTodoToDoing() throws Exception {
+    // given Todo 상태의 Todo Item
+    TodoItem savedItem = new TodoItem();
+    savedItem.setIdx(1L);
+    savedItem.setState(TodoState.TODO);
+    TodoItem changedItem = new TodoItem();
+    changedItem.setIdx(1L);
+    changedItem.setState(TodoState.DOING);
+    when(todoItemRepository.save(any(TodoItem.class))).thenReturn(changedItem);
+    when(todoItemRepository.findById(1L)).thenReturn(Optional.of(savedItem));
+
+    TodoItem item = new TodoItem();
+    item.setIdx(1L);
+
+    // when Todo Item의 상태를 Doing으로 변경한다.
+    TodoItem result = service.changeState(item, TodoState.DOING);
+
+    // then Todo Item의 상태가 Doing으로 변경된다.
+    Assert.assertThat(result.getState(), is(TodoState.DOING));
+    verifyNoMoreInteractions(service);
+  }
+
+  /**
+   * Todo상태를 Done상태로 변경하면 상태가 변경되지 않고 예외사항이 발생한다.
+   * @throws Exception
+   */
+  @Test(expected = IllegalStateChangeException.class)
+  public void testStateChangeFromTodoToDoneThrownException() throws Exception {
+    try {
+      // given Todo 상태의 Todo Item
+      TodoItem savedItem = new TodoItem();
+      savedItem.setIdx(1L);
+      savedItem.setState(TodoState.TODO);
+      TodoItem changedItem = new TodoItem();
+      changedItem.setIdx(1L);
+      changedItem.setState(TodoState.DOING);
+      when(todoItemRepository.findById(any(Long.class))).thenReturn(Optional.of(savedItem));
+      when(todoItemRepository.save(any(TodoItem.class))).thenReturn(changedItem);
+
+      TodoItem item = new TodoItem();
+      item.setIdx(1L);
+
+      // when Todo Item의 상태를 Done으로 변경한다.
+      service.changeState(item, TodoState.DONE);
+
+      // then Todo Item의 상태가 변경되지 않고 예외사항이 발생한다.
+    } catch (Exception e) {
+      verifyNoMoreInteractions(service);
+      throw e;
+    }
+  }
+}
+----
+
+https://slides.com/hyeoniljeong/bdd_spock_framework#/5/2[관련 slide 자료]
+
+== References
+
+* https://en.wikipedia.org/wiki/Behavior-driven_development
+* https://en.wikipedia.org/wiki/User_story
