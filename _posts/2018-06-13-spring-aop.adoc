@@ -228,7 +228,7 @@ image::aop/dynamic-proxy.jpg[title="Dynamic Proxy", scaledwidth="60%", align="ce
 
 == AOP
 
-image::aop/aop.jpg[title="AOP", scaledwidth="60%", align="center"]
+image::aop/aop.png[title="AOP", scaledwidth="60%", align="center"]
 
 * Advice
 ** 타겟이 필요 없는 순수한 부가 기능
