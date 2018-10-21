@@ -108,7 +108,6 @@ public void method(@PathVariable("id") Long id) {
 === @RequestParam
 
 * ``application/x-www-form-urlencoded``요청에서 쿼리스트링을 매핑
-* ``""``
 
 [source, java]
 ----
