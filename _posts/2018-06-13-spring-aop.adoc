@@ -17,9 +17,11 @@ ifndef::imagesdir[:imagesdir: /public/images]
 
 == 개요
 
-INFO:
+[NOTE]
+====
 ``AOP``는 스프링의 기반 기술 중 하나로 이해하기 힘든 용어와 개념을 가졌다.
 ``AOP``는 자바의 ``Reflection API``를 활용해서 구현을 하게되고, 주로 비즈니스 요구사항이 아닌 부분들을 처리하기 위해 사용한다.
+====
 
 == Reflection API
 

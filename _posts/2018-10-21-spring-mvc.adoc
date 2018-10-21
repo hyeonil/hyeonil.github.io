@@ -1,0 +1,627 @@
+---
+layout: post
+comments: true
+tags: [spring, java]
+---
+
+= Spring MVC
+
+:doctype: book
+:icons: font
+:source-highlighter: coderay
+:toc: top
+:toclevels: 3
+:sectlinks:
+:numbered:
+ifndef::imagesdir[:imagesdir: /public/images]
+
+[[term]]
+== 기본 용어
+
+[[request-mapping]]
+=== @RequestMapping
+
+* DefaultAnnotationHandlerMapping에서 매핑
+* url과 컨트롤러 메소드 매핑정보 생성
+* 클래스, 메소드 레벨에 사용 가능
+* url, method, parameter, header 정보를 통해 구분 가능
+* url에 ANT스타일의 와일드카드 사용 가능
+* 상속 가능
+
+[source, java]
+----
+@RequestMapping("/home")
+@RequestMapping("/home*")
+@RequestMapping("/home/**/action")
+@RequestMapping("/user/{userId}")
+@RequestMapping({"/", "/index"})
+@RequestMapping(value="/user/{userId}", method=RequestMethod.GET)
+@RequestMapping(value="/login", method=RequestMethod.POST, params="env=mobile")
+@RequestMapping(value="/login", method=RequestMethod.POST, params="env=!mobile")
+@RequestMapping(value="/login", method=RequestMethod.POST, headers="content-type=application/json")
+----
+
+[[controller]]
+=== @Controller
+
+* Controller를 정의
+* 여러 값들을 매핑할 수 있도록 함
+
+[source, java]
+----
+@Controller
+public class SampleController {
+  ...
+}
+----
+
+[[servlet]]
+=== HttpServletRequest, HttpServletResponse
+
+* 서블릿의 HttpServletRequest와 HttpServletResponse
+
+[source, java]
+----
+public void method(HttpServletRequest request, HttpServletResponse response) {
+  ...
+}
+----
+
+[[http-session]]
+=== HttpSession
+
+* 세션관리 객체
+
+[source, java]
+----
+public void method(HttpSession session) {
+  ...
+}
+----
+
+[[web-request]]
+=== WebRequest
+
+* HttpServletRequest의 정보를 대부분 그대로 갖고 있는 서블릿 API에 종속적이지 않은 오브젝트 타입
+* 서블릿과 프틀릿 환경 양쪽에 모두 적용 가능한 범용적인 핸들러 인터셉터를 만들 때 활용하기 위함
+
+[[native-web-request]]
+=== NativeWebRequest
+
+* WebRequest 내부에 감춰진 HttpServeltRequest와 같은 환경종속적인 오브젝트를 가져올 수 있는 메소드가 추가되어있음
+
+[[path-variable]]
+=== @PathVariable
+
+* url로 들어가는 패스 변수를 받는다
+
+[source, java]
+----
+// curl https://sample.nuti.pe.kr/home/1
+@RequestMappint("/home/{id}")
+public void method(@PathVariable("id") Long id) {
+  ...
+}
+----
+
+[[request-param]]
+=== @RequestParam
+
+* ``application/x-www-form-urlencoded``요청에서 쿼리스트링을 매핑
+* ``""``
+
+[source, java]
+----
+// curl https://sample.nuti.pe.kr/home?id=1
+public void method(@RequestParam("id") Long id) {
+  ...
+}
+----
+
+[[cookie-value]]
+=== @CookieValue
+
+* 쿠키값을 받음
+* 필수여부 지정 가능
+
+[source, java]
+----
+// curl -b 'auth=abc' https://sample.nuti.pe.kr
+public void method(@CookieValue(value="auth", required=false, defaultValue="") String auth) {
+  ...
+}
+----
+
+[[request-header]]
+=== @RequestHeader
+
+* 헤더 정보를 받음
+* 필수여부 지정 가능
+
+[source, java]
+----
+// curl -H 'Content-Type: application/json' https://sample.nuti.pe.kr
+public void method(@RequestHeader(value="Content-Type", required=true) String contentType) {
+  ...
+}
+----
+
+[[model-map]]
+=== Map, Model, ModelMap
+
+* 모델 정보를 담는데 사용
+
+[source, java]
+----
+public void method(Map model) {
+  ...
+}
+public void method(Model model) {
+  ...
+}
+public void method(ModelMap model) {
+  ...
+}
+----
+
+[[model-attribute]]
+=== @ModelAttribute
+
+* 생략가능
+* 모델 정보를 객체에 매핑
+* 클라이언트에서 받은 정보를 매핑할 수도 있고, 서버에서 등록한 정보도 매핑할 수 있음
+
+[source, java]
+----
+public void method(User user) {
+  ...
+}
+public void method(@ModelAttribute User user) {
+  ...
+}
+public void method(@ModelAttribute("currentUser") User user) {
+  ...
+}
+
+@ModelAttribute("userId")
+public String getUserId(HttpServletRequest request) {
+  Object userId = request.getAttribute("userId");
+  return (String) userId;
+}
+public void method(@ModelAttribute("userId") String userId) {
+  ...
+}
+----
+
+[[request-body]]
+=== @RequestBody
+
+* payload를 mapping
+
+[source, java]
+----
+// curl -X POST -H 'Content-Type: application/json' -d '{ "idx": 1, "id": "user" }'
+public void method(@RequestBody User user) {
+  ..
+}
+----
+
+[[value]]
+=== @Value
+
+* 프로퍼티값
+* 상수 값
+* 특정 메소드를 호출한 결과 값
+
+[source, java]
+----
+@Value("#{systemProperties['user.home']}")
+private String userHome;
+----
+
+[[model-and-view]]
+=== ModelAndView
+
+* 반환하는 객체와 뷰를 지정
+
+[source, java]
+----
+@RequestMapping(value = "")
+public ModelAndView index(Device device) {
+  ModelAndView mav = new ModelAndView();
+
+  mav.addObject("isMobileDevice", device.isMobile());
+  mav.setViewName("index");
+
+  return mav;
+}
+----
+
+[[view]]
+=== 뷰 지정
+
+* String으로 뷰 이름을 지정 가능
+* void로 사용할 시 url을 통해 view 지정
+* 이외 모델 사용시 url을 통해 지정
+
+[source, java]
+----
+public String method(Model model) {
+  ...
+  return "index";
+}
+
+@RequestMapping("/index")
+public void method(Model model) {
+  ...
+}
+
+@RequestMapping("/index")
+public User method() {
+  ...
+}
+
+public String method(RedirectAttributes redirectAttributes) {
+  return "redirect:/index";
+}
+----
+
+[[response-body]]
+=== @ResponseBody
+
+* 반환값을 응답 본문으로 사용
+
+[source, java]
+----
+@ResponseBody
+public String method() {
+  return "<html><head></head><body>Hello</body></html>"
+}
+----
+
+[session-attributes]]
+=== @SessionAttributes
+
+* 모델 객체를 세션에 저장해서 사용할 수 있도록 함
+* 세션의 값을 사용
+
+[source, java]
+----
+@Controller
+@SessionAttributes("user")
+public class SampleController {
+  ...
+
+  @RequestMapping("/")
+  public String method(@ModelAttribute User user) {
+    ...
+  }
+}
+----
+
+[[session-status]]
+=== SessionStatus
+
+* 세션을 관리
+* 사용이 완료된 세션을 제거하지 않으면 메모리 누수가 발생할 수 있으므로 사용 후 제거해야함
+
+[source, java]
+----
+public void method(SessionStatus sessionStatus) {
+  sessionStatus.setComplete();
+}
+----
+
+[[binder]]
+=== @InitBinder, WebDataBinder
+
+* 메소드 파라미터를 바인딩 및 검증
+* allowedFields, disallowedFields
+
+[source, java]
+----
+private AgentValidator agentValidator;
+
+@InitBinder("agent")
+public void initAgentBinder(WebDataBinder dataBinder) {
+  dataBinder.setValidator(agentValidator);
+}
+----
+
+[[validator]]
+=== Validator
+
+* @ModelAttribute로 바인딩되는 모델의 데이터 검
+
+[source, java]
+----
+@Component
+public class AgentValidator implements Validator {
+  @Override
+  public boolean supports(Class<?> clazz) {
+    return (String.class.isAssignableFrom(clazz));
+  }
+
+  @Override
+  public void validate(Object target, Errors errors) {
+    List<String> agentList = Arrays.asList(OS_ANDROID.getName(), OS_IOS.getName());
+    ErrorCode error = null;
+
+    String agent = (String) target;
+
+    if (! agentList.contains(agent)) {
+      error = ErrorCode.UnsupportedAgent;
+    }
+
+    if (error != null) {
+      errors.reject(error.getCode(), error.getMessage());
+    }
+  }
+}
+----
+
+[[valid]]
+=== @Valid
+
+* @ModelAttribute의 값을 검증
+
+[source, java]
+----
+@RequestMapping(value = "/{agent}", method = RequestMethod.GET)
+public JigjakVersion getVersion(@ModelAttribute("agent") @Valid String agent, BindingResult bindingResult) {
+  ...
+}
+----
+
+[[errors-binding-result]]
+=== Errors, BindingResult
+
+* @ModelAttribute의 Validation 결과를 담음
+
+[source, java]
+----
+public void method(@ModelAttribute User, BindingResult result) {
+  if (bindingResult.hasErrors()) {
+    ObjectError error = bindingResult.getAllErrors().get(0);
+
+    throw new ResourceNotFoundException(UnsupportedAgent);
+  }
+}
+----
+
+[[converter]]
+=== Converter
+
+* 데이터 바인딩 시 데이터를 변환
+* ex) String -> 클래스
+* 클래스 -> String
+
+[source, java]
+----
+public interface Converters<S, T> {
+  T convert(S source);
+}
+----
+
+[[conversion-service]]
+=== ConversionService
+
+* 컨트롤러 값 바인딩 시 데이터 타입 변환에 사용
+* InitBinder 혹은 ConfigurableWebBindingInitializer를 통해 등록
+
+[source, xml]
+----
+<bean class="org.springframework.context.support.ConversionServiceFactoryBean">
+  <property name="converters">
+    <set>
+      <bean class="kr.pe.nuti.converter.CustomConverter" />
+    </set>
+  </property>
+</bean>
+----
+
+[source, java]
+----
+@Autowired
+private ConversionService conversionService;
+
+@InitBinder
+public void initBinder(WEbDataBinder dataBinder) {
+  dataBinder.setConversionService(this.conversionService);
+}
+----
+
+[[formatter]]
+=== Formatter, FormattingConversionService
+
+* 오브젝트 > 문자열
+* 문자열 > 오브젝트
+* locale이 포함
+* html
+
+[[number-format]]
+=== @NumberFormat
+
+* 숫자, 문자 포맷
+
+[source, java]
+----
+@NumberFormat("$###,##0.00")
+BigDecimal price;
+----
+
+[[date-time-format]]
+=== @DateTimeFormat
+
+* 날짜, 문자 포맷
+
+[source, java]
+----
+@DateTimeFormat(pattern="yyyy/MM/dd")
+Date date;
+----
+
+[[message-converter]]
+=== Message Converter
+
+* 요청본문과 응답 본문을 다룸
+
+==== ByteArrayHttpMessageConverter
+
+* byte[] 지원
+* application/octet-stream
+
+==== StringHttpConverter
+
+* xml, json같이 문서 포맷이 있다면 적절한 파서를 붙여서 활용할 수 있음
+
+==== FormHttpMessageConverter
+
+* application/x-www-form-urlencoded
+
+==== SourceHttpMessageConverter
+
+* application/json
+* application/*+xml
+* text/xml
+
+==== Jaxb2RootElementHttpMessageConverter
+
+* JAXB2의 @XmlRootElement, @XmlType이 붙은 클래스를 이용해 XML과 오브젝트를 변환할 때 사용
+
+==== MarshallingHttpMessageConverter
+
+* Marshaller와 UnMarshaller
+* XML문서와 자바 오브젝트 사이의 변환을 지원
+
+==== MappingJacksonHttpMessageConverter
+
+* Jackson ObjectMapper를 통해서 JSON 문서와 자바오브젝트 변환을 지원
+
+
+[[mvc-annotation-driven]]
+=== mvc:annotation-driven
+
+* MVC에서 지원하는 빈을 자동으로 등록
+* 라이브러리의 존재 여부를 파악해서 자동으로 관련 빈을 등록
+
+==== DefaultAnnotationHandlerMapping
+
+* @RequestMapping을 이용한 핸들러 매핑 전략을 등록
+
+==== AnnotationMethodHandlerAdapter
+
+* DispatcherServlet이 자동으로 등록해주는 디폴트 핸들러 어댑터
+
+==== ConfigurableWebBindingInitializer
+
+* 모든 컨트롤러 메소드에 자동으로 적용되는 WebDataBinder 초기화용 빈을 등록
+
+==== 메세지 컨버터
+
+* 기본 컨버터와 라이브러리 유무에 따라 Jaxb2RootElementHttpMessageConverter, MappingJacksonHttpMessageConverter 등록
+
+==== validator
+
+* 모든 컨테이너에 일괄 적용하는 validator 등록
+
+==== conversion-service
+
+* Default: FormattingConversionServiceFactoryBean
+
+[source, xml]
+----
+<mvc:annotation-driven conversion-service="myConversionService" />
+
+<bean id="myConversionService" class="FormattingConversionServiceFactoryBean">
+  <property name="converters">
+    ...
+  </property>
+</bean>
+----
+
+[[interceptors]]
+=== Interceptors
+
+* 컨트롤러 전후로 작업할 내용 지정
+
+[source, xml]
+----
+<mvc:interceptors>
+  <bean class="kr.pe.nuti.GlobalInterceptor" />
+</mvc:intercptors>
+----
+
+[source, xml]
+----
+<mvc:interceptors>
+  <mvc:interceptor>
+    <mvc:mapping path="/home/*" />
+    <bean class="kr.pe.nuti.HomeInterceptor" />
+  </mvc:interceptor>
+</mvc:interceptors>
+----
+
+[[view-controller]]
+=== view-controller
+
+* 뷰로 매핑만 할 경우
+
+[source, xml]
+----
+<mvc:view-controller path="/" view-name="/index" />
+----
+
+<<<
+
+[[mvc-extension]]
+== MVC 확장 포인트
+
+[[session-attrubute-store]]
+=== SessionAttributeStore
+
+* @SessionAttribute 에 의해 지정된 모델은 세션에 저장된
+* 세션은 메모리에 저장됨
+* 메모리 문제를 해결하기 위해 별도의 저장소를 사용해서 사용할 수 있음
+
+[[web-argument-resolver]]
+=== WebArgumentResolver
+
+* 어플리케이션에 특화된 컨트롤러 파라미터 타입을 추가할 수 있음
+* 암호화된 정보를 복호화해서 파라미터로 넘김
+
+[[model-and-view-resolver]]
+=== ModelAndViewResolver
+
+* 컨트롤러 메소드의 리턴 타입과 메소드 정보, 어노테이션 정보등을 통해 ModelAndView를 생성
+* 활용도는 낮음
+
+[[handler-method-return-value-handler]]
+=== HandlerMethodReturnValueHandler
+
+* 리턴 값을 처리
+* RequestMaiingHalderAdapter의 customReturnValueHandlers 프로퍼티에 주입
+
+<<<
+
+[[url-resource-manage]]
+== url과 리소스 관리
+
+[[mvc-default-servlet-handler]]
+=== <mvc:default-servlet-handler />
+
+* servlet path가 /일 경우 모든 요청이 DispatcherServlet으로 전달됨
+* 이때 함께 사용해야됨
+* @RequestMapping 정보에 의존
+* 매핑된 정보를 찾을 수 없을 시 가장 우선순위가 낮은 디폴트 서블릿 매핑 전략을 통해 컨테이너가 제공하는 디폴트 서블릿으로 요청이 포워딩
+* 동작원리는 이해할 필요는 없고 같이 사용해야된다는 것만 기억
+
+[[url-resource]]
+=== <url:resource />
+
+* 요청에 따라 리소스 경로를 지정
+
+[source, xml]
+----
+<mvc:resources mapping="/resources/**" location="/resources/" />
+----
