@@ -1,10 +1,10 @@
 ---
 layout: post
 comments: true
-tags: [spring, java, memo]
+tags: [memo]
 ---
 
-= SpringOne TOUR 2018 Memo
+= SpringOne Tour 2018 Memo
 
 :doctype: book
 :icons: font
@@ -13,22 +13,26 @@ tags: [spring, java, memo]
 :toclevels: 3
 :sectlinks:
 :numbered:
-1
+
+== 전반적인 후기
+
 == Full Stack Reactive Kotlin! with Spring Framework 5, Spring Boot2, & Project Reactor
 
 [NOTE]
 ====
 Reactive Spring with Spring Boot 2.0
+
 Mark Heckler, Developer Advocate, Pivotal
 ====
 
 site: www.thehecklers.com
+
 twitter: @mkheck
 
 * 트위터 홍보중..
 * 그 다음 이메일 홍보중...
 * 일하는거 증명해야된다고 자꾸 사진찍음...
-* 이 아저씨 뭐하는아저씨야...
+* 이 아저씨 뭐하는 아저씨야...
 * Non-blocking, event-driven application
 * scale with a small number of threads
 * backpresure as a key ingredient
@@ -147,13 +151,11 @@ Jakub Pilimon, Principal Technologist Pivotal
 * 동일한 처리를 하는것 같아도 행위가 다르면 별도로 메소드 처리
 * given에 값이 들어가는 것 뿐만 아니라 전처리(선행 행위)를 쓸수있음
 * `io.vavr.io.collection.List.ofAll(...).foldLeft`
-* 달러 뭐지?
 * include, exclude가 아닌 broker를 두고 broker가 호출하는 식으로 사용하는것이 흐름을 파악하기 쉽다
-* 뭔가 그냥 다 말장난같은데
 * Consumer, Producer는 서로가 누구인지 알 필요가 없음
 * APPLICATION_STREAM_JSON_VALUE
 
-* 인텔리제이에 되게 신기한기능있다.... 블락해서 메소드를 만들어냄
+* 인텔리제이에 되게 신기한기능있다.... 블록지정해서 메소드를 만들어냄
 
 * 굳이 하나로 다 쓸 필요 없이 and 라는 좋은것이 있음
 
@@ -193,7 +195,7 @@ Younjin Jeong, Principal Technologist, Pivotal
 ====
 
 * Full Cycle Developers
-* Pivotal Application Server?
+* Pivotal Application Service
 * Cred Hub
 * Pivotal 제품 소개 위주
 
@@ -205,3 +207,14 @@ Younjin Jeong, Principal Technologist, Pivotal
 ====
 Paul Czarkowski, Principal Technologist, Pivotal
 ====
+
+* 맥주(kloud)가 기술적이라함
+* 피보탈에서 돈받아서 피보탈얘기를 해야한다함
+* kubernates master가 여러 worker를 관리함
+* Pod
+* StatefulSet
+* Helm
+* Spinnaker
+* Halyard
+
+`@_@`
