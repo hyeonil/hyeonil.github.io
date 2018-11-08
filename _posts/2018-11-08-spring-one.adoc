@@ -1,0 +1,207 @@
+---
+layout: post
+comments: true
+tags: [spring, java, memo]
+---
+
+= SpringOne TOUR 2018 Memo
+
+:doctype: book
+:icons: font
+:source-highlighter: coderay
+:toc: top
+:toclevels: 3
+:sectlinks:
+:numbered:
+1
+== Full Stack Reactive Kotlin! with Spring Framework 5, Spring Boot2, & Project Reactor
+
+[NOTE]
+====
+Reactive Spring with Spring Boot 2.0
+Mark Heckler, Developer Advocate, Pivotal
+====
+
+site: www.thehecklers.com
+twitter: @mkheck
+
+* 트위터 홍보중..
+* 그 다음 이메일 홍보중...
+* 일하는거 증명해야된다고 자꾸 사진찍음...
+* 이 아저씨 뭐하는아저씨야...
+* Non-blocking, event-driven application
+* scale with a small number of threads
+* backpresure as a key ingredient
+* thread가 대기하는 비효율적인 상황을 없애고 효율적으로 쓰도록 한다
+* 적은 수의 thread로 많은 요청을 처리할 수 있도록한다
+* Callback이 많을수록 보기 어려워짐
+
+
+=== Reactive Streams: 4 interfaces
+
+* Publisher<T>
+** 값을만들어냄
+* Subscriber<T>
+** 소비자
+* Subscription
+** ???
+* Processor<T>
+** Subscriber와 Subscription을 사용함
+
+=== Project Reactor: a quick overview
+
+* 피보탈에서 진행중
+* 자바 8 사용
+* Spring In Busy????? 뭐야이게
+* Flux를 반환
+
+=== Let's Code
+
+* start.spring.io
+* 코틀린 설명중...
+* 라이브 코딩
+* 코틀린 신기하당
+
+=== Helpful resources
+
+* www.reactive-streams.org
+* projectreactor.io
+* github.com/mkheck/FSR
+
+
+<<<
+
+== Cloud-Native Spring
+
+[NOTE]
+====
+Josh Long, Spring Developer Advocate, Pivotal
+====
+
+twitter: @starbuxman
+
+* 이 아저씨도 사진찍음...
+* 책 커버 동물때문에 책내는데 2년 걸렸다고함
+* ReactiveSpringBook.io
+
+* 시작부터 라이브코딩
+* Reactive Web, Lombok, actuator, gateway
+* r2jdbc
+
+* 이아저씨 이상해...
+
+* 라우터 게이트웨이용으로만 쓰면 좋을거같다
+* 초당 리퀘스트 갯수 개한할 수 있음
+
+* 뭔가 빠르게 코딩 잘하기는 한다..
+* 대규모에서 Http가 아니라 RSocket을 사용해서도 할 수 있음(byte stream)
+* 분산환경 및 더 빠르게 할 수 있음
+
+<<<
+
+
+== Spring Cloud Gateway
+
+[NOTE]
+====
+Younjin Jeong, Principal Technologist, Pivotal
+====
+
+* 다양한 클라이언트에서 각 서비스로 직접 접근을 했었음
+* 이를 l7이나 proxy를 통해서 구현하기도 했지만 점점 처리해야되는 요구사항이 많아짐
+* 게이트웨이를 두고 헤더나 다른 값들을 통해 추가적이 요구사항을 충족할 수 있도록 하게 함
+* Mesh: 사이드캅(?) 패턴과 프록시 패턴의 혼용?
+* Zuul - netflix.github.com?
+** 요청을 어디로보낼지 결정
+* Zuul2 - 비동기를 지원하기 위해 개발
+* Latency, Thread Count, Concurrent Connections가 중요함
+* Zuul2를 넣지 않음
+* Spring Boot 2.0 + Project Reactor + Netty
+* 유레카: Service Discovery
+* Ribbon: Latency에 따라 요청을 핸들링
+* curl은 사람이 쓸게 아님..HTTPie
+* fallbackUri > Service API에 문제 발생 시 미리지정한 Fallback Message를 줄 수 있음
+* Zipkin
+
+
+<<<
+
+== Cloud Event Driven Architectures with Spring Cloud Stream 2.0
+
+[NOTE]
+====
+Jakub Pilimon, Principal Technologist Pivotal
+====
+
+* pillopl.github.io
+* github.com/ddd-by-examples
+
+* 도메인을 어떻게 Discover 하는지
+* 이벤트를 발견하고 이벤트의 트리거를 찾는다
+* 이벤트간의 연관관계(?)를 파악한다
+* effect of events on invariants
+* 용어를 정의한다
+* 메세지가 중요하다
+* Event와 행위(Behavior)가 비슷한거같은데...뭐가다른거지...
+
+* 동일한 처리를 하는것 같아도 행위가 다르면 별도로 메소드 처리
+* given에 값이 들어가는 것 뿐만 아니라 전처리(선행 행위)를 쓸수있음
+* `io.vavr.io.collection.List.ofAll(...).foldLeft`
+* 달러 뭐지?
+* include, exclude가 아닌 broker를 두고 broker가 호출하는 식으로 사용하는것이 흐름을 파악하기 쉽다
+* 뭔가 그냥 다 말장난같은데
+* Consumer, Producer는 서로가 누구인지 알 필요가 없음
+* APPLICATION_STREAM_JSON_VALUE
+
+* 인텔리제이에 되게 신기한기능있다.... 블락해서 메소드를 만들어냄
+
+* 굳이 하나로 다 쓸 필요 없이 and 라는 좋은것이 있음
+
+[source,groovy]
+----
+given:
+and:
+and:
+when:
+and:
+then:
+----
+
+
+<<<
+
+== Spring, Functions, Serverless and You
+
+[NOTE]
+====
+Nate Schutta, Solution Architect, Pivotal
+====
+
+* IaaS(Infrastructure as a Service)
+* Docker Container
+* Kubernates
+* cloudfoundary
+* 집중이 안댐 ㅠㅠ
+
+<<<
+
+== Spring Boot & Spring Cloud on Pivotal Application Service
+
+[NOTE]
+====
+Younjin Jeong, Principal Technologist, Pivotal
+====
+
+* Full Cycle Developers
+* Pivotal Application Server?
+* Cred Hub
+* Pivotal 제품 소개 위주
+
+<<<
+
+== Using Spinnaker to Create a Development Workflow on Kubernates
+
+[NOTE]
+====
+Paul Czarkowski, Principal Technologist, Pivotal
+====

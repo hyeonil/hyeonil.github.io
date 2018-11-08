@@ -47,5 +47,8 @@ devops:
 spec:
   name: Spec
 
+memo:
+  name: Memo
+
 etc:
   name: Etc
