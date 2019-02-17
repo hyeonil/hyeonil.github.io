@@ -1,0 +1,73 @@
+---
+layout: post
+comments: true
+tags: [java]
+---
+
+= JVM Memory
+
+:doctype: book
+:icons: font
+:source-highlighter: coderay
+:toc: top
+:toclevels: 3
+:sectlinks:
+:numbered:
+
+== JVM?
+
+* 정의된 스펙을 구현한 하나의 독자적인 프로세스 형태로 구동되는 `Runtime Instance`
+* `Java` 프로그램의 모든 것들을 실행시키는 기본 데몬
+* `Class` 파일을 로딩하고 `ByteCode`를 해석하는 과정을 거쳐 메모리 리소스를 할당하고 관리하며 정보를 처리
+* `Thread` 관리 및 `Garbage Collection`과 같은 메모리 정리
+
+=== 용어
+
+|===
+|용어 |설명
+
+| Java Source | 사용자가 작성한 Java 코드
+| Java Compiler | Java Source 파일을 JVM이 해석할 수 있는 Java Byte Code로 변경하는 Compiler
+| Java Byte Code | Java Compiler에 의해 수행될 결과물(.class 파일)
+| Class Loader | JVM 내로 .class파일들을 Load 하여 Loading된클래스들을 Runtime Data Area에 배치
+| Execution Engine | Loading된 클래스의 Byte Code를 해석
+| Runtime Data Area | JVM이 프로그램을 수행하기 위해 OS에서 할당 받은 메모리 공간
+| Method Area | 클래스, 변수, Method, static변수,상수 정보 등이 저장되는 영역으로 모든 Thread가 공유
+| Heap Area | new 명령어로 생성된 인스턴스와 객체가 저장되는 영역으로 Garbage Collection 대상이고 모든 Thread가 공유
+| Stack Area | Method 내에서 사용되는 값들(Argument, Local Variable, Return Value)이 저장되는 영역으로 메소드가 호출될 때 LIFO로 하나씩 생성되고,
+메소드 실행이 완료되면 LIFO로 하나씩 삭제(Thread별로 하나씩 생성)
+| PC Register | CPU의 Register와 비슷한 역할로 현재 수행중인 JVM 명령의 주소값이 저장(Thread별로 하나씩 생성)
+| Native Method Stack | 다른 언어(C/C++)의 메소드 호출을 위해 할당되는 구역으로 언어에 맞게 Stack이 형성
+|===
+
+
+== Java Heap
+
+
+|===
+|용어 |설명
+
+| Eden(Young) | Object가 생성될 때 Heap에 최초로 할당되는 영역
+| Survivor (Young) | Eden 영역이 꽉 차서 Minor GC가 발생할 때 살아남은 Live Object들이 이동되는 영역
+| Tenured(Old) | Young Generation에서 Live Object로 오래 살아남은 Object들이 이동되는 영역(특정 회수 이상 참조되어 기준 Age를 초과한 Object)
+비교적 오랫동안 참조되어 이용되고 있고 앞으로도 계속 사용될 확률이 높은 Object들이 저장
+| Permanent | Class와 Method의 Meta 정보나 Static 변수와 같은 상수 정보들이 저장되는 영역(Java 8 이후로 사라짐)
+| Metaspace(Native) | Java 8부터 생긴 영역으로 Permanent 영역에서 저장하던 정보 중 Static Object를 제외한 정보들을 저장하는 영역
+|===
+
+* Heap 영역은 JVM에 의해 관리되는 영역이고, Native 메모리는 OS레벨에서 관리하는 영역
+
+**Permanent 초기치와 최대치 확인**
+[source,bash]
+----
+java -XX:+PrintFlagsFinal -version -server | grep "PermSize"
+----
+
+**Metaspace 초기치와 최대치 확인**
+[source,bash]
+----
+java -XX:+PrintFlagsFinal -version -server | grep "MetaspaceSize"
+----
+
+
+
