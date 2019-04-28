@@ -261,7 +261,7 @@ prometheus endpoint 추가
 
 .Test Double
 * 무엇을 ``Test Double``로 처리?
-* 테스트가 구현을 알아야 함?
+* 테스트가 구현을 알아야 함? => 알 필요 없다
 * 제어할 수 없는 영역을 ``Test Double``로 처리
 
 .Embedded
