@@ -1,0 +1,33 @@
+---
+layout: post
+comments: true
+tags: [java]
+---
+
+= Garbage Collection
+
+:doctype: book
+:icons: font
+:source-highlighter: coderay
+:toc: top
+:toclevels: 3
+:sectlinks:
+:numbered:
+
+== Garbage Collection
+
+* Full GC가 발생할 때 Suspend Time(Stop the World)가 일어남
+* Root Set에서 어떤 식으로든 Reference가 있다면 Reachable Object라고 하고 이를 현재 사용되고있는 Object로 판단
+
+== Reachable Object
+
+* Local variable Section, Operand Stack에 Object의 Reference 정보가 있는 Object
+* Method Area에 로딩된 클래스 중 constant pool을 통해 간접 link를 하고 있는 Object
+* 아직 Memory에 남아 있으며 Native Method Area로 넘겨진 Object의 Reference가 JNI 현태로 참조 관계가 있는 Object
+
+== Garbage Collection
+
+* 어떤 이유든 메모리가 필요하면 수행
+* 새로운 Object의 할당을 위해 한정된 Heap 공간을 재활용하려는 목적
+* Garbage가 빠져나간 자리는 듬성듬성함
+
