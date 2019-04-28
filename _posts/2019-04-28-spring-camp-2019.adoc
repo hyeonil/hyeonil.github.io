@@ -330,7 +330,7 @@ prometheus endpoint 추가
 * Memory Leak이 있는지 검토(?)
 * Matcher_AppendReplacement => 메모리 효율이 좋음
 * OOM Killer가 죽일 떄가 있는데 이런 경우 로그를 확인해서 왜 죽였는지 파악
-* ~.~.2 이상이 아니면 쓰지 않는것이...(안정화가 안됐을 가능성이 높다)
+* v.v2.2 이상이 아니면 쓰지 않는것이...(안정화가 안됐을 가능성이 높다)
 
 .조금 더 다듬기
 * RAM Drive를 사용할 수 있는가?
