@@ -1,0 +1,36 @@
+---
+layout: null
+---
+
+<rss version="2.0">
+  <channel>
+    <title>{{ site.title }}</title>
+    <link>{{ site.url }}{{ site.baseurl }}/</link>
+    <description>{{ site.description }}</description>
+    <language>ko</language>
+    <updated>{{ site.time | date_to_xmlschema }}</updated>
+    <id>{{ site.url }}{{ site.baseurl }}</id>
+    <author>
+      <name>{{ site.author.name }}</name>
+      <email>{{ site.author.email }}</email>
+    </author>
+    <image>
+      <title>{{ site.title }}</title>
+      <url>{{ site.url }}{{ site.baseurl }}/public/img/profile2.jpg</url>
+      <link>{{ site.url }}{{ site.baseurl }}/</link>
+      <description>{{ site.description }}</description>
+    </image>
+
+    {% for post in site.posts %}
+    <item>
+      <title>{{ post.title | xml_escape }}</title>
+      <link>{{ site.url }}{{ site.baseurl }}{{ post.url }}</link>
+      <updated>{{ post.date | date_to_xmlschema }}</updated>
+      <id>{{ site.url }}{{ site.baseurl }}{{ post.id }}</id>
+      <content type="html">{{ post.content | xml_escape }}</content>
+      <author>{{ site.author.name }}</author>
+      <pubDate>{{ post.date | date_to_xmlschema }}</pubDate>
+    </item>
+    {% endfor %}
+  </channel>
+</rss>
