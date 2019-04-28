@@ -218,7 +218,7 @@ public class TodoServiceStateChangeTest {
 }
 ----
 
-https://slides.com/hyeoniljeong/bdd_spock_framework#/5/2[관련 slide 자료]
+https://slides.com/hyeoniljeong/bdd_spock_framework[관련 slide 자료]
 
 == References
 
