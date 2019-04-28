@@ -4,7 +4,7 @@ comments: true
 tags: [spec]
 ---
 
-= Specification
+= 기능 요구사항 명세(Specification)
 
 :doctype: book
 :icons: font
