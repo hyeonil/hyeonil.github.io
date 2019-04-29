@@ -1,7 +1,7 @@
 ---
 layout: post
 comments: true
-tags: [etc]
+tags: [etc, memo]
 ---
 
 = SpringCamp 2019 참석 후기

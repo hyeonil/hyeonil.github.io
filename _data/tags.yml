@@ -38,9 +38,6 @@ spring:
 groovy:
   name: Groovy
 
-grails:
-  name: Grails
-
 devops:
   name: DevOps
 
@@ -49,6 +46,9 @@ spec:
 
 memo:
   name: Memo
+
+diary:
+  name: Diary
 
 etc:
   name: Etc
