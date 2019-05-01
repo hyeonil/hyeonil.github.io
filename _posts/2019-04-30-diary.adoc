@@ -4,7 +4,7 @@ comments: true
 tags: [diary]
 ---
 
-= 2019-04-29 Daily Post
+= 2019-04-30 Daily Post
 
 :doctype: book
 :icons: font
