@@ -1,7 +1,7 @@
 ---
 layout: post
 comments: true
-tags: [devops]
+tags: [etc]
 ---
 
 = nginx proxy 설정

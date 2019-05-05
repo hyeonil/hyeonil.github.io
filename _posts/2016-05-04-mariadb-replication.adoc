@@ -1,7 +1,7 @@
 ---
 layout: post
 comments: true
-tags: [devops]
+tags: [etc]
 ---
 
 = MariaDB Replication(복제) 설정

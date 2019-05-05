@@ -1,7 +1,7 @@
 ---
 layout: post
 comments: true
-tags: [etc, spring]
+tags: [etc, spring, java]
 ---
 
 = SpringCamp 2017 2/2

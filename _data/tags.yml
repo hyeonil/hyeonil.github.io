@@ -35,17 +35,11 @@ java:
 spring:
   name: Spring
 
-groovy:
-  name: Groovy
-
-devops:
-  name: DevOps
+architecture:
+  name: Architecture
 
 spec:
-  name: Spec
-
-memo:
-  name: Memo
+  name: Specification
 
 diary:
   name: Diary

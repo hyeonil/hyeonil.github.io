@@ -1,7 +1,7 @@
 ---
 layout: post
 comments: true
-tags: [devops]
+tags: [etc]
 ---
 
 = Docker 기본 사용법

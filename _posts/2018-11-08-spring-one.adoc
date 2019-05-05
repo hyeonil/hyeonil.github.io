@@ -1,7 +1,7 @@
 ---
 layout: post
 comments: true
-tags: [memo]
+tags: [etc, java, spring]
 ---
 
 = SpringOne Tour 2018 Memo

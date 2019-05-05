@@ -26,7 +26,7 @@ description:         >
   Hyeonil's Dev Note
 
 # The tags listed as entries in the sidebar
-sidebar_tags:        [all, java, spring, groovy, spec, devops, memo, diary, etc]
+sidebar_tags:        [all, java, spring, spec, devops, diary, etc]
 
 # Fallback image and color if not overwritten for tag or post
 image:               /public/img/side.jpg
@@ -49,11 +49,11 @@ author:
   about:             |
     **Name**: Hyeonil Jeong
 
-    **Birth**: 1990-01-20
+    **Birth**: 1990-**-**
 
     **E-mail**: [dev.nuti0102@gmail.com](mailto:dev.nuti0102@gmail.com)
 
-    **Job**: Web Programmer
+    **Job**: Web Back-end Programmer
 
     **Interest**: Java, Test, Specification, Architecture, Clean Code
 

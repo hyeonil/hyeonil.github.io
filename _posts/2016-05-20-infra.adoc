@@ -1,7 +1,7 @@
 ---
 layout: post
 comments: true
-tags: [devops]
+tags: [etc]
 ---
 
 = 프론트 정적 리소스버전관리 및 독립 프로젝트로 분리

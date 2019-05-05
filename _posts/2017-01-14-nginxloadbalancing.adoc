@@ -1,7 +1,7 @@
 ---
 layout: post
 comments: true
-tags: [devops]
+tags: [etc]
 ---
 
 = NGINX Loadbalance 설정
