@@ -26,7 +26,7 @@ description:         >
   Hyeonil's Dev Note
 
 # The tags listed as entries in the sidebar
-sidebar_tags:        [all, java, spring, spec, devops, diary, etc]
+sidebar_tags:        [all, java, spring, spec, architecture, diary, etc]
 
 # Fallback image and color if not overwritten for tag or post
 image:               /public/img/side.jpg
