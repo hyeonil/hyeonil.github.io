@@ -1,0 +1,23 @@
+---
+layout: post
+comments: true
+tags: [diary]
+---
+
+= 블로그이사
+
+:doctype: book
+:icons: font
+:source-highlighter: coderay
+:toc: top
+:toclevels: 3
+:sectlinks:
+:numbered:
+
+블로그 이사했습니다.
+
+에디터나 환경같은게 티스토리쪽이 더 좋은것 같아서 티스토리로 이사했습니다.
+
+블로그 내용은 일부를 제외하고는 옮겨놓았습니다.
+
+https://nuti.tistory.com/[블로그(https://nuti.tistory.com/)]
