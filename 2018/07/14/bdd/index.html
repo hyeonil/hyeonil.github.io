@@ -1,0 +1,141 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no"><title>BDD &middot; Hyeonil's Note</title><meta name="description" content=""> <!--[if gt IE 8]><!----><style> article,aside,dialog,figcaption,figure,footer,header,hgroup,main,nav,section{display:block}mark{background:#FF0;color:#000}template{display:none}*{-webkit-box-sizing:border-box;-moz-box-sizing:border-box;box-sizing:border-box}html,body{margin:0;padding:0}html{line-height:1.65}body{color:#515151;background-color:#fff}a{text-decoration:none}img{display:block;max-width:100%;margin:0 0 1rem}img.lead{max-width:calc(100% + 2rem);width:calc(100% + 2rem);margin-left:calc(-1rem);margin-right:calc(-1rem)}h1,h2,h3,h4,h5,h6{margin-bottom:.5rem;font-weight:600;line-height:1.25;color:#313131;text-rendering:optimizeLegibility}h1{font-size:2rem}h2{margin-top:1rem;font-size:1.5rem}p{margin-top:0;margin-bottom:1rem}p.lead{font-size:1.25rem;font-weight:300}ul,ol,dl{margin-top:0;margin-bottom:1rem}hr{position:relative;margin:1.5rem 0;border:0;border-top:1px solid #eee;border-bottom:1px solid #fff}.container{max-width:38rem;padding-left:1rem;padding-right:1rem;margin-left:auto;margin-right:auto}.page-title,.post-title{color:#303030}.page-title,.post-title{margin-top:0}.post-date{display:block;margin-top:-.25rem;margin-bottom:1rem;color:#9a9a9a;font-weight:bold}.related{padding-top:2rem;padding-bottom:2rem}.related-posts{padding-left:0;list-style:none}.related-posts>li{margin-top:1rem}.related-posts>li>*{font-weight:normal}.message{margin-bottom:1rem;padding:1rem;color:#717171;background-color:#f9f9f9;margin-left:-1rem;margin-right:-1rem}body{padding-left:0.5rem}@media (min-width: 48em){html{font-size:16px}body{padding-left:0}}@media (min-width: 58em){html{font-size:18px}}.sr-only{display:none}.backdrop{display:none}.sidebar{position:relative;z-index:4;padding:2rem 1rem;color:rgba(255,255,255,0.75);background-color:#202020;text-align:left;background-size:cover;background-position:center center;min-height:640px;min-height:100vh;margin-left:-0.5rem}.sidebar a{color:#fff}.sidebar ul{list-style:none;padding-left:0}.sidebar-sticky{position:absolute;right:1rem;bottom:1rem;left:1rem}.sidebar-about>h1{color:#fff;font-size:2rem}.sidebar-nav-item{font-weight:bold;display:block;line-height:1.75;padding:.25rem .1rem;border-top:1px solid rgba(255,255,255,0.23)}.sidebar-social>ul{min-height:3.5rem}.sidebar::before{content:"";position:absolute;top:0;left:0;bottom:0;right:0;background:rgba(32,32,32,0.33);background:-moz-linear-gradient(bottom, rgba(32,32,32,0) 0%, rgba(32,32,32,0.5) 100%);background:-webkit-linear-gradient(bottom, rgba(32,32,32,0) 0%, rgba(32,32,32,0.5) 100%);background:linear-gradient(to bottom, rgba(32,32,32,0) 0%, rgba(32,32,32,0.5) 100%)}@media (min-width: 48em){.sidebar{position:fixed;top:0;left:0;bottom:0;width:18rem;margin-left:0}}.menu{display:block;padding:1.25rem 1.5rem;color:#9a9a9a;border-bottom:none;position:fixed;top:0;left:0;z-index:2}@media (min-width: 48em){.menu{position:absolute;left:-9999px}}@media (min-width: 48em){.menu:focus{left:19.5rem}}@media (min-width: 64em){.menu:focus{left:21.5rem}}.content{padding-top:4rem;padding-bottom:4rem}@media (min-width: 48em){.content{max-width:38rem;margin-left:20rem;margin-right:2rem;border-left:none}}@media (min-width: 64em){.content{margin-left:22rem;margin-right:4rem}}.me{float:right;width:6.5rem;margin-top:-4.8rem;margin-left:1rem;border-radius:100%;position:relative}@media (min-width: 38em){.me{width:7rem;margin-top:-5.05rem}}@media (min-width: 48em){.me{width:6.5rem;margin-top:-4.8rem}}@media (min-width: 58em){.me{width:7rem;margin-top:-5.05rem}}</style><noscript><link rel="stylesheet" href="/public/css/non-essentials.css"><link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto+Slab:700|PT+Serif:400,400italic,700,700italic"> </noscript><link rel="preload" href="/public/css/non-essentials.css" as="style" onload="this.rel='stylesheet'"><style> html { font-family: "PT Serif", Georgia, serif; } :focus { outline-color: #A85641; } .font-accent { font-family: "Roboto Slab", "PT Serif", Georgia, serif; } .content a, .related-posts li a:hover { color: #A85641; } ::selection { color: #fff; background: #A85641; } ::-moz-selection { color: #fff; background: #A85641; } .sidebar { background-image: url('/public/img/side.jpg'); }</style><!--<![endif]--><link rel="canonical" href="https://blog.nuti.pe.kr/2018/07/14/bdd/" /><link rel="alternate" type="application/atom+xml" title="Hyeonil's Note Atom Feed" href="/atom.xml"><link rel="stylesheet" href="/public/css/asciidoctor.css"><link rel="stylesheet" href="/public/css/coderay.css"><link rel="stylesheet" href="/public/css/font-awesome.min.css"><link rel="stylesheet" href="/public/css/foundation.min.css"><link rel="stylesheet" href="/public/css/normalize.css"><link rel="stylesheet" href="/public/css/custom.css"> <script>!function(n,e){function t(n,e){n.onload=function(){this.onerror=this.onload=null,e(null,n)},n.onerror=function(){this.onerror=this.onload=null,e(new Error("Failed to load "+this.src),n)}}function o(n,e){n.onreadystatechange=function(){"complete"!=this.readyState&&"loaded"!=this.readyState||(this.onreadystatechange=null,e(null,n))}}n.isReady=!1,n.loadJSDeferred=function(a,r){function d(){n.isReady=!0;var d=e.createElement("script");d.src=a,r&&(("onload"in d?t:o)(d,r),d.onload||t(d,r));var i=e.getElementsByTagName("script")[0];i.parentNode.insertBefore(d,i)}n.isReady?d():n.addEventListener?n.addEventListener("load",d,!1):n.attachEvent?n.attachEvent("onload",d):n.onload=d}}(window,document); </script> <!--[if lt IE 9]> <script src="https://unpkg.com/html5shiv/dist/html5shiv.min.js"></script> <![endif]--><body> <span class="sr-only">Jump to:</span> <a id="_menu" class="menu" href="#_asidebar"> <span>☰</span> <span class="sr-only">Menu</span> </a><main class="content container" role="main"><article id="post-2018/07/14/bdd" class="post" role="article"><h1 class="post-title"> BDD</h1><div class="post-date"> <time datetime="2018-07-14T00:00:00+00:00">2018/07/14/</time> <span>on <a href="/tag/spec/">Specification</a></span></div><hr/> <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script> <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-1986785092914105" data-ad-slot="9021907658" data-ad-format="auto"></ins> <script> (adsbygoogle = window.adsbygoogle || []).push({}); </script><div class="sect1"><h2 id="bddbehavior_driven_development란"><a class="link" href="#bddbehavior_driven_development란">1. BDD(Behavior-Driven Development)란?</a></h2><div class="sectionbody"><div class="paragraph"><p><code>BDD</code>는 <code>TDD</code>에서 파생된 개발 방법론으로 테스트에 대한 집중보다는 명세와 행위에 대해 비중을 두고 있다.</div><div class="sect2"><h3 id="tdd"><a class="link" href="#tdd">1.1. TDD</a></h3><div class="imageblock text-center"><div class="content"> <img src="/public/images/bdd/tdd.jpg" alt="tdd"></div><div class="title">Figure 1. TDD</div></div><div class="paragraph"><p><code>TDD</code>는 <code>Test Case(이하 TC)</code>를 작성하고 실패를 확인 후 실제 비즈니스 코드를 작성, <code>TC</code> 성공확인을 하나의 반복주기로 잡고, 이를 반복해서 진행하는 것을 요구한다. 하지만 <code>TC</code>를 작성하는데 의문점이 있다. 코드가 없는데 무엇을 테스트할 것인가? <code>TDD</code>를 보면 무엇을 테스하는지에 대한 명시는 되어있지 않다. 또한, 보통 테스트라 하면 제품이 나오면 그 제품을 사용해보면서 제대로 작동하는지 확인을 해보는 과정인데, 제품이 나오지도 않았는데 테스트를 한다라는 것부터 모순이 생긴다. 이를 개선한 것이 <code>BDD</code>라고 생각을 한다.</div></div><div class="sect2"><h3 id="bddbehavior_driven_development"><a class="link" href="#bddbehavior_driven_development">1.2. BDD(Behavior-Driven Development)</a></h3><div class="paragraph"><p><code>BDD</code>는 위에서 언급한바와 같이 <code>TDD</code>에서 파생된 개발방법론이고, 코드의 구현과 테스트 보다는 행위(동작, 명세)에 집중하고 있다. <code>BDD</code>에서는 기능의 <code>TC</code>를 작성하는 것이 아닌 명세를 작성하는 것이고, 요구사항 분석 후 기능 설계 및 명세작성, 코드구현의 순서로 진행을 하게된다.</div><div class="paragraph"><p><code>BDD</code>에서 <code>테스트(Test)</code> 라는 단어를 사용하지 않고 <code>명세(Specification)</code>를 사용함으로써 많은 것이 바뀌게 된다. <code>TDD</code>에서는 <code>테스트</code>라는 단어를 사용하게 되어 혼란과 모순을 가지게 되었는데, <code>BDD</code>에서는 이를 <code>명세</code>라는 단어로 사용함으로써, 제품이 생산되기 전에 제품에 대한 명세를 작성하게 되는 것이므로 이에 대한 모순이 사라지게 된다.</div></div></div></div><div class="sect1"><h2 id="bdd_template"><a class="link" href="#bdd_template">2. BDD Template</a></h2><div class="sectionbody"><div class="listingblock"><div class="content"><pre class="CodeRay highlight"><code data-lang="plain">Title: 스토리에대한 제목을 간략하고 명확하게 작성
+User Story
+  Who 누가
+  Why 왜
+  What 무엇을 하는지
+Scenario
+  Given 어떤 값이 주어졌을 때
+  When 어떤 행위를 하게 되면
+  Then 어떤 결과를 도출한다</code></pre></div></div></div></div><div class="sect1"><h2 id="bdd_example"><a class="link" href="#bdd_example">3. BDD Example</a></h2><div class="sectionbody"><div class="paragraph"><p>할일을 관리할 수 있는 프로그램을 만든다고 가정을 한다. 그렇다면 기획자 혹은 개발자는 고객과 커뮤니케이션을 하며 프로그램에 대한 요구사항을 수집하게 된다.</div><div class="listingblock"><div class="content"><pre class="CodeRay highlight"><code data-lang="plain">할일을 관리할 수 있는 시스템을 개발한다.
+Todo Item을 등록/수정/삭제 할 수 있다.
+Todo/Doing/Done 할 수 있고 Archive할 수 있어야 한다.
+Todo Item을 등록할 때 Todo 상태로 시작한다.
+상태변경을 할 수 있고 상태 변경은
+Todo &gt; Doing, Doing &gt; Done, Done &gt; Doing, Doing &gt; Todo로만 할 수 있다.
+Archive는 Todo/Doing/Done 모든 상태에서 가능하다.
+목록보기/상세보기 기능을 포함한다.
+페이징 기능은 스펙에서 제외하고 현재 스펙에서는 전체 목록을 한번에 조회한다.</code></pre></div></div><div class="paragraph"><p>수집한 요구항이 위와 같다고 하면 아래 그림과 같은 <code>Use Case Diagram</code>과 <code>Class Diagram</code>을 그릴 수 있다.</div><div class="imageblock text-center"><div class="content"> <img src="/public/images/bdd/use-case-diagram.png" alt="use case diagram"></div><div class="title">Figure 2. Use Case Diagram</div></div><div class="imageblock text-center"><div class="content"> <img src="/public/images/bdd/class-diagram.png" alt="class diagram"></div><div class="title">Figure 3. Class Diagram</div></div><div class="paragraph"><p>위 예시에서 <strong>상태변경</strong>을 통해 명세작성 예시를 진행하도록 하겠다.</div><div class="listingblock"><div class="content"><pre class="CodeRay highlight"><code data-lang="plain">Title: Todo Item의 상태를 변경한다.
+
+User Story
+Who: Todo Management System을 사용하는 사용자가
+Why: Todo Item의 상태관리를 위해서
+What: 각각의 Todo Item의 상태를 변경할 수 있다.
+      상태 변경은 Todo &gt; Doing, Doing &gt; Done,
+      Done &gt; Doing, Doing &gt; Todo로만 할 수 있다.
+
+Scenario 1: Todo상태를 Doing상태로 변경하면 상태가 변경된다.
+Scenario 2: Doing상태를 Done상태로 변경하면 상태가 변경된다.
+Scenario 3: Done상태를 Doing상태로 변경하면 상태가 변경된다.
+Scenario 4: Doing상태를 Todo상태로 변경하면 상태가 변경된다.
+Scenario 5: Todo상태를 Done상태로 변경하면 상태가 변경되지 않고 예외사항이 발생한다.
+Scenario 6: Done상태를 Todo상태로 변경하면 상태가 변경되지 않고 예외사항이 발생한다.</code></pre></div></div><div class="paragraph"><p>일반 글로 위와 같은 명세를 작성할 수 있고 아래와 같이 코드로 명세를 작성할 수 있다.</div><div class="listingblock"><div class="content"><pre class="CodeRay highlight"><code data-lang="java"><span class="keyword">package</span> <span class="namespace">kr.pe.nuti.home.api.service.todo</span>;
+
+<span class="keyword">import</span> <span class="include">kr.pe.nuti.home.api.core.application.Application</span>;
+<span class="keyword">import</span> <span class="include">kr.pe.nuti.home.api.core.application.JpaConfiguration</span>;
+<span class="keyword">import</span> <span class="include">kr.pe.nuti.home.api.core.application.WebConfiguration</span>;
+<span class="keyword">import</span> <span class="include">kr.pe.nuti.home.api.domain.todo.TodoItem</span>;
+<span class="keyword">import</span> <span class="include">kr.pe.nuti.home.api.enumeration.todo.TodoState</span>;
+<span class="keyword">import</span> <span class="include">kr.pe.nuti.home.api.exception.todo.IllegalStateChangeException</span>;
+<span class="keyword">import</span> <span class="include">kr.pe.nuti.home.api.repository.todo.TodoItemRepository</span>;
+<span class="keyword">import</span> <span class="include">org.junit.Assert</span>;
+<span class="keyword">import</span> <span class="include">org.junit.Before</span>;
+<span class="keyword">import</span> <span class="include">org.junit.Test</span>;
+<span class="keyword">import</span> <span class="include">org.junit.runner.RunWith</span>;
+<span class="keyword">import</span> <span class="include">org.mockito.InjectMocks</span>;
+<span class="keyword">import</span> <span class="include">org.mockito.Mock</span>;
+<span class="keyword">import</span> <span class="include">org.mockito.MockitoAnnotations</span>;
+<span class="keyword">import</span> <span class="include">org.mockito.Spy</span>;
+<span class="keyword">import</span> <span class="include">org.springframework.beans.factory.annotation.Autowired</span>;
+<span class="keyword">import</span> <span class="include">org.springframework.test.context.ContextConfiguration</span>;
+<span class="keyword">import</span> <span class="include">org.springframework.test.context.junit4.SpringJUnit4ClassRunner</span>;
+
+<span class="keyword">import</span> <span class="include">java.util.Optional</span>;
+
+<span class="keyword">import</span> <span class="include">static</span> <span class="include">org.hamcrest.Matchers.is</span>;
+<span class="keyword">import</span> <span class="include">static</span> <span class="include">org.mockito.ArgumentMatchers.any</span>;
+<span class="keyword">import</span> <span class="include">static</span> <span class="include">org.mockito.Mockito.verifyNoMoreInteractions</span>;
+<span class="keyword">import</span> <span class="include">static</span> <span class="include">org.mockito.Mockito.when</span>;
+
+<span class="comment">/**
+ * Title: Todo Item의 상태를 변경한다.
+ * User Story:
+ * Todo Management System을 사용하는 사용자가
+ * Todo Item의 상태관리를 위해서
+ * 각각의 Todo Item의 상태를 변경할 수 있다.
+ * 상태 변경은 Todo &gt; Doing, Doing &gt; Done,
+ * Done &gt; Doing, Doing &gt; Todo로만 할 수 있다.
+ */</span>
+<span class="annotation">@RunWith</span>(SpringJUnit4ClassRunner.class)
+<span class="annotation">@ContextConfiguration</span>(classes = {JpaConfiguration.class, WebConfiguration.class, Application.class})
+<span class="directive">public</span> <span class="type">class</span> <span class="class">TodoServiceStateChangeTest</span> {
+
+  <span class="annotation">@Mock</span>
+  <span class="directive">private</span> TodoItemRepository todoItemRepository;
+
+  <span class="annotation">@Autowired</span>
+  <span class="annotation">@Spy</span>
+  <span class="annotation">@InjectMocks</span>
+  <span class="directive">private</span> TodoService service;
+
+  <span class="annotation">@Before</span>
+  <span class="directive">public</span> <span class="type">void</span> setup() {
+    MockitoAnnotations.initMocks(<span class="local-variable">this</span>);
+  }
+
+  <span class="comment">/**
+   * Todo상태를 Doing상태로 변경하면 상태가 변경된다.
+   * @throws Exception
+   */</span>
+  <span class="annotation">@Test</span>
+  <span class="directive">public</span> <span class="type">void</span> testStateChangeFromTodoToDoing() <span class="directive">throws</span> <span class="exception">Exception</span> {
+    <span class="comment">// given Todo 상태의 Todo Item</span>
+    TodoItem savedItem = <span class="keyword">new</span> TodoItem();
+    savedItem.setIdx(<span class="integer">1L</span>);
+    savedItem.setState(TodoState.TODO);
+    TodoItem changedItem = <span class="keyword">new</span> TodoItem();
+    changedItem.setIdx(<span class="integer">1L</span>);
+    changedItem.setState(TodoState.DOING);
+    when(todoItemRepository.save(any(TodoItem.class))).thenReturn(changedItem);
+    when(todoItemRepository.findById(<span class="integer">1L</span>)).thenReturn(Optional.of(savedItem));
+
+    TodoItem item = <span class="keyword">new</span> TodoItem();
+    item.setIdx(<span class="integer">1L</span>);
+
+    <span class="comment">// when Todo Item의 상태를 Doing으로 변경한다.</span>
+    TodoItem result = service.changeState(item, TodoState.DOING);
+
+    <span class="comment">// then Todo Item의 상태가 Doing으로 변경된다.</span>
+    Assert.assertThat(result.getState(), is(TodoState.DOING));
+    verifyNoMoreInteractions(service);
+  }
+
+  <span class="comment">/**
+   * Todo상태를 Done상태로 변경하면 상태가 변경되지 않고 예외사항이 발생한다.
+   * @throws Exception
+   */</span>
+  <span class="annotation">@Test</span>(expected = IllegalStateChangeException.class)
+  <span class="directive">public</span> <span class="type">void</span> testStateChangeFromTodoToDoneThrownException() <span class="directive">throws</span> <span class="exception">Exception</span> {
+    <span class="keyword">try</span> {
+      <span class="comment">// given Todo 상태의 Todo Item</span>
+      TodoItem savedItem = <span class="keyword">new</span> TodoItem();
+      savedItem.setIdx(<span class="integer">1L</span>);
+      savedItem.setState(TodoState.TODO);
+      TodoItem changedItem = <span class="keyword">new</span> TodoItem();
+      changedItem.setIdx(<span class="integer">1L</span>);
+      changedItem.setState(TodoState.DOING);
+      when(todoItemRepository.findById(any(<span class="predefined-type">Long</span>.class))).thenReturn(Optional.of(savedItem));
+      when(todoItemRepository.save(any(TodoItem.class))).thenReturn(changedItem);
+
+      TodoItem item = <span class="keyword">new</span> TodoItem();
+      item.setIdx(<span class="integer">1L</span>);
+
+      <span class="comment">// when Todo Item의 상태를 Done으로 변경한다.</span>
+      service.changeState(item, TodoState.DONE);
+
+      <span class="comment">// then Todo Item의 상태가 변경되지 않고 예외사항이 발생한다.</span>
+    } <span class="keyword">catch</span> (<span class="exception">Exception</span> e) {
+      verifyNoMoreInteractions(service);
+      <span class="keyword">throw</span> e;
+    }
+  }
+}</code></pre></div></div><div class="paragraph"><p><a href="https://slides.com/hyeoniljeong/bdd_spock_framework">관련 slide 자료</a></div></div></div><div class="sect1"><h2 id="references"><a class="link" href="#references">4. References</a></h2><div class="sectionbody"><div class="ulist"><ul><li><p><a href="https://en.wikipedia.org/wiki/Behavior-driven_development" class="bare">https://en.wikipedia.org/wiki/Behavior-driven_development</a><li><p><a href="https://en.wikipedia.org/wiki/User_story" class="bare">https://en.wikipedia.org/wiki/User_story</a></ul></div></div></div><script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script> <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-1986785092914105" data-ad-slot="9021907658" data-ad-format="auto"></ins> <script> (adsbygoogle = window.adsbygoogle || []).push({}); </script></article><aside class="author" role="complementary"><h2>About</h2><img class="me" alt="Hyeonil Jeong" src="/public/img/profile2.jpg" srcset="/public/img/profile2.jpg 2x" /><p><strong>Name</strong>: Hyeonil Jeong<p><strong>Birth</strong>: 1990-**-**<p><strong>E-mail</strong>: ^_^<p><strong>Job</strong>: Web Back-end Programmer<p><strong>Interest</strong>: Java, Test, Specification, Architecture, Clean Code</aside><aside class="related" role="complementary"><h2>Related Posts</h2><ul class="related-posts"><li> <a href="/2019/02/17/specification/"> <span>기능 요구사항 명세(Specification)</span> <small><time datetime="2019-02-17T00:00:00+00:00"> 02/17/19 </time></small> </a><li> <a href="/2018/07/14/spock-framework/"> <span>Spock Framework</span> <small><time datetime="2018-07-14T00:00:00+00:00"> 07/14/18 </time></small> </a></ul></aside><aside class="comments" role="complementary"><h2>Comments</h2><div id="disqus_thread"></div><script> var disqus_config = function () { this.page.url = 'https://blog.nuti.pe.kr/2018/07/14/bdd/'; this.page.identifier = '/2018/07/14/bdd'; }; (function() { var d = document, s = d.createElement('script'); s.src = 'https://nuti01.disqus.com/embed.js'; s.setAttribute('data-timestamp', +new Date()); (d.head || d.body).appendChild(s); })(); </script> <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript></aside></main><div id="_backdrop" class="backdrop"></div><header id="_sidebar" class="sidebar" role="banner"><div id="_asidebar" class="container sidebar-sticky"><div class="sidebar-about"><h1 class="font-accent"><a href="/">Hyeonil's Note</a></h1><p>Hyeonil’s Dev Note</div><nav class="sidebar-nav font-accent" role="navigation"><ul><li> <a class="sidebar-nav-item " href="/tag/all/">All</a><li> <a class="sidebar-nav-item " href="/tag/java/">Java</a><li> <a class="sidebar-nav-item " href="/tag/spring/">Spring</a><li> <a class="sidebar-nav-item " href="/tag/spec/">Specification</a><li> <a class="sidebar-nav-item " href="/tag/architecture/">Architecture</a><li> <a class="sidebar-nav-item " href="/tag/diary/">Diary</a><li> <a class="sidebar-nav-item " href="/tag/etc/">Etc</a><li> <a class="sidebar-nav-item " href="/about/">About</a></ul></nav><div class="sidebar-social"><ul><li> <a href="https://github.com/hyeonil"> <span class="fa fa-github"></span> <span class="sr-only">github</span> </a><li> <a href="https://nuti.tistory.com"> <span class="fa fa-external-link"></span> <span class="sr-only">blog</span> </a></ul></div></div></header><!--[if gt IE 8]><!----> <script>loadJSDeferred('/public/js/hydejack.min.js')</script> <script> WebFontConfig = { google: { families: 'Roboto+Slab:700|PT+Serif:400,400italic,700,700italic'.split('|') }, custom: { families: ['icomoon'], urls: ['/public/css/font-awesome.min.css'] }, classes: false, events: false }; </script> <script>loadJSDeferred('https://ajax.googleapis.com/ajax/libs/webfont/1.6.16/webfont.js')</script> <script> window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date; ga('create', 'UA-88066046-1', 'auto'); ga('send', 'pageview'); </script> <script>loadJSDeferred('https://www.google-analytics.com/analytics.js')</script> <!--<![endif]-->

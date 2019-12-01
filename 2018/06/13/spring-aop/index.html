@@ -1,0 +1,187 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no"><title>Spring AOP(Aspect Oriented Programming) &middot; Hyeonil's Note</title><meta name="description" content=""> <!--[if gt IE 8]><!----><style> article,aside,dialog,figcaption,figure,footer,header,hgroup,main,nav,section{display:block}mark{background:#FF0;color:#000}template{display:none}*{-webkit-box-sizing:border-box;-moz-box-sizing:border-box;box-sizing:border-box}html,body{margin:0;padding:0}html{line-height:1.65}body{color:#515151;background-color:#fff}a{text-decoration:none}img{display:block;max-width:100%;margin:0 0 1rem}img.lead{max-width:calc(100% + 2rem);width:calc(100% + 2rem);margin-left:calc(-1rem);margin-right:calc(-1rem)}h1,h2,h3,h4,h5,h6{margin-bottom:.5rem;font-weight:600;line-height:1.25;color:#313131;text-rendering:optimizeLegibility}h1{font-size:2rem}h2{margin-top:1rem;font-size:1.5rem}p{margin-top:0;margin-bottom:1rem}p.lead{font-size:1.25rem;font-weight:300}ul,ol,dl{margin-top:0;margin-bottom:1rem}hr{position:relative;margin:1.5rem 0;border:0;border-top:1px solid #eee;border-bottom:1px solid #fff}.container{max-width:38rem;padding-left:1rem;padding-right:1rem;margin-left:auto;margin-right:auto}.page-title,.post-title{color:#303030}.page-title,.post-title{margin-top:0}.post-date{display:block;margin-top:-.25rem;margin-bottom:1rem;color:#9a9a9a;font-weight:bold}.related{padding-top:2rem;padding-bottom:2rem}.related-posts{padding-left:0;list-style:none}.related-posts>li{margin-top:1rem}.related-posts>li>*{font-weight:normal}.message{margin-bottom:1rem;padding:1rem;color:#717171;background-color:#f9f9f9;margin-left:-1rem;margin-right:-1rem}body{padding-left:0.5rem}@media (min-width: 48em){html{font-size:16px}body{padding-left:0}}@media (min-width: 58em){html{font-size:18px}}.sr-only{display:none}.backdrop{display:none}.sidebar{position:relative;z-index:4;padding:2rem 1rem;color:rgba(255,255,255,0.75);background-color:#202020;text-align:left;background-size:cover;background-position:center center;min-height:640px;min-height:100vh;margin-left:-0.5rem}.sidebar a{color:#fff}.sidebar ul{list-style:none;padding-left:0}.sidebar-sticky{position:absolute;right:1rem;bottom:1rem;left:1rem}.sidebar-about>h1{color:#fff;font-size:2rem}.sidebar-nav-item{font-weight:bold;display:block;line-height:1.75;padding:.25rem .1rem;border-top:1px solid rgba(255,255,255,0.23)}.sidebar-social>ul{min-height:3.5rem}.sidebar::before{content:"";position:absolute;top:0;left:0;bottom:0;right:0;background:rgba(32,32,32,0.33);background:-moz-linear-gradient(bottom, rgba(32,32,32,0) 0%, rgba(32,32,32,0.5) 100%);background:-webkit-linear-gradient(bottom, rgba(32,32,32,0) 0%, rgba(32,32,32,0.5) 100%);background:linear-gradient(to bottom, rgba(32,32,32,0) 0%, rgba(32,32,32,0.5) 100%)}@media (min-width: 48em){.sidebar{position:fixed;top:0;left:0;bottom:0;width:18rem;margin-left:0}}.menu{display:block;padding:1.25rem 1.5rem;color:#9a9a9a;border-bottom:none;position:fixed;top:0;left:0;z-index:2}@media (min-width: 48em){.menu{position:absolute;left:-9999px}}@media (min-width: 48em){.menu:focus{left:19.5rem}}@media (min-width: 64em){.menu:focus{left:21.5rem}}.content{padding-top:4rem;padding-bottom:4rem}@media (min-width: 48em){.content{max-width:38rem;margin-left:20rem;margin-right:2rem;border-left:none}}@media (min-width: 64em){.content{margin-left:22rem;margin-right:4rem}}.me{float:right;width:6.5rem;margin-top:-4.8rem;margin-left:1rem;border-radius:100%;position:relative}@media (min-width: 38em){.me{width:7rem;margin-top:-5.05rem}}@media (min-width: 48em){.me{width:6.5rem;margin-top:-4.8rem}}@media (min-width: 58em){.me{width:7rem;margin-top:-5.05rem}}</style><noscript><link rel="stylesheet" href="/public/css/non-essentials.css"><link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto+Slab:700|PT+Serif:400,400italic,700,700italic"> </noscript><link rel="preload" href="/public/css/non-essentials.css" as="style" onload="this.rel='stylesheet'"><style> html { font-family: "PT Serif", Georgia, serif; } :focus { outline-color: #A85641; } .font-accent { font-family: "Roboto Slab", "PT Serif", Georgia, serif; } .content a, .related-posts li a:hover { color: #A85641; } ::selection { color: #fff; background: #A85641; } ::-moz-selection { color: #fff; background: #A85641; } .sidebar { background-image: url('/public/img/side.jpg'); }</style><!--<![endif]--><link rel="canonical" href="https://blog.nuti.pe.kr/2018/06/13/spring-aop/" /><link rel="alternate" type="application/atom+xml" title="Hyeonil's Note Atom Feed" href="/atom.xml"><link rel="stylesheet" href="/public/css/asciidoctor.css"><link rel="stylesheet" href="/public/css/coderay.css"><link rel="stylesheet" href="/public/css/font-awesome.min.css"><link rel="stylesheet" href="/public/css/foundation.min.css"><link rel="stylesheet" href="/public/css/normalize.css"><link rel="stylesheet" href="/public/css/custom.css"> <script>!function(n,e){function t(n,e){n.onload=function(){this.onerror=this.onload=null,e(null,n)},n.onerror=function(){this.onerror=this.onload=null,e(new Error("Failed to load "+this.src),n)}}function o(n,e){n.onreadystatechange=function(){"complete"!=this.readyState&&"loaded"!=this.readyState||(this.onreadystatechange=null,e(null,n))}}n.isReady=!1,n.loadJSDeferred=function(a,r){function d(){n.isReady=!0;var d=e.createElement("script");d.src=a,r&&(("onload"in d?t:o)(d,r),d.onload||t(d,r));var i=e.getElementsByTagName("script")[0];i.parentNode.insertBefore(d,i)}n.isReady?d():n.addEventListener?n.addEventListener("load",d,!1):n.attachEvent?n.attachEvent("onload",d):n.onload=d}}(window,document); </script> <!--[if lt IE 9]> <script src="https://unpkg.com/html5shiv/dist/html5shiv.min.js"></script> <![endif]--><body> <span class="sr-only">Jump to:</span> <a id="_menu" class="menu" href="#_asidebar"> <span>☰</span> <span class="sr-only">Menu</span> </a><main class="content container" role="main"><article id="post-2018/06/13/spring-aop" class="post" role="article"><h1 class="post-title"> Spring AOP(Aspect Oriented Programming)</h1><div class="post-date"> <time datetime="2018-06-13T00:00:00+00:00">2018/06/13/</time> <span>on <a href="/tag/spring/">Spring</a><span>, </span><a href="/tag/java/">Java</a></span></div><hr/> <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script> <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-1986785092914105" data-ad-slot="9021907658" data-ad-format="auto"></ins> <script> (adsbygoogle = window.adsbygoogle || []).push({}); </script><div class="sect1"><h2 id="개요"><a class="link" href="#개요">1. 개요</a></h2><div class="sectionbody"><div class="admonitionblock note"><table><tr><td class="icon"> <i class="fa icon-note" title="Note"></i><td class="content"><div class="paragraph"><p><code>AOP</code>는 스프링의 기반 기술 중 하나로 이해하기 힘든 용어와 개념을 가졌다. <code>AOP</code>는 자바의 <code>Reflection API</code>를 활용해서 구현을 하게되고, 주로 비즈니스 요구사항이 아닌 부분들을 처리하기 위해 사용한다.</div></table></div></div></div><div class="sect1"><h2 id="reflection_api"><a class="link" href="#reflection_api">2. Reflection API</a></h2><div class="sectionbody"><div class="imageblock text-center"><div class="content"> <img src="/public/images/aop/jvm-architecture.jpg" alt="jvm architecture"></div><div class="title">Figure 1. JVM Architecture</div></div><div class="paragraph"><p>자바의 Reflection API는 컴파일 레벨에서 실행될 클래스를 정하는 것이 아닌, 런타임에 실행할 클래스 파일을 정하게 할 수 있다. 또한, 런타임에서 클래스의 공개되지 않은 필드에 대한 정보를 볼 수 있고 조작할 수 있다.</div><div class="paragraph"><p>주로 JDBC나 MyBatis에서 많이 사용한다. 예시는 아래와 같다.</div><div class="sect2"><h3 id="reflection_api_example"><a class="link" href="#reflection_api_example">2.1. Reflection API Example</a></h3><div class="listingblock"><div class="content"><pre class="CodeRay highlight"><code data-lang="java"><span class="keyword">package</span> <span class="namespace">kr.pe.nuti.home.api.core.annotation</span>;
+
+<span class="keyword">import</span> <span class="include">java.lang.annotation</span>.*;
+
+<span class="annotation">@Inherited</span>
+<span class="annotation">@Documented</span>
+<span class="annotation">@Retention</span>(<span class="predefined-type">RetentionPolicy</span>.RUNTIME)
+<span class="annotation">@Target</span>({
+    <span class="predefined-type">ElementType</span>.METHOD
+})
+<span class="directive">public</span> <span class="annotation">@interface</span> LogDetail {
+}</code></pre></div></div><div class="listingblock"><div class="content"><pre class="CodeRay highlight"><code data-lang="java"><span class="keyword">package</span> <span class="namespace">kr.pe.nuti.home.api.core.annotation</span>;
+
+<span class="keyword">import</span> <span class="include">java.lang.annotation</span>.*;
+
+<span class="annotation">@Inherited</span>
+<span class="annotation">@Documented</span>
+<span class="annotation">@Retention</span>(<span class="predefined-type">RetentionPolicy</span>.RUNTIME)
+<span class="annotation">@Target</span>({
+    <span class="predefined-type">ElementType</span>.TYPE
+})
+<span class="directive">public</span> <span class="annotation">@interface</span> TrackLog {
+}</code></pre></div></div><div class="listingblock"><div class="content"><pre class="CodeRay highlight"><code data-lang="java"><span class="keyword">package</span> <span class="namespace">kr.pe.nuti.home.api.core.util</span>;
+
+<span class="keyword">import</span> <span class="include">kr.pe.nuti.home.api.core.annotation.TrackLog</span>;
+
+<span class="keyword">import</span> <span class="include">java.lang.reflect.Field</span>;
+
+<span class="keyword">import</span> <span class="include">static</span> <span class="include">kr.pe.nuti.home.api.core.util.BooleanUtil.not</span>;
+
+<span class="directive">public</span> <span class="directive">final</span> <span class="type">class</span> <span class="class">LogUtil</span> {
+
+  <span class="directive">private</span> LogUtil() {
+    <span class="keyword">throw</span> <span class="keyword">new</span> <span class="exception">IllegalAccessError</span>();
+  }
+
+  <span class="directive">public</span> <span class="directive">static</span> <span class="predefined-type">String</span> argValues(<span class="predefined-type">Object</span> arg, <span class="type">int</span> depth) <span class="directive">throws</span> <span class="exception">IllegalAccessException</span> {
+    <span class="keyword">if</span> (arg == <span class="predefined-constant">null</span>) {
+      <span class="keyword">return</span> <span class="string"><span class="delimiter">&quot;</span><span class="content">null</span><span class="delimiter">&quot;</span></span>;
+    }
+    <span class="directive">final</span> <span class="predefined-type">Class</span>&lt;?&gt; cls = arg.getClass();
+
+    <span class="keyword">if</span> (cls.isPrimitive() || cls.isAssignableFrom(<span class="predefined-type">String</span>.class) || not(cls.isAnnotationPresent(TrackLog.class))) {
+      <span class="keyword">return</span> arg.toString();
+    }
+
+    <span class="predefined-type">StringBuilder</span> builder = <span class="keyword">new</span> <span class="predefined-type">StringBuilder</span>();
+    builder.append(whiteSpace(depth)).append(cls.getName()).append(<span class="string"><span class="delimiter">&quot;</span><span class="content">{</span><span class="char">\n</span><span class="delimiter">&quot;</span></span>);
+
+    <span class="keyword">for</span> (<span class="predefined-type">Field</span> field : cls.getDeclaredFields()) {
+      field.setAccessible(<span class="predefined-constant">true</span>);
+      <span class="predefined-type">Object</span> fieldObj = field.get(arg);
+      builder.append(whiteSpace(depth + <span class="integer">1</span>))
+          .append(field.getName())
+          .append(<span class="string"><span class="delimiter">&quot;</span><span class="content"> : </span><span class="delimiter">&quot;</span></span>)
+          .append(argValues(fieldObj, depth + <span class="integer">1</span>))
+          .append(<span class="string"><span class="delimiter">&quot;</span><span class="char">\n</span><span class="delimiter">&quot;</span></span>);
+    }
+
+    builder.append(<span class="string"><span class="delimiter">&quot;</span><span class="content">}</span><span class="delimiter">&quot;</span></span>);
+
+    <span class="keyword">return</span> builder.toString();
+  }
+
+  <span class="directive">public</span> <span class="directive">static</span> <span class="predefined-type">String</span> whiteSpace(<span class="type">int</span> depth) {
+    <span class="directive">final</span> <span class="predefined-type">String</span> appender = <span class="string"><span class="delimiter">&quot;</span><span class="content">  </span><span class="delimiter">&quot;</span></span>;
+    <span class="predefined-type">StringBuilder</span> builder = <span class="keyword">new</span> <span class="predefined-type">StringBuilder</span>();
+
+    <span class="keyword">for</span> (<span class="type">int</span> i = <span class="integer">0</span>; i &lt; depth; i++) {
+      builder.append(appender);
+    }
+
+    <span class="keyword">return</span> builder.toString();
+  }
+}</code></pre></div></div><div class="listingblock"><div class="content"><pre class="CodeRay highlight"><code data-lang="java"><span class="keyword">package</span> <span class="namespace">kr.pe.nuti.home.api.core.handler</span>;
+
+<span class="keyword">import</span> <span class="include">kr.pe.nuti.home.api.core.annotation.LogDetail</span>;
+<span class="keyword">import</span> <span class="include">kr.pe.nuti.home.api.core.util.LogUtil</span>;
+<span class="keyword">import</span> <span class="include">org.slf4j.Logger</span>;
+<span class="keyword">import</span> <span class="include">org.slf4j.LoggerFactory</span>;
+
+<span class="keyword">import</span> <span class="include">java.lang.reflect.InvocationHandler</span>;
+<span class="keyword">import</span> <span class="include">java.lang.reflect.Method</span>;
+
+<span class="keyword">import</span> <span class="include">static</span> <span class="include">kr.pe.nuti.home.api.core.util.BooleanUtil.not</span>;
+
+<span class="directive">public</span> <span class="type">class</span> <span class="class">LogDetailMethodInvocationHandler</span> <span class="directive">implements</span> <span class="predefined-type">InvocationHandler</span> {
+
+  <span class="directive">private</span> <span class="directive">static</span> <span class="directive">final</span> <span class="predefined-type">Logger</span> logger = LoggerFactory.getLogger(LogDetailMethodInvocationHandler.class);
+
+  <span class="directive">private</span> <span class="predefined-type">Object</span> target;
+
+  <span class="directive">public</span> LogDetailMethodInvocationHandler(<span class="predefined-type">Object</span> target) {
+    <span class="local-variable">this</span>.target = target;
+  }
+
+  <span class="annotation">@Override</span>
+  <span class="directive">public</span> <span class="predefined-type">Object</span> invoke(<span class="predefined-type">Object</span> proxy, <span class="predefined-type">Method</span> method, <span class="predefined-type">Object</span><span class="type">[]</span> args) <span class="directive">throws</span> <span class="predefined-type">Throwable</span> {
+    <span class="keyword">if</span> (not(method.isAnnotationPresent(LogDetail.class))) {
+      <span class="keyword">return</span> method.invoke(target, args);
+    }
+    <span class="predefined-type">String</span> className = method.getDeclaringClass().getName();
+    <span class="predefined-type">String</span> methodName = method.getName();
+    <span class="predefined-type">StringBuilder</span> argBuilder = <span class="keyword">new</span> <span class="predefined-type">StringBuilder</span>();
+
+    <span class="keyword">for</span> (<span class="predefined-type">Object</span> arg : args) {
+      argBuilder.append(LogUtil.argValues(arg, <span class="integer">0</span>))
+          .append(<span class="string"><span class="delimiter">&quot;</span><span class="char">\n</span><span class="delimiter">&quot;</span></span>);
+    }
+    <span class="predefined-type">String</span> argString = argBuilder.toString();
+
+    logger.info(<span class="string"><span class="delimiter">&quot;</span><span class="content">invoke method {}${}</span><span class="delimiter">&quot;</span></span>, className, methodName);
+    logger.info(<span class="string"><span class="delimiter">&quot;</span><span class="content">method arguments: {}</span><span class="delimiter">&quot;</span></span>, argString);
+
+    <span class="predefined-type">Object</span> result  = method.invoke(target, args);
+
+    logger.info(<span class="string"><span class="delimiter">&quot;</span><span class="content">finish the method {}${}</span><span class="delimiter">&quot;</span></span>, className, methodName);
+
+    <span class="keyword">return</span> result;
+  }
+}</code></pre></div></div><div class="paragraph"><p>위 예시는 <code>LogDetail</code>이라는 어노테이션을 가진 메소드에 대해서 해당 메소드의 파라미터 정보를 상세하게 로깅하는 것이다. 런타임에서 메소드의 정보를 분석해서 어노테이션 표기 여부에 따라 로그를 남기고 메소드를 실행시키게 된다. 또한, <code>LogUtil.argValues</code>는 Object의 정보를 상세하게 분석해서 Object 내부의 필드정보를 보여줄 수 있도록 되어있다.</div><div class="paragraph"><p><code>Reflection API</code>는 이런식으로 컴파일 타임에 어떤 클래스의 인스턴스가 실행될 지 알 수 없는 경우에 런타임에서 클래스정보를 분석하고 실행할 수 있도록 할 때 사용한다.</div></div></div></div><div class="sect1"><h2 id="proxy_pattern"><a class="link" href="#proxy_pattern">3. Proxy Pattern</a></h2><div class="sectionbody"><div class="imageblock text-center"><div class="content"> <img src="/public/images/aop/proxy_pattern.png" alt="proxy pattern"></div><div class="title">Figure 2. Proxy Pattern</div></div><div class="ulist"><ul><li><p>클라이언트가 실제 사용하려 하는 기능에 부가적인 기능을 더해서 자신이 핵심 기능인 척 위장하는 것<li><p>타겟은 프록시가 있는지 알아서는 안된다.<li><p>타겟의 기능을 확장 및 접근 방법을 제어할 수 있는 유용한 방법<li><p>특정 Object에 대한 접근을 제어<li><p>대상이 되는 Object의 생성에 관여를 하기도 함<div class="ulist"><ul><li><p>생성이 복잡한 경우<li><p>당장 생성이 필요하지 않은 경우에 바로 생성하지 않고, 필요한 시기에 생성</ul></div><li><p>원격 Object를 이용하는 경우에 사용<div class="ulist"><ul><li><p>RMI<li><p>EJB</ul></div><li><p>대상이 되는 Object에 대한 접근권한을 제어하기 위해 사용</ul></div></div></div><div class="sect1"><h2 id="decorator_pattern"><a class="link" href="#decorator_pattern">4. Decorator Pattern</a></h2><div class="sectionbody"><div class="imageblock text-center"><div class="content"> <img src="/public/images/aop/decorator_pattern.png" alt="decorator pattern"></div><div class="title">Figure 3. Decorator Pattern</div></div><div class="ulist"><ul><li><p>대상이 되는 Object에 부가적인 기능을 부여하기 위해 사용<li><p>컴파일 시점에 어떤 방법과 순서로 연결되어 사용하는지 정해지지 않음<li><p>InputStream, OutputStream</ul></div><div class="sect2"><h3 id="프록시_패턴과의_차이"><a class="link" href="#프록시_패턴과의_차이">4.1. 프록시 패턴과의 차이</a></h3><div class="ulist"><ul><li><p>프록시는 어떤 오브젝트를 사용하기 위해 대리인 역할을 맡은 오브젝트를 사용하는 방법을 총칭<li><p>프록시패턴 프록시를 사용하는 방법 중 타겟에 대한 접근 방법을 제어하려는 목적<li><p>타겟을 생성하기 복잡하거나 당장 필요하지 않은 경우에 타겟을 바로 생성하지 않고 프록시를 사용<li><p>실제 타겟을 사용할 때 타겟을 생성(Lazy)<li><p>기능에 대한 접근 권한을 제어하는 목적으로도 사용(읽기/쓰기 권한)<li><p>자신이 만들거나 접근할 타겟을 알고있는 경우가 많음</ul></div></div></div></div><div class="sect1"><h2 id="proxy"><a class="link" href="#proxy">5. Proxy</a></h2><div class="sectionbody"><div class="ulist"><ul><li><p>Client와 사용 대상 Object 사이에서 대리 역할을 하는 Object<li><p>대상 Object의 핵심 기능에 부가적인 기능을 추가<li><p>대상 Object는 Proxy Object의 존재 여부를 모름<li><p>대상 Object를 Target 또는 Real Object라고 부름</ul></div></div></div><div class="sect1"><h2 id="dynamic_proxy"><a class="link" href="#dynamic_proxy">6. Dynamic Proxy</a></h2><div class="sectionbody"><div class="imageblock text-center"><div class="content"> <img src="/public/images/aop/dynamic-proxy.jpg" alt="dynamic proxy"></div><div class="title">Figure 4. Dynamic Proxy</div></div><div class="ulist"><ul><li><p>프록시는 매 Class, Method마다 Proxy를 정의해주어야 한다는 단점이 존재<li><p>JAVA의 Reflection API를 통해 Runtime에 동적으로 Proxy하도록 함</ul></div></div></div><div class="sect1"><h2 id="aop"><a class="link" href="#aop">7. AOP</a></h2><div class="sectionbody"><div class="imageblock text-center"><div class="content"> <img src="/public/images/aop/aop.png" alt="aop"></div><div class="title">Figure 5. AOP</div></div><div class="ulist"><ul><li><p>Advice<div class="ulist"><ul><li><p>타겟이 필요 없는 순수한 부가 기능<li><p>스프링에서는 부가기능을 제공하는 Object를 Advice라고 부름</ul></div><li><p>Pointcut<div class="ulist"><ul><li><p>부가기능 적용 대상 선정 방법<li><p>스프링에서는 메소드 선정 알고리즘을 담은 Object를 Pointcut이라고 부름</ul></div><li><p>Advisor<div class="ulist"><ul><li><p>Pointcut + Advice</ul></div><li><p>Join Point<div class="ulist"><ul><li><p>Advice가 적용될 수 있는 위치</ul></div><li><p>Aspect<div class="ulist"><ul><li><p>독립적인 모듈화가 불가능한 모듈<li><p>그 자체로 핵심 기능을 담고 있지는 않지만, 어플리케이션을 구성하는 중요한 한 가지 요소이고, 핵심 기능에 부가되어 의미를 갖는 특별한 모듈</ul></div><li><p>핵심적인 기능에서 부가적인 기능을 분리해서 Aspect라는 독특한 모듈로 만들어 설계하고 개발하는 방법<li><p>객체지향을 좀 더 편하고 객체지향답게 사용할 수 있도록 하는 개념</ul></div></div></div><div class="sect1"><h2 id="aop_example"><a class="link" href="#aop_example">8. AOP Example</a></h2><div class="sectionbody"><div class="sect2"><h3 id="expression"><a class="link" href="#expression">8.1. Expression</a></h3><div class="paragraph"><p>execution([접근제한자 패턴] 타입패턴 [타입패턴.]이름패턴 (타입패턴 | “..}, …) [throws 예외 패턴])</div><div class="paragraph"><p>ex) public int springbook.learningtest.spring.pointcut.Target.mins(int, int) throws java.lang.RuntimeException</div><div class="ulist"><ul><li><p>public<div class="ulist"><ul><li><p>접근 제한자, 생략 가능</ul></div><li><p>int<div class="ulist"><ul><li><p>리턴 값의 타입을 나타내는 패턴</ul></div><li><p>springbook.learningtest.spring.pointcut.Target<div class="ulist"><ul><li><p>패키지 및 클래스 이름 패턴</ul></div><li><p>minus<div class="ulist"><ul><li><p>메소드 이름 패턴</ul></div><li><p>(int, int)<div class="ulist"><ul><li><p>메소드 파리미터 패턴</ul></div><li><p>throws java.lang.RuntimeException<div class="ulist"><ul><li><p>예외 이름 패턴</ul></div></ul></div><div class="paragraph"><p><a href="https://docs.spring.io/spring/docs/5.0.0.RELEASE/spring-framework-reference/core.html#aop-pointcuts">참고링크</a></div></div><div class="sect2"><h3 id="example_code"><a class="link" href="#example_code">8.2. Example Code</a></h3><div class="listingblock"><div class="content"><pre class="CodeRay highlight"><code data-lang="java"><span class="keyword">package</span> <span class="namespace">kr.pe.nuti.home.api.core.annotation</span>;
+
+<span class="keyword">import</span> <span class="include">java.lang.annotation</span>.*;
+
+<span class="annotation">@Inherited</span>
+<span class="annotation">@Documented</span>
+<span class="annotation">@Retention</span>(<span class="predefined-type">RetentionPolicy</span>.RUNTIME)
+<span class="annotation">@Target</span>({
+    <span class="predefined-type">ElementType</span>.METHOD
+})
+<span class="directive">public</span> <span class="annotation">@interface</span> LogDetail {
+
+}</code></pre></div></div><div class="listingblock"><div class="content"><pre class="CodeRay highlight"><code data-lang="java"><span class="keyword">package</span> <span class="namespace">kr.pe.nuti.home.api.core.aspect</span>;
+
+<span class="keyword">import</span> <span class="include">kr.pe.nuti.home.api.core.annotation.LogDetail</span>;
+<span class="keyword">import</span> <span class="include">kr.pe.nuti.home.api.core.util.LogUtil</span>;
+<span class="keyword">import</span> <span class="include">org.aspectj.lang.ProceedingJoinPoint</span>;
+<span class="keyword">import</span> <span class="include">org.aspectj.lang.annotation.Around</span>;
+<span class="keyword">import</span> <span class="include">org.aspectj.lang.annotation.Aspect</span>;
+<span class="keyword">import</span> <span class="include">org.slf4j.Logger</span>;
+<span class="keyword">import</span> <span class="include">org.slf4j.LoggerFactory</span>;
+<span class="keyword">import</span> <span class="include">org.springframework.stereotype.Component</span>;
+
+<span class="annotation">@Aspect</span>
+<span class="annotation">@Component</span>
+<span class="directive">public</span> <span class="type">class</span> <span class="class">LogDetailAspect</span> {
+
+  <span class="directive">private</span> <span class="directive">static</span> <span class="directive">final</span> <span class="predefined-type">Logger</span> logger = LoggerFactory.getLogger(LogDetailAspect.class);
+
+  <span class="annotation">@Around</span>(<span class="string"><span class="delimiter">&quot;</span><span class="content">execution(* kr.pe.nuti.home.api..*.*(..)) &amp;&amp; @annotation(logDetail)</span><span class="delimiter">&quot;</span></span>)
+  <span class="directive">public</span> <span class="predefined-type">Object</span> aroundTargetObject(ProceedingJoinPoint joinPoint, LogDetail logDetail) <span class="directive">throws</span> <span class="predefined-type">Throwable</span> {
+    <span class="predefined-type">Object</span> target = joinPoint.getTarget();
+    <span class="predefined-type">Object</span><span class="type">[]</span> args = joinPoint.getArgs();
+
+    <span class="predefined-type">String</span> className = target.getClass().getName();
+    <span class="predefined-type">String</span> methodName = joinPoint.getSignature().getName();
+    <span class="predefined-type">StringBuilder</span> argBuilder = <span class="keyword">new</span> <span class="predefined-type">StringBuilder</span>();
+
+    <span class="keyword">for</span> (<span class="predefined-type">Object</span> arg : args) {
+      argBuilder.append(LogUtil.argValues(arg, <span class="integer">0</span>))
+          .append(<span class="string"><span class="delimiter">&quot;</span><span class="char">\n</span><span class="delimiter">&quot;</span></span>);
+    }
+    <span class="predefined-type">String</span> argString = argBuilder.toString();
+
+    logger.debug(<span class="string"><span class="delimiter">&quot;</span><span class="content">invoke method {}${}</span><span class="delimiter">&quot;</span></span>, className, methodName);
+    logger.debug(<span class="string"><span class="delimiter">&quot;</span><span class="content">method arguments: {}</span><span class="delimiter">&quot;</span></span>, argString);
+
+    <span class="predefined-type">Object</span> result  = joinPoint.proceed(args);
+
+    logger.debug(<span class="string"><span class="delimiter">&quot;</span><span class="content">finish the method {}${}</span><span class="delimiter">&quot;</span></span>, className, methodName);
+
+    <span class="keyword">return</span> result;
+  }
+}</code></pre></div></div><div class="listingblock"><div class="content"><pre class="CodeRay highlight"><code data-lang="java"><span class="annotation">@Transactional</span>
+<span class="annotation">@Override</span>
+<span class="directive">public</span> TodoItem changeState(<span class="annotation">@NonNull</span> TodoItem todo, <span class="annotation">@NonNull</span> TodoState state) <span class="directive">throws</span> IllegalStateChangeException {
+  TodoItem savedItem = <span class="local-variable">this</span>.getItem(todo.getIdx());
+
+  <span class="directive">final</span> <span class="type">boolean</span> possibleToChangeState = TodoState.isPossibleToChangeState(savedItem.getState(), state);
+  <span class="keyword">if</span> (not(possibleToChangeState)) {
+    <span class="keyword">throw</span> <span class="keyword">new</span> IllegalStateChangeException();
+  }
+
+  savedItem.setState(state);
+
+  <span class="keyword">return</span> todoItemRepository.save(savedItem);
+}</code></pre></div></div></div></div></div><script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script> <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-1986785092914105" data-ad-slot="9021907658" data-ad-format="auto"></ins> <script> (adsbygoogle = window.adsbygoogle || []).push({}); </script></article><aside class="author" role="complementary"><h2>About</h2><img class="me" alt="Hyeonil Jeong" src="/public/img/profile2.jpg" srcset="/public/img/profile2.jpg 2x" /><p><strong>Name</strong>: Hyeonil Jeong<p><strong>Birth</strong>: 1990-**-**<p><strong>E-mail</strong>: ^_^<p><strong>Job</strong>: Web Back-end Programmer<p><strong>Interest</strong>: Java, Test, Specification, Architecture, Clean Code</aside><aside class="related" role="complementary"><h2>Related Posts</h2><ul class="related-posts"><li> <a href="/2019/04/28/spring-camp-2019/"> <span>SpringCamp 2019 참석 후기</span> <small><time datetime="2019-04-28T00:00:00+00:00"> 04/28/19 </time></small> </a><li> <a href="/2018/11/08/spring-one/"> <span>SpringOne Tour 2018 Memo</span> <small><time datetime="2018-11-08T00:00:00+00:00"> 11/08/18 </time></small> </a><li> <a href="/2018/10/21/spring-mvc/"> <span>Spring MVC</span> <small><time datetime="2018-10-21T00:00:00+00:00"> 10/21/18 </time></small> </a></ul></aside><aside class="comments" role="complementary"><h2>Comments</h2><div id="disqus_thread"></div><script> var disqus_config = function () { this.page.url = 'https://blog.nuti.pe.kr/2018/06/13/spring-aop/'; this.page.identifier = '/2018/06/13/spring-aop'; }; (function() { var d = document, s = d.createElement('script'); s.src = 'https://nuti01.disqus.com/embed.js'; s.setAttribute('data-timestamp', +new Date()); (d.head || d.body).appendChild(s); })(); </script> <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript></aside></main><div id="_backdrop" class="backdrop"></div><header id="_sidebar" class="sidebar" role="banner"><div id="_asidebar" class="container sidebar-sticky"><div class="sidebar-about"><h1 class="font-accent"><a href="/">Hyeonil's Note</a></h1><p>Hyeonil’s Dev Note</div><nav class="sidebar-nav font-accent" role="navigation"><ul><li> <a class="sidebar-nav-item " href="/tag/all/">All</a><li> <a class="sidebar-nav-item " href="/tag/java/">Java</a><li> <a class="sidebar-nav-item " href="/tag/spring/">Spring</a><li> <a class="sidebar-nav-item " href="/tag/spec/">Specification</a><li> <a class="sidebar-nav-item " href="/tag/architecture/">Architecture</a><li> <a class="sidebar-nav-item " href="/tag/diary/">Diary</a><li> <a class="sidebar-nav-item " href="/tag/etc/">Etc</a><li> <a class="sidebar-nav-item " href="/about/">About</a></ul></nav><div class="sidebar-social"><ul><li> <a href="https://github.com/hyeonil"> <span class="fa fa-github"></span> <span class="sr-only">github</span> </a><li> <a href="https://nuti.tistory.com"> <span class="fa fa-external-link"></span> <span class="sr-only">blog</span> </a></ul></div></div></header><!--[if gt IE 8]><!----> <script>loadJSDeferred('/public/js/hydejack.min.js')</script> <script> WebFontConfig = { google: { families: 'Roboto+Slab:700|PT+Serif:400,400italic,700,700italic'.split('|') }, custom: { families: ['icomoon'], urls: ['/public/css/font-awesome.min.css'] }, classes: false, events: false }; </script> <script>loadJSDeferred('https://ajax.googleapis.com/ajax/libs/webfont/1.6.16/webfont.js')</script> <script> window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date; ga('create', 'UA-88066046-1', 'auto'); ga('send', 'pageview'); </script> <script>loadJSDeferred('https://www.google-analytics.com/analytics.js')</script> <!--<![endif]-->
