@@ -114,8 +114,8 @@ try {
   final MimeMessage mimeMessage = javaMailSender.createMimeMessage();
   boolean html = false;
   MimeMessageHelper helper = new MimeMessageHelper(mimeMessage, true, Charsets.UTF_8.displayName());
-  helper.setFrom(new InternetAddress("dev.nuti0102@gmail.com", "HyeonilJeong"));
-  helper.setTo("nuti0102@gmail.com");
+  helper.setFrom(new InternetAddress("from.test@gmail.com", "HyeonilJeong"));
+  helper.setTo("to.test@gmail.com");
   helper.setSubject("Subject");
 
   if (MailContentType.HTML.equals(MailContentType.HTML)) {
