@@ -19,8 +19,8 @@ javaMailSender.setJavaMailProperties(props);
   <span class="directive">final</span> MimeMessage mimeMessage = javaMailSender.createMimeMessage();
   <span class="type">boolean</span> html = <span class="predefined-constant">false</span>;
   MimeMessageHelper helper = <span class="keyword">new</span> MimeMessageHelper(mimeMessage, <span class="predefined-constant">true</span>, Charsets.UTF_8.displayName());
-  helper.setFrom(<span class="keyword">new</span> InternetAddress(<span class="string"><span class="delimiter">&quot;</span><span class="content">dev.nuti0102@gmail.com</span><span class="delimiter">&quot;</span></span>, <span class="string"><span class="delimiter">&quot;</span><span class="content">HyeonilJeong</span><span class="delimiter">&quot;</span></span>));
-  helper.setTo(<span class="string"><span class="delimiter">&quot;</span><span class="content">nuti0102@gmail.com</span><span class="delimiter">&quot;</span></span>);
+  helper.setFrom(<span class="keyword">new</span> InternetAddress(<span class="string"><span class="delimiter">&quot;</span><span class="content">from.test@test.com</span><span class="delimiter">&quot;</span></span>, <span class="string"><span class="delimiter">&quot;</span><span class="content">HyeonilJeong</span><span class="delimiter">&quot;</span></span>));
+  helper.setTo(<span class="string"><span class="delimiter">&quot;</span><span class="content">to.test@test.com</span><span class="delimiter">&quot;</span></span>);
   helper.setSubject(<span class="string"><span class="delimiter">&quot;</span><span class="content">Subject</span><span class="delimiter">&quot;</span></span>);
 
   <span class="keyword">if</span> (MailContentType.HTML.equals(MailContentType.HTML)) {
